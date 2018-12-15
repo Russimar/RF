@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TfrxReport Tag="1" Version="5.6.8" DotMatrixReport="False" IniFile="\Software\Fast Reports" PreviewOptions.Buttons="4095" PreviewOptions.Zoom="1" PrintOptions.Printer="Padr�o" PrintOptions.PrintOnSheet="0" ReportOptions.CreateDate="43330,5406525347" ReportOptions.Description.Text="" ReportOptions.LastChange="43330,8877220486" ScriptLanguage="PascalScript" ScriptText.Text="begin&#13;&#10;&#13;&#10;end." OnReportPrint="frxReportOnReportPrint">
+  <Datasets>
+    <item DataSet="frxConsEscolaridade" DataSetName="frxConsEscolaridade"/>
+    <item DataSet="frxEmpresa" DataSetName="frxEmpresa"/>
+  </Datasets>
+  <TfrxDataPage Name="Data" Height="1000" Left="0" Top="0" Width="1000"/>
+  <TfrxReportPage Name="Page1" PaperWidth="210" PaperHeight="297" PaperSize="9" LeftMargin="10" RightMargin="10" TopMargin="10" BottomMargin="10" ColumnWidth="0" ColumnPositions.Text="" HGuides.Text="" VGuides.Text="">
+    <TfrxPageHeader Name="PageHeader1" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Font.Charset="1" Font.Color="0" Font.Height="-13" Font.Name="Arial" Font.Style="5" Height="130,35621524" Left="0" ParentFont="False" Top="18,89765" Width="718,1107">
+      <TfrxMemoView Name="Memo4" Left="41,57142857" Top="107,05689524" Width="45,35436" Height="15,11812" Font.Charset="1" Font.Color="0" Font.Height="-12" Font.Name="Arial" Font.Style="1" ParentFont="False" Text="Nome"/>
+      <TfrxMemoView Name="Memo7" Left="250,33333333" Top="107,05689524" Width="94,48825" Height="15,11812" StretchMode="smMaxHeight" Font.Charset="1" Font.Color="0" Font.Height="-12" Font.Name="Arial" Font.Style="1" ParentFont="False" Text="Escolaridade"/>
+      <TfrxMemoView Name="Memo8" Left="562,61904762" Top="108,00927619" Width="56,3930119" Height="15,11812" Font.Charset="1" Font.Color="0" Font.Height="-12" Font.Name="Arial" Font.Style="1" ParentFont="False" Text="Idade"/>
+      <TfrxLineView Name="Line1" Left="3,57142857" Top="125,91929476" Width="713,30333952" Height="0" Color="0" Frame.Style="fsDot" Diagonal="True"/>
+      <TfrxPictureView Name="Picture1" Left="8,57142857" Top="6,82405667" Width="104,96444048" Height="83,65955476" DataField="LOGOTIPO" DataSet="frxEmpresa" DataSetName="frxEmpresa" HightQuality="False" Transparent="False" TransparentColor="16777215"/>
+      <TfrxMemoView Name="Memo1" Left="239,67022309" Top="42,37337643" Width="238,77025381" Height="18,89765" Font.Charset="1" Font.Color="0" Font.Height="-13" Font.Name="Arial" Font.Style="5" ParentFont="False" Text="Relatório de Pessoas Por Escolaridade"/>
+      <TfrxMemoView Name="Date" Left="675,04761904" Top="15,44310428" Width="49,66635762" Height="10,32622143" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="[Date]"/>
+      <TfrxMemoView Name="Page" Left="675,0952381" Top="31,58596142" Width="37,40538048" Height="11,27860238" DisplayFormat.FormatStr="000" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="[Page]"/>
+      <TfrxMemoView Name="Memo9" Left="639,85714286" Top="32,49072332" Width="31,63110714" Height="9,37384048" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" HAlign="haRight" ParentFont="False" Text="Página:"/>
+      <TfrxMemoView Name="Memo10" Left="651,19573286" Top="15,39548523" Width="20,29251714" Height="9,37384048" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" HAlign="haRight" ParentFont="False" Text="Data:"/>
+      <TfrxMemoView Name="Memo11" Left="2,85714286" Top="107,76901667" Width="34,01577" Height="15,11812" Font.Charset="1" Font.Color="0" Font.Height="-12" Font.Name="Arial" Font.Style="1" ParentFont="False" Text="Cod"/>
+    </TfrxPageHeader>
+    <TfrxMasterData Name="MasterData1" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="17,20284476" Left="0" Top="211,65368" Width="718,1107" ColumnWidth="0" ColumnGap="0" DataSet="frxConsEscolaridade" DataSetName="frxConsEscolaridade" RowCount="0">
+      <TfrxMemoView Name="Memo3" Left="41,57142857" Top="0,22479857" Width="204,07204714" Height="15,11812" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="[frxConsEscolaridade.&#34;NOME&#34;]"/>
+      <TfrxMemoView Name="Memo5" Left="250,33333333" Top="0,22479857" Width="309,92146" Height="15,11812" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="[frxConsEscolaridade.&#34;ESCOLARIDADE&#34;]"/>
+      <TfrxMemoView Name="Memo6" Left="562,61904762" Top="0,22479857" Width="94,48825" Height="15,11812" DisplayFormat.FormatStr="00" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="[frxConsEscolaridade.&#34;IDADE&#34;]"/>
+      <TfrxMemoView Name="Memo12" Left="2,85714286" Top="0,22479857" Width="29,78633285" Height="15,11812" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="[frxConsEscolaridade.&#34;CODIGO&#34;]"/>
+    </TfrxMasterData>
+    <TfrxFooter Name="Footer1" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="22,67718" Left="0" Top="253,22851" Width="718,1107">
+      <TfrxMemoView Name="Memo2" Left="40,95238095" Top="3,10482333" Width="55,44063095" Height="15,11812" Font.Charset="1" Font.Color="0" Font.Height="-13" Font.Name="Arial" Font.Style="1" ParentFont="False" Text="Total:"/>
+      <TfrxLineView Name="Line2" Left="1,9047619" Top="1,05720429" Width="713,30333952" Height="0" Color="0" Diagonal="True"/>
+      <TfrxMemoView Name="Memo13" Left="103,80952381" Top="3,10482333" Width="94,48825" Height="15,11812" Font.Charset="1" Font.Color="0" Font.Height="-13" Font.Name="Arial" Font.Style="1" ParentFont="False" Text="[COUNT(MasterData1)]"/>
+    </TfrxFooter>
+  </TfrxReportPage>
+</TfrxReport>
