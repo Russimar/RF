@@ -14,7 +14,7 @@ object dmDatabase: TdmDatabase
     LoginPrompt = False
     Params.Strings = (
       'DriverName=Interbase'
-      'Database=E:\projetos\RF\Dados\dados.fdb'
+      'Database=E:\projetos\Dados\dados.fdb'
       'RoleName=RoleName'
       'User_Name=sysdba'
       'Password=masterkey'
@@ -28,7 +28,6 @@ object dmDatabase: TdmDatabase
       'Interbase TransIsolation=ReadCommited'
       'Trim Char=False')
     VendorLib = 'gds32.dll'
-    Connected = True
     Left = 39
     Top = 14
   end

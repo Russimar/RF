@@ -91,7 +91,7 @@ ImageBase=4194304
 ExeDescription=
 [Directories]
 OutputDir=E:\projetos\exec
-UnitOutputDir=E:\projetos\CMPD\DCU
+UnitOutputDir=E:\projetos\DCU\RF
 PackageDLLOutputDir=
 PackageDCPOutputDir=
 SearchPath=
@@ -144,9 +144,10 @@ Item1=C:\Delphi7\SSFacil\EXE\relatorios\
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
 [HistoryLists\hlUnitOutputDirectory]
-Count=2
-Item0=E:\projetos\CMPD\DCU
-Item1=C:\projetos\CMPD\DCU
+Count=3
+Item0=E:\projetos\DCU\RF
+Item1=E:\projetos\CMPD\DCU
+Item2=C:\projetos\CMPD\DCU
 [HistoryLists\hlOutputDirectorry]
 Count=3
 Item0=E:\projetos\exec

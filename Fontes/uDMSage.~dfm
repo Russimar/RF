@@ -1,8 +1,8 @@
 object DMSage: TDMSage
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Left = 270
-  Top = 144
+  Left = 409
+  Top = 155
   Height = 356
   Width = 820
   object sdsTomadorSage: TSQLDataSet
@@ -415,9 +415,9 @@ object DMSage: TDMSage
     CommandText = 
       'SELECT p.cd_empresa'#13#10'      ,p.cd_funcionario'#13#10'      ,p.mes'#13#10'    ' +
       '  ,p.tipo'#13#10'      ,p.cd_evento'#13#10'      ,p.ano'#13#10'      ,p.referencia' +
-      #13#10'      ,p.referencia_editada'#13#10'      ,p.valor'#13#10'      ,f.nome'#13#10'  ' +
-      'FROM ProcEvento P'#13#10'  inner join funcionario F on f.cd_funcionari' +
-      'o = p.cd_funcionario'
+      #13#10'      ,p.referencia_editada'#13#10'      ,p.valor'#13#10'  FROM ProcEvento' +
+      ' P'#13#10'  inner join funtomador FT ON FT.CD_FUNCIONARIO = P.CD_FUNCI' +
+      'ONARIO and p.cd_empresa = ft.cd_empresa'
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.Conexao_SQLServer
@@ -457,11 +457,6 @@ object DMSage: TDMSage
     end
     object sdsProcEventovalor: TFloatField
       FieldName = 'valor'
-    end
-    object sdsProcEventonome: TStringField
-      FieldName = 'nome'
-      FixedChar = True
-      Size = 40
     end
   end
   object dspProcEvento: TDataSetProvider
@@ -510,19 +505,17 @@ object DMSage: TDMSage
     object cdsProcEventovalor: TFloatField
       FieldName = 'valor'
     end
-    object cdsProcEventonome: TStringField
-      FieldName = 'nome'
-      FixedChar = True
-      Size = 40
-    end
   end
   object sdsValeTransporte: TSQLDataSet
     CommandText = 
-      'SELECT fun.cd_funcionario'#13#10'      ,fun.cd_linha'#13#10'      ,fun.qt_di' +
-      'a_util'#13#10'      ,fun.qt_sabado'#13#10'      ,fun.qt_domingo'#13#10'      ,fun.' +
-      'qt_feriado'#13#10'      ,lin.vl_vale'#13#10'      ,lin.descricao'#13#10'  FROM Fun' +
-      'Vale fun'#13#10'  inner join LinhaG lin on lin.cd_linha = fun.cd_linha' +
-      ' '#13#10
+      'SELECT fc.cd_empresa'#13#10'      ,fc.cd_funcionario'#13#10'      ,fun.cd_li' +
+      'nha'#13#10'      ,fc.nome'#13#10'      ,fun.qt_dia_util'#13#10'      ,fun.qt_sabad' +
+      'o'#13#10'      ,fun.qt_domingo'#13#10'      ,fun.qt_feriado'#13#10'      ,lin.vl_v' +
+      'ale'#13#10'      ,lin.descricao'#13#10'      ,ft.cd_tomador'#13#10'  FROM FunVale ' +
+      'fun'#13#10'  inner join LinhaG lin on lin.cd_linha = fun.cd_linha '#13#10'  ' +
+      'inner join FUNCIONARIO FC ON FUN.CD_FUNCIONARIO = FC.CD_FUNCIONA' +
+      'RIO   '#13#10'  LEFT join FUNTOMADOR  FT ON FT.CD_FUNCIONARIO = FC.CD_' +
+      'FUNCIONARIO'
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.Conexao_SQLServer
@@ -555,6 +548,18 @@ object DMSage: TDMSage
       FieldName = 'descricao'
       FixedChar = True
       Size = 30
+    end
+    object sdsValeTransportenome: TStringField
+      FieldName = 'nome'
+      FixedChar = True
+      Size = 40
+    end
+    object sdsValeTransportecd_empresa: TSmallintField
+      FieldName = 'cd_empresa'
+      Required = True
+    end
+    object sdsValeTransportecd_tomador: TIntegerField
+      FieldName = 'cd_tomador'
     end
   end
   object dspValeTransporte: TDataSetProvider
@@ -595,6 +600,18 @@ object DMSage: TDMSage
       FieldName = 'descricao'
       FixedChar = True
       Size = 30
+    end
+    object cdsValeTransportenome: TStringField
+      FieldName = 'nome'
+      FixedChar = True
+      Size = 40
+    end
+    object cdsValeTransportecd_empresa: TSmallintField
+      FieldName = 'cd_empresa'
+      Required = True
+    end
+    object cdsValeTransportecd_tomador: TIntegerField
+      FieldName = 'cd_tomador'
     end
   end
   object sdsValeRefeicao: TSQLDataSet
@@ -676,5 +693,10 @@ object DMSage: TDMSage
     object cdsValeRefeicaovl_vale: TFloatField
       FieldName = 'vl_vale'
     end
+  end
+  object dsProcEvento: TDataSource
+    DataSet = cdsProcEvento
+    Left = 208
+    Top = 192
   end
 end

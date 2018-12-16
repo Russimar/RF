@@ -10,12 +10,14 @@ function ValidaCNPJ(numCNPJ: string): Boolean;
 function ValidaCPF(numCPF: string): Boolean;
 function VerificaDuplicidade(vCnpj, vTipo: string; ID: Integer; ID_Filial: Integer = 0): string;
 procedure SalvaImagem(FieldImg : TField; nFile : TFileName; ComponentDBImg : TDBImage; FieldExt : String = 'EXTENSAO');
+function ExtensoMes(n: Integer): String;
 
 var
   vUsuario: string;
   vErro: Boolean = False;
   vFilial : Integer;
   vCod_Tomador_Pos : Integer;
+  vNomeEmpresa : String;
 
 implementation
 
@@ -212,5 +214,22 @@ begin
   end;
 end;
 
+function ExtensoMes(n: Integer): String;
+begin
+  Case n Of
+    01 : result := 'Janeiro';
+    02 : nresult := 'Fevereiro';
+    03 : result := 'Março';
+    04 : result := 'Abril';
+    05 : result := 'Maio';
+    06 : result := 'Junho';
+    07 : result := 'Julho';
+    08 : result := 'Agosto';
+    09 : result := 'Setembro';
+    10 : result := 'Outubro';
+    11 : result := 'Novembro';
+    12 : result := 'Dezembro';
+  end;
+end;
 end.
 

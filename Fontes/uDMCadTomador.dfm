@@ -1,10 +1,10 @@
 object DMCadTomador: TDMCadTomador
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Left = 310
-  Top = 178
-  Height = 352
-  Width = 592
+  Left = 254
+  Top = 136
+  Height = 458
+  Width = 856
   object sdsTomador: TSQLDataSet
     NoMetadata = True
     GetMetadata = False
@@ -477,5 +477,400 @@ object DMCadTomador: TDMCadTomador
       Precision = 15
       Size = 2
     end
+  end
+  object frxReport1: TfrxReport
+    Version = '5.6.8'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PrintOptions.Printer = 'Default'
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 43449.885001122700000000
+    ReportOptions.LastChange = 43450.846347418980000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      'begin'
+      ''
+      'end.')
+    Left = 312
+    Top = 200
+    Datasets = <
+      item
+        DataSet = frxValeTransporteDetalhe
+        DataSetName = 'frxValeTransporteDetalhe'
+      end
+      item
+        DataSet = frxValeTransporte
+        DataSetName = 'frxValeTransporte'
+      end>
+    Variables = <>
+    Style = <>
+    object Data: TfrxDataPage
+      Height = 1000.000000000000000000
+      Width = 1000.000000000000000000
+    end
+    object Page1: TfrxReportPage
+      PaperWidth = 210.000000000000000000
+      PaperHeight = 297.000000000000000000
+      PaperSize = 9
+      LeftMargin = 10.000000000000000000
+      RightMargin = 10.000000000000000000
+      TopMargin = 10.000000000000000000
+      BottomMargin = 10.000000000000000000
+      object MasterData1: TfrxMasterData
+        FillType = ftBrush
+        Height = 219.212740000000000000
+        Top = 18.897650000000000000
+        Width = 718.110700000000000000
+        DataSet = frxValeTransporte
+        DataSetName = 'frxValeTransporte'
+        RowCount = 0
+        object Shape1: TfrxShapeView
+          Left = 2.000000000000000000
+          Top = 7.559060000000000000
+          Width = 714.331170000000000000
+          Height = 60.472480000000000000
+        end
+        object Memo1: TfrxMemoView
+          Left = 173.858380000000000000
+          Top = 22.677180000000000000
+          Width = 336.378170000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -19
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          HAlign = haCenter
+          Memo.UTF8 = (
+            'RECIBO DE VALE TRANSPORTE')
+          ParentFont = False
+        end
+        object Memo2: TfrxMemoView
+          Top = 49.133890000000000000
+          Width = 170.078850000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Memo.UTF8 = (
+            '(Decreto n'#194#186' 95.247 de 17/11/1987')
+          ParentFont = False
+        end
+        object Memo3: TfrxMemoView
+          Left = 3.779530000000000000
+          Top = 78.811070000000000000
+          Width = 506.457020000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Memo.UTF8 = (
+            'Nome do(a) Empregado(a): [frxValeTransporte."Nome_Funcionario"]')
+          ParentFont = False
+        end
+        object Memo4: TfrxMemoView
+          Left = 525.354670000000000000
+          Top = 78.811070000000000000
+          Width = 173.858380000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          HAlign = haRight
+          Memo.UTF8 = (
+            'Reg.N'#194#186': [frxValeTransporte."Cod_Funcionario"]')
+          ParentFont = False
+        end
+        object Memo5: TfrxMemoView
+          Left = 2.000000000000000000
+          Top = 117.047310000000000000
+          Width = 714.330708660000000000
+          Height = 94.488250000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -15
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          GapY = 5.000000000000000000
+          HAlign = haBlock
+          LineSpacing = 6.000000000000000000
+          ParentFont = False
+        end
+        object Shape2: TfrxShapeView
+          Left = 2.000000000000000000
+          Top = 75.590600000000000000
+          Width = 714.331170000000000000
+          Height = 30.236240000000000000
+        end
+      end
+      object DetailData1: TfrxDetailData
+        FillType = ftBrush
+        Height = 37.795300000000000000
+        Top = 260.787570000000000000
+        Width = 718.110700000000000000
+        DataSet = frxValeTransporteDetalhe
+        DataSetName = 'frxValeTransporteDetalhe'
+        RowCount = 0
+        object Memo6: TfrxMemoView
+          Left = 7.559060000000000000
+          Top = 3.779530000000000000
+          Width = 94.488250000000000000
+          Height = 18.897650000000000000
+          Memo.UTF8 = (
+            '[frxValeTransporteDetalhe."Cod_Passagem"]')
+        end
+      end
+    end
+  end
+  object frxValeTransporteDetalhe: TfrxDBDataset
+    UserName = 'frxValeTransporteDetalhe'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'Cod_Funcionario=Cod_Funcionario'
+      'Nome_Funcionario=Nome_Funcionario'
+      'Valor_Passagem=Valor_Passagem'
+      'Qtde_Passagem=Qtde_Passagem'
+      'Dias Trabalhados=Dias Trabalhados'
+      'Dias Falta=Dias Falta'
+      'Dias Atestado=Dias Atestado'
+      'Mes=Mes'
+      'Ano=Ano'
+      'Cod_Passagem=Cod_Passagem'
+      'Valor_Total=Valor_Total')
+    DataSource = dsVTVA
+    BCDToCurrency = False
+    Left = 312
+    Top = 256
+  end
+  object ACBrExtenso1: TACBrExtenso
+    StrMoeda = 'Real'
+    StrMoedas = 'Reais'
+    StrCentavo = 'Centavo'
+    StrCentavos = 'Centavos'
+    Left = 96
+    Top = 232
+  end
+  object cdsVTVA: TClientDataSet
+    Active = True
+    Aggregates = <>
+    FieldDefs = <
+      item
+        Name = 'Cod_Funcionario'
+        DataType = ftInteger
+      end
+      item
+        Name = 'Nome_Funcionario'
+        DataType = ftString
+        Size = 60
+      end
+      item
+        Name = 'Valor_Passagem'
+        DataType = ftFloat
+      end
+      item
+        Name = 'Qtde_Passagem'
+        DataType = ftFloat
+      end
+      item
+        Name = 'Dias Trabalhados'
+        DataType = ftFloat
+      end
+      item
+        Name = 'Dias Falta'
+        DataType = ftFloat
+      end
+      item
+        Name = 'Dias Atestado'
+        DataType = ftFloat
+      end
+      item
+        Name = 'Mes'
+        DataType = ftInteger
+      end
+      item
+        Name = 'Ano'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'Cod_Passagem'
+        DataType = ftInteger
+      end>
+    IndexDefs = <>
+    IndexFieldNames = 'Cod_Funcionario'
+    Params = <>
+    StoreDefs = True
+    OnCalcFields = cdsVTVACalcFields
+    Left = 264
+    Top = 120
+    Data = {
+      FF0000009619E0BD01000000180000000A000000000003000000FF000F436F64
+      5F46756E63696F6E6172696F0400010000000000104E6F6D655F46756E63696F
+      6E6172696F0100490000000100055749445448020002003C000E56616C6F725F
+      506173736167656D08000400000000000D517464655F506173736167656D0800
+      04000000000010446961732054726162616C6861646F7308000400000000000A
+      446961732046616C746108000400000000000D4469617320417465737461646F
+      0800040000000000034D6573040001000000000003416E6F0100490000000100
+      0557494454480200020014000C436F645F506173736167656D04000100000000
+      000000}
+    object cdsVTVACod_Funcionario: TIntegerField
+      DisplayLabel = 'C'#243'digo Funcion'#225'rio'
+      FieldName = 'Cod_Funcionario'
+    end
+    object cdsVTVANome_Funcionario: TStringField
+      DisplayLabel = 'Nome Funcion'#225'rio'
+      FieldName = 'Nome_Funcionario'
+      Size = 60
+    end
+    object cdsVTVAValor_Passagem: TFloatField
+      DisplayLabel = 'Valor Passagem'
+      FieldName = 'Valor_Passagem'
+      DisplayFormat = '##0.00'
+    end
+    object cdsVTVAQtde_Passagem: TFloatField
+      DisplayLabel = 'Qtde Passagem'
+      FieldName = 'Qtde_Passagem'
+      DisplayFormat = '##0.00'
+    end
+    object cdsVTVADiasTrabalhados: TFloatField
+      FieldName = 'Dias Trabalhados'
+      DisplayFormat = '##0.00'
+    end
+    object cdsVTVADiasFalta: TFloatField
+      FieldName = 'Dias Falta'
+      DisplayFormat = '##0.00'
+    end
+    object cdsVTVADiasAtestado: TFloatField
+      FieldName = 'Dias Atestado'
+      DisplayFormat = '##0.00'
+    end
+    object cdsVTVAMes: TIntegerField
+      FieldName = 'Mes'
+    end
+    object cdsVTVAAno: TStringField
+      FieldName = 'Ano'
+    end
+    object cdsVTVACod_Passagem: TIntegerField
+      FieldName = 'Cod_Passagem'
+    end
+    object cdsVTVAValor_Total: TFloatField
+      FieldKind = fkCalculated
+      FieldName = 'Valor_Total'
+      Calculated = True
+    end
+  end
+  object dsVTVA: TDataSource
+    DataSet = cdsVTVA
+    Left = 336
+    Top = 120
+  end
+  object mVTAuxiliar: TClientDataSet
+    Active = True
+    Aggregates = <>
+    FieldDefs = <
+      item
+        Name = 'cod_funcionario'
+        DataType = ftInteger
+      end
+      item
+        Name = 'nome_funcionario'
+        DataType = ftString
+        Size = 100
+      end
+      item
+        Name = 'valor_passagem'
+        DataType = ftFloat
+      end
+      item
+        Name = 'valor_total'
+        DataType = ftFloat
+      end
+      item
+        Name = 'dias_Trabalhados'
+        DataType = ftFloat
+      end
+      item
+        Name = 'mes'
+        DataType = ftInteger
+      end
+      item
+        Name = 'ano'
+        DataType = ftString
+        Size = 20
+      end>
+    IndexDefs = <>
+    Params = <>
+    StoreDefs = True
+    Left = 208
+    Top = 344
+    Data = {
+      BF0000009619E0BD010000001800000007000000000003000000BF000F636F64
+      5F66756E63696F6E6172696F0400010000000000106E6F6D655F66756E63696F
+      6E6172696F01004900000001000557494454480200020064000E76616C6F725F
+      706173736167656D08000400000000000B76616C6F725F746F74616C08000400
+      0000000010646961735F54726162616C6861646F730800040000000000036D65
+      73040001000000000003616E6F01004900000001000557494454480200020014
+      000000}
+    object mVTAuxiliarcod_funcionario: TIntegerField
+      DisplayLabel = 'C'#243'd.Funcion'#225'rio'
+      FieldName = 'cod_funcionario'
+    end
+    object mVTAuxiliarnome_funcionario: TStringField
+      DisplayLabel = 'Nome Funcion'#225'rio'
+      FieldName = 'nome_funcionario'
+      Size = 100
+    end
+    object mVTAuxiliarvalor_passagem: TFloatField
+      DisplayLabel = 'Valor Passagem'
+      FieldName = 'valor_passagem'
+      DisplayFormat = '#0.00'
+    end
+    object mVTAuxiliarvalor_total: TFloatField
+      DisplayLabel = 'Valor Total'
+      FieldName = 'valor_total'
+      DisplayFormat = '#0.00'
+    end
+    object mVTAuxiliarDias_Trabalhados: TFloatField
+      DisplayLabel = 'Dias Trabalhados'
+      FieldName = 'dias_Trabalhados'
+    end
+    object mVTAuxiliarMes: TIntegerField
+      FieldName = 'mes'
+    end
+    object mVTAuxiliarano: TStringField
+      FieldName = 'ano'
+    end
+  end
+  object dsmVTAuxiliar: TDataSource
+    DataSet = mVTAuxiliar
+    Left = 272
+    Top = 344
+  end
+  object frxValeTransporte: TfrxDBDataset
+    UserName = 'frxValeTransporte'
+    OnFirst = frxValeTransporteFirst
+    OnNext = frxValeTransporteNext
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'cod_funcionario=cod_funcionario'
+      'nome_funcionario=nome_funcionario'
+      'valor_passagem=valor_passagem'
+      'valor_total=valor_total'
+      'dias_Trabalhados=dias_Trabalhados'
+      'mes=mes'
+      'ano=ano')
+    DataSource = dsmVTAuxiliar
+    BCDToCurrency = False
+    Left = 384
+    Top = 256
   end
 end

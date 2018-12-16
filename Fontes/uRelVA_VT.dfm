@@ -1,6 +1,6 @@
 object frmRelVA_VT: TfrmRelVA_VT
-  Left = 130
-  Top = 66
+  Left = 240
+  Top = 72
   Width = 1055
   Height = 518
   Caption = 'Rela'#231#227'o de VA e VT'
@@ -11,6 +11,7 @@ object frmRelVA_VT: TfrmRelVA_VT
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  OnClose = FormClose
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -122,7 +123,6 @@ object frmRelVA_VT: TfrmRelVA_VT
       Height = 21
       TabOrder = 5
       OnExit = edtTomadorExit
-      OnKeyDown = edtTomadorKeyDown
     end
     object edtNomeTomador: TEdit
       Left = 197
@@ -339,6 +339,7 @@ object frmRelVA_VT: TfrmRelVA_VT
       ParentFont = False
       TabOrder = 9
       Transparent = True
+      OnClick = btnImprimirClick
     end
     object rdgTipoImpressa: TRadioGroup
       Left = 696
@@ -368,7 +369,7 @@ object frmRelVA_VT: TfrmRelVA_VT
       Width = 1037
       Height = 364
       Align = alClient
-      DataSource = dsVTVA
+      DataSource = DMCadTomador.dsmVTAuxiliar
       Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
       TabOrder = 0
       TitleFont.Charset = DEFAULT_CHARSET
@@ -388,106 +389,140 @@ object frmRelVA_VT: TfrmRelVA_VT
       GridStyle.EvenColor = clWindow
       TitleHeight.PixelCount = 24
       FooterColor = clBtnFace
-      ExOptions = [eoENTERlikeTAB, eoKeepSelection, eoStandardPopup, eoBLOBEditor, eoTitleWordWrap]
+      ExOptions = [eoENTERlikeTAB, eoKeepSelection, eoStandardPopup, eoBLOBEditor, eoTitleWordWrap, eoShowFilterBar]
       RegistryKey = 'Software\Scalabium'
       RegistrySection = 'SMDBGrid'
       WidthOfIndicator = 11
       DefaultRowHeight = 17
       ScrollBars = ssHorizontal
-      ColCount = 8
+      ColCount = 6
+      RowCount = 2
+      Columns = <
+        item
+          Expanded = False
+          FieldName = 'cod_funcionario'
+          Title.Alignment = taCenter
+          Width = 93
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'nome_funcionario'
+          Title.Alignment = taCenter
+          Width = 428
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'valor_passagem'
+          Title.Alignment = taCenter
+          Width = 106
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'valor_total'
+          Title.Alignment = taCenter
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'dias_Trabalhados'
+          Title.Alignment = taCenter
+          Width = 103
+          Visible = True
+        end>
+    end
+    object SMDBGrid2: TSMDBGrid
+      Left = 1
+      Top = 232
+      Width = 1037
+      Height = 136
+      Align = alCustom
+      DataSource = DMCadTomador.dsVTVA
+      Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
+      TabOrder = 1
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -11
+      TitleFont.Name = 'MS Sans Serif'
+      TitleFont.Style = []
+      Flat = False
+      BandsFont.Charset = DEFAULT_CHARSET
+      BandsFont.Color = clWindowText
+      BandsFont.Height = -11
+      BandsFont.Name = 'MS Sans Serif'
+      BandsFont.Style = []
+      Groupings = <>
+      GridStyle.Style = gsCustom
+      GridStyle.OddColor = clWindow
+      GridStyle.EvenColor = clWindow
+      TitleHeight.PixelCount = 24
+      FooterColor = clBtnFace
+      ExOptions = [eoENTERlikeTAB, eoKeepSelection, eoStandardPopup, eoBLOBEditor, eoTitleWordWrap, eoShowFilterBar]
+      RegistryKey = 'Software\Scalabium'
+      RegistrySection = 'SMDBGrid'
+      WidthOfIndicator = 11
+      DefaultRowHeight = 17
+      ScrollBars = ssHorizontal
+      ColCount = 12
       RowCount = 2
       Columns = <
         item
           Expanded = False
           FieldName = 'Cod_Funcionario'
-          Width = 125
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'Nome_Funcionario'
-          Width = 376
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'Valor_Passagem'
-          Width = 102
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'Qtde_Passagem'
-          Width = 96
           Visible = True
         end
         item
           Expanded = False
-          FieldName = 'Dias_Trabalhados'
-          Width = 104
+          FieldName = 'Dias Trabalhados'
           Visible = True
         end
         item
           Expanded = False
-          FieldName = 'Dias_Atestado'
-          Width = 91
+          FieldName = 'Dias Falta'
           Visible = True
         end
         item
           Expanded = False
-          FieldName = 'Dias_Falta'
+          FieldName = 'Dias Atestado'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Mes'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Ano'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Cod_Passagem'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Valor_Total'
           Visible = True
         end>
     end
-  end
-  object cdsVTVA: TClientDataSet
-    Active = True
-    Aggregates = <>
-    IndexFieldNames = 'Cod_Funcionario'
-    Params = <>
-    Left = 688
-    Top = 80
-    Data = {
-      C60000009619E0BD010000001800000007000000000003000000C6000F436F64
-      5F46756E63696F6E6172696F0400010000000000104E6F6D655F46756E63696F
-      6E6172696F0100490000000100055749445448020002003C000E56616C6F725F
-      506173736167656D08000400000000000D517464655F506173736167656D0800
-      04000000000010446961735F54726162616C6861646F7304000100000000000D
-      446961735F417465737461646F04000100000000000A446961735F46616C7461
-      04000100000000000000}
-    object cdsVTVACod_Funcionario: TIntegerField
-      DisplayLabel = 'C'#243'digo Funcion'#225'rio'
-      FieldName = 'Cod_Funcionario'
-    end
-    object cdsVTVANome_Funcionario: TStringField
-      DisplayLabel = 'Nome Funcion'#225'rio'
-      FieldName = 'Nome_Funcionario'
-      Size = 60
-    end
-    object cdsVTVAValor_Passagem: TFloatField
-      DisplayLabel = 'Valor Passagem'
-      FieldName = 'Valor_Passagem'
-    end
-    object cdsVTVAQtde_Passagem: TFloatField
-      DisplayLabel = 'Qtde Passagem'
-      FieldName = 'Qtde_Passagem'
-    end
-    object cdsVTVADias_Trabalhados: TIntegerField
-      DisplayLabel = 'Dias Trabalhados'
-      FieldName = 'Dias_Trabalhados'
-    end
-    object cdsVTVADias_Atestado: TIntegerField
-      DisplayLabel = 'Dias Atestado'
-      FieldName = 'Dias_Atestado'
-    end
-    object cdsVTVADias_Falta: TIntegerField
-      DisplayLabel = 'Dias Falta'
-      FieldName = 'Dias_Falta'
-    end
-  end
-  object dsVTVA: TDataSource
-    DataSet = cdsVTVA
-    Left = 728
-    Top = 80
   end
 end

@@ -3,7 +3,8 @@ unit uDMCadTomador;
 interface
 
 uses
-  SysUtils, Classes, FMTBcd, DB, Provider, DBClient, SqlExpr;
+  SysUtils, Classes, FMTBcd, DB, Provider, DBClient, SqlExpr, frxClass, frxDBSet,
+  ACBrBase, ACBrExtenso;
 
 type
   TDMCadTomador = class(TDataModule)
@@ -96,20 +97,50 @@ type
     qTomador_DiasVALOR_VA: TFMTBCDField;
     qTomador_DiasPERC_VA: TFMTBCDField;
     qTomador_DiasVALOR_LANCHE: TFMTBCDField;
+    frxReport1: TfrxReport;
+    frxValeTransporteDetalhe: TfrxDBDataset;
+    ACBrExtenso1: TACBrExtenso;
+    cdsVTVA: TClientDataSet;
+    cdsVTVACod_Funcionario: TIntegerField;
+    cdsVTVANome_Funcionario: TStringField;
+    cdsVTVAValor_Passagem: TFloatField;
+    cdsVTVAQtde_Passagem: TFloatField;
+    cdsVTVADiasTrabalhados: TFloatField;
+    cdsVTVADiasFalta: TFloatField;
+    cdsVTVADiasAtestado: TFloatField;
+    dsVTVA: TDataSource;
+    cdsVTVAMes: TIntegerField;
+    cdsVTVAAno: TStringField;
+    mVTAuxiliar: TClientDataSet;
+    dsmVTAuxiliar: TDataSource;
+    mVTAuxiliarcod_funcionario: TIntegerField;
+    mVTAuxiliarvalor_passagem: TFloatField;
+    mVTAuxiliarvalor_total: TFloatField;
+    cdsVTVACod_Passagem: TIntegerField;
+    mVTAuxiliarDias_Trabalhados: TFloatField;
+    mVTAuxiliarMes: TIntegerField;
+    mVTAuxiliarnome_funcionario: TStringField;
+    mVTAuxiliarano: TStringField;
+    frxValeTransporte: TfrxDBDataset;
+    cdsVTVAValor_Total: TFloatField;
     procedure DataModuleCreate(Sender: TObject);
+    procedure frxValeTransporteNext(Sender: TObject);
+    procedure frxValeTransporteFirst(Sender: TObject);
+    procedure cdsVTVACalcFields(DataSet: TDataSet);
   private
     { Private declarations }
   public
     vMsgTomador: string;
-    ctCommand : String;
+    ctCommand: string;
     procedure prc_Consultar(x: string);
     procedure prc_Localizar(ID: Integer);
     procedure prc_Abrir_Tomador_Dias(ID_Tomador: Integer);
     procedure prc_Inserir_Tomador_Dias;
     procedure prc_Alterar;
     procedure prc_Gravar;
-    procedure prc_Posiciona_Tomador(ID_Tomador : Integer);
-    procedure prc_Posiciona_Tomador_Dia(Ano : SmallInt; Mes : String; ID_TOMADOR : Integer);
+    procedure prc_Posiciona_Tomador(ID_Tomador: Integer);
+    procedure prc_Posiciona_Tomador_Dia(Ano: SmallInt; Mes: string; ID_TOMADOR: Integer);
+    function fnc_Monta_Impressao_VT: string;
     { Public declarations }
   end;
 
@@ -119,7 +150,7 @@ var
 implementation
 
 uses
-  DmdDatabase, uUtilPadrao;
+  DmdDatabase, uUtilPadrao, uRelVA_VT;
 
 {$R *.dfm}
 
@@ -190,14 +221,50 @@ begin
   qTomador.Open;
 end;
 
-procedure TDMCadTomador.prc_Posiciona_Tomador_Dia(Ano: SmallInt;
-  Mes: String; ID_TOMADOR: Integer);
+procedure TDMCadTomador.prc_Posiciona_Tomador_Dia(Ano: SmallInt; Mes: string; ID_TOMADOR: Integer);
 begin
   qTomador_Dias.Close;
   qTomador_Dias.ParamByName('Ano').AsSmallInt := Ano;
-  qTomador_Dias.ParamByName('Mes').AsString   := Mes;
+  qTomador_Dias.ParamByName('Mes').AsString := Mes;
   qTomador_Dias.ParamByName('ID_TOMADOR').AsInteger := ID_TOMADOR;
   qTomador_Dias.Open;
+end;
+
+function TDMCadTomador.fnc_Monta_Impressao_VT: string;
+var
+  vTexto, vMes: string;
+begin
+  vMes := ExtensoMes(StrToInt(cdsVTVAMes.AsString));
+  vTexto := '   Recebi de ' + vNomeEmpresa +
+            ' a importância de ' + UpperCase(ACBrExtenso1.ValorToTexto(mVTAuxiliarvalor_total.AsFloat)) +
+            ' em vales transporte conforme quantidade abaixo discriminada, para utilização no período de ' +
+            vMes + ' de ' + mVTAuxiliarano.AsString + ' autorizando o desconto em meu salário até o máximo de 6%(seis por cento).' ;
+
+  Result := vTexto;
+end;
+
+procedure TDMCadTomador.frxValeTransporteNext(Sender: TObject);
+begin
+  TfrxMemoView(frxReport1.FindComponent('Memo5')).Text := '';
+  if cdsVTVAValor_Passagem.AsFloat > 0 then
+  begin
+    TfrxMemoView(frxReport1.FindComponent('Memo5')).Text := fnc_Monta_Impressao_VT;
+  end;
+end;
+
+procedure TDMCadTomador.frxValeTransporteFirst(Sender: TObject);
+begin
+  TfrxMemoView(frxReport1.FindComponent('Memo5')).Text := '';
+  if cdsVTVAValor_Passagem.AsFloat > 0 then
+  begin
+    TfrxMemoView(frxReport1.FindComponent('Memo5')).Text := fnc_Monta_Impressao_VT;
+  end;
+end;
+
+procedure TDMCadTomador.cdsVTVACalcFields(DataSet: TDataSet);
+begin
+  if (cdsVTVAValor_Passagem.AsFloat > 0) and (cdsVTVAValor_Passagem.AsFloat > 0) and (cdsVTVAQtde_Passagem.AsFloat > 0) and (cdsVTVADiasTrabalhados.AsFloat > 0) then
+    cdsVTVAValor_Total.AsFloat := (cdsVTVAValor_Passagem.AsFloat * cdsVTVAQtde_Passagem.AsFloat) * (cdsVTVADiasTrabalhados.AsFloat - cdsVTVADiasFalta.AsFloat - cdsVTVADiasAtestado.AsFloat);
 end;
 
 end.

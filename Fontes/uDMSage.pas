@@ -142,7 +142,6 @@ type
     sdsProcEventoreferencia: TFloatField;
     sdsProcEventoreferencia_editada: TStringField;
     sdsProcEventovalor: TFloatField;
-    sdsProcEventonome: TStringField;
     cdsProcEventocd_empresa: TSmallintField;
     cdsProcEventocd_funcionario: TIntegerField;
     cdsProcEventomes: TSmallintField;
@@ -152,7 +151,6 @@ type
     cdsProcEventoreferencia: TFloatField;
     cdsProcEventoreferencia_editada: TStringField;
     cdsProcEventovalor: TFloatField;
-    cdsProcEventonome: TStringField;
     cdsValeRefeicaocd_funcionario: TIntegerField;
     cdsValeRefeicaocd_vale: TSmallintField;
     cdsValeRefeicaoqt_dia_util: TSmallintField;
@@ -161,6 +159,13 @@ type
     cdsValeRefeicaoqt_feriado: TSmallintField;
     cdsValeRefeicaodescricao: TStringField;
     cdsValeRefeicaovl_vale: TFloatField;
+    sdsValeTransportenome: TStringField;
+    cdsValeTransportenome: TStringField;
+    dsProcEvento: TDataSource;
+    sdsValeTransportecd_empresa: TSmallintField;
+    sdsValeTransportecd_tomador: TIntegerField;
+    cdsValeTransportecd_empresa: TSmallintField;
+    cdsValeTransportecd_tomador: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -170,7 +175,8 @@ type
     ctValeTransporte : String;
     ctValeRefeicao : string;
     procedure prc_Abrir_Tomador_Sage;
-    procedure prc_Abrir_Vale_Transporte(ID_Empresa : Integer);
+    procedure prc_Abrir_Vale_Transporte(ID_Empresa, ID_Tomador : Integer); overload;
+//    procedure prc_Abrir_Vale_Transporte(ID_Empresa, ID_Funcionario : Integer); overload;
     procedure prc_Abrir_Vale_Refeicao(ID_Empresa : Integer);
     procedure prc_Abrir_ProcEvento(ID_Empresa, ID_Tomador, Mes: Integer; Ano : String);
     { Public declarations }
@@ -199,10 +205,14 @@ var
   vSql : string;
 begin
   cdsProcEvento.Close;
-  vSql := ' where p.cd_empresa = ' + IntToStr(vFilial);
-//  vSql := vSql + ' and cd_tomador = ' + IntToStr(ID_Tomador);
+  vSql := ' and  p.cd_empresa = ft.cd_empresa and';
+  vSql := vSql + ' year(ft.dt_lotacao) = ' + Ano;
+  vSql := vSql + ' and month(ft.dt_lotacao) = ' + IntToStr(Mes);
+  vSql := vSql + ' where p.cd_empresa = ' + IntToStr(vFilial);
+  vSql := vSql + ' and ft.cd_tomador = ' + IntToStr(ID_Tomador);
   vSql := vSql + ' and p.cd_evento in (225, 938)';
-  vSql := vSql + ' and mes = ' + IntToStr(Mes)  + ' AND p.ano = '+ Ano;
+  vSql := vSql + ' and p.mes = ' + IntToStr(Mes);
+  vSql := vSql + ' and p.ano = ' + Ano;
   sdsProcEvento.CommandText := ctProcEvento + vSql;
   cdsProcEvento.Open;
 end;
@@ -222,10 +232,17 @@ begin
   cdsValeRefeicao.Open;
 end;
 
-procedure TDMSage.prc_Abrir_Vale_Transporte(ID_Empresa : Integer);
+procedure TDMSage.prc_Abrir_Vale_Transporte(ID_Empresa, ID_Tomador : Integer);
+var
+  vSql : String;
 begin
   cdsValeTransporte.Close;
-  sdsValeTransporte.CommandText := ctValeTransporte + ' and cd_empresa = ' + IntToStr(ID_Empresa) + ' order by cd_funcionario';
+  vSql :=  ' WHERE FT.CD_EMPRESA = ' + IntToStr(ID_Empresa) + ' AND fc.CD_EMPRESA = ' + IntToStr(ID_Empresa);
+  vSql := vSql + ' AND ft.dt_lotacao = (select max(dt_lotacao) from funtomador ft1 where ft.cd_funcionario = ft1.cd_funcionario) ';
+  vSql := vSql + ' AND ft.cd_tomador = ' + IntToStr(ID_Tomador) + ' AND ft.cd_empresa = ' + IntToStr(ID_Empresa);
+  vSql := vSql + ' and fun.cd_empresa = ' + IntToStr(ID_Empresa);;
+  vSql := vSql + ' order by fun.cd_funcionario';
+  sdsValeTransporte.CommandText := ctValeTransporte + vSql;
   cdsValeTransporte.Open;
 end;
 
