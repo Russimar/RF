@@ -487,7 +487,7 @@ object DMCadTomador: TDMCadTomador
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 43449.885001122700000000
-    ReportOptions.LastChange = 43450.846347418980000000
+    ReportOptions.LastChange = 43450.895519502320000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -614,7 +614,7 @@ object DMCadTomador: TDMCadTomador
       end
       object DetailData1: TfrxDetailData
         FillType = ftBrush
-        Height = 37.795300000000000000
+        Height = 26.456710000000000000
         Top = 260.787570000000000000
         Width = 718.110700000000000000
         DataSet = frxValeTransporteDetalhe
@@ -625,6 +625,18 @@ object DMCadTomador: TDMCadTomador
           Top = 3.779530000000000000
           Width = 94.488250000000000000
           Height = 18.897650000000000000
+          DisplayFormat.FormatStr = '000'
+          DisplayFormat.Kind = fkNumeric
+          Memo.UTF8 = (
+            '[frxValeTransporteDetalhe."Cod_Passagem"]')
+        end
+        object Memo7: TfrxMemoView
+          Left = 109.606370000000000000
+          Top = 3.779530000000000000
+          Width = 94.488250000000000000
+          Height = 18.897650000000000000
+          DisplayFormat.FormatStr = '000'
+          DisplayFormat.Kind = fkNumeric
           Memo.UTF8 = (
             '[frxValeTransporteDetalhe."Cod_Passagem"]')
         end
@@ -645,7 +657,8 @@ object DMCadTomador: TDMCadTomador
       'Mes=Mes'
       'Ano=Ano'
       'Cod_Passagem=Cod_Passagem'
-      'Valor_Total=Valor_Total')
+      'Valor_Total=Valor_Total'
+      'Nome_Linha=Nome_Linha')
     DataSource = dsVTVA
     BCDToCurrency = False
     Left = 312
@@ -704,15 +717,21 @@ object DMCadTomador: TDMCadTomador
       item
         Name = 'Cod_Passagem'
         DataType = ftInteger
+      end
+      item
+        Name = 'Nome_Linha'
+        DataType = ftString
+        Size = 30
       end>
     IndexDefs = <>
     IndexFieldNames = 'Cod_Funcionario'
     Params = <>
     StoreDefs = True
+    OnCalcFields = cdsVTVACalcFields
     Left = 264
     Top = 120
     Data = {
-      FF0000009619E0BD01000000180000000A000000000003000000FF000F436F64
+      1E0100009619E0BD01000000180000000B0000000000030000001E010F436F64
       5F46756E63696F6E6172696F0400010000000000104E6F6D655F46756E63696F
       6E6172696F0100490000000100055749445448020002003C000E56616C6F725F
       506173736167656D08000400000000000D517464655F506173736167656D0800
@@ -720,7 +739,8 @@ object DMCadTomador: TDMCadTomador
       446961732046616C746108000400000000000D4469617320417465737461646F
       0800040000000000034D6573040001000000000003416E6F0100490000000100
       0557494454480200020014000C436F645F506173736167656D04000100000000
-      000000}
+      000A4E6F6D655F4C696E68610100490000000100055749445448020002001E00
+      0000}
     object cdsVTVACod_Funcionario: TIntegerField
       DisplayLabel = 'C'#243'digo Funcion'#225'rio'
       FieldName = 'Cod_Funcionario'
@@ -764,7 +784,12 @@ object DMCadTomador: TDMCadTomador
     object cdsVTVAValor_Total: TFloatField
       FieldKind = fkCalculated
       FieldName = 'Valor_Total'
+      DisplayFormat = '##0.00'
       Calculated = True
+    end
+    object cdsVTVANome_Linha: TStringField
+      FieldName = 'Nome_Linha'
+      Size = 30
     end
   end
   object dsVTVA: TDataSource
@@ -807,6 +832,7 @@ object DMCadTomador: TDMCadTomador
         Size = 20
       end>
     IndexDefs = <>
+    IndexFieldNames = 'cod_funcionario'
     Params = <>
     StoreDefs = True
     Left = 208

@@ -123,9 +123,11 @@ type
     mVTAuxiliarano: TStringField;
     frxValeTransporte: TfrxDBDataset;
     cdsVTVAValor_Total: TFloatField;
+    cdsVTVANome_Linha: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure frxValeTransporteNext(Sender: TObject);
     procedure frxValeTransporteFirst(Sender: TObject);
+    procedure cdsVTVACalcFields(DataSet: TDataSet);
   private
     { Private declarations }
   public
@@ -258,6 +260,12 @@ begin
   begin
     TfrxMemoView(frxReport1.FindComponent('Memo5')).Text := fnc_Monta_Impressao_VT;
   end;
+end;
+
+procedure TDMCadTomador.cdsVTVACalcFields(DataSet: TDataSet);
+begin
+  if (cdsVTVAValor_Passagem.AsFloat > 0) and (cdsVTVAValor_Passagem.AsFloat > 0) and (cdsVTVAQtde_Passagem.AsFloat > 0) and (cdsVTVADiasTrabalhados.AsFloat > 0) then
+    cdsVTVAValor_Total.AsFloat := (cdsVTVAValor_Passagem.AsFloat * cdsVTVAQtde_Passagem.AsFloat) * (cdsVTVADiasTrabalhados.AsFloat - cdsVTVADiasFalta.AsFloat - cdsVTVADiasAtestado.AsFloat);
 end;
 
 end.

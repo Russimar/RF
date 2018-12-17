@@ -479,6 +479,7 @@ object DMCadTomador: TDMCadTomador
     end
   end
   object frxReport1: TfrxReport
+    Tag = 1
     Version = '5.6.8'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
@@ -487,12 +488,13 @@ object DMCadTomador: TDMCadTomador
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 43449.885001122700000000
-    ReportOptions.LastChange = 43450.846347418980000000
+    ReportOptions.LastChange = 43450.970399571760000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
       ''
       'end.')
+    OnReportPrint = 'frxReportOnReportPrint'
     Left = 312
     Top = 200
     Datasets = <
@@ -520,12 +522,29 @@ object DMCadTomador: TDMCadTomador
       BottomMargin = 10.000000000000000000
       object MasterData1: TfrxMasterData
         FillType = ftBrush
-        Height = 219.212740000000000000
+        Height = 253.228510000000000000
         Top = 18.897650000000000000
         Width = 718.110700000000000000
         DataSet = frxValeTransporte
         DataSetName = 'frxValeTransporte'
         RowCount = 0
+        object Memo5: TfrxMemoView
+          Left = 2.000461340000000000
+          Top = 136.063080000000000000
+          Width = 714.330708660000000000
+          Height = 94.488250000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -15
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Style = fsDot
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          GapY = 5.000000000000000000
+          HAlign = haBlock
+          LineSpacing = 6.000000000000000000
+          ParentFont = False
+        end
         object Shape1: TfrxShapeView
           Left = 2.000000000000000000
           Top = 7.559060000000000000
@@ -589,22 +608,6 @@ object DMCadTomador: TDMCadTomador
             'Reg.N'#194#186': [frxValeTransporte."Cod_Funcionario"]')
           ParentFont = False
         end
-        object Memo5: TfrxMemoView
-          Left = 2.000000000000000000
-          Top = 117.047310000000000000
-          Width = 714.330708660000000000
-          Height = 94.488250000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -15
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
-          GapY = 5.000000000000000000
-          HAlign = haBlock
-          LineSpacing = 6.000000000000000000
-          ParentFont = False
-        end
         object Shape2: TfrxShapeView
           Left = 2.000000000000000000
           Top = 75.590600000000000000
@@ -612,21 +615,86 @@ object DMCadTomador: TDMCadTomador
           Height = 30.236240000000000000
         end
       end
+      object Footer1: TfrxFooter
+        FillType = ftBrush
+        Height = 139.842610000000000000
+        Top = 340.157700000000000000
+        Width = 718.110700000000000000
+        object Shape3: TfrxShapeView
+          Left = 2.000461340000000000
+          Top = 4.000000000000000000
+          Width = 714.330708660000000000
+          Height = 22.677180000000000000
+        end
+        object Memo10: TfrxMemoView
+          Left = 8.897650000000000000
+          Top = 4.220470000000000000
+          Width = 139.842610000000000000
+          Height = 18.897650000000000000
+          Memo.UTF8 = (
+            'Sal'#195#161'rio Base M'#195#170's R$:')
+        end
+        object Line2: TfrxLineView
+          Left = 360.393940000000000000
+          Top = 4.220470000000000000
+          Height = 22.677180000000000000
+          Color = clBlack
+          Diagonal = True
+        end
+        object Memo11: TfrxMemoView
+          Left = 367.953000000000000000
+          Top = 4.220470000000000000
+          Width = 113.385900000000000000
+          Height = 18.897650000000000000
+          Memo.UTF8 = (
+            'Total Desconto:')
+        end
+      end
       object DetailData1: TfrxDetailData
         FillType = ftBrush
-        Height = 37.795300000000000000
-        Top = 260.787570000000000000
+        Height = 22.677180000000000000
+        Top = 294.803340000000000000
         Width = 718.110700000000000000
         DataSet = frxValeTransporteDetalhe
         DataSetName = 'frxValeTransporteDetalhe'
         RowCount = 0
         object Memo6: TfrxMemoView
-          Left = 7.559060000000000000
+          Left = 3.779530000000000000
           Top = 3.779530000000000000
           Width = 94.488250000000000000
           Height = 18.897650000000000000
+          DisplayFormat.FormatStr = '000'
+          DisplayFormat.Kind = fkNumeric
           Memo.UTF8 = (
             '[frxValeTransporteDetalhe."Cod_Passagem"]')
+        end
+        object Memo7: TfrxMemoView
+          Left = 105.826840000000000000
+          Top = 3.779530000000000000
+          Width = 302.362400000000000000
+          Height = 18.897650000000000000
+          Memo.UTF8 = (
+            '[frxValeTransporteDetalhe."Nome_Linha"]')
+        end
+        object Memo8: TfrxMemoView
+          Left = 415.748300000000000000
+          Top = 3.779530000000000000
+          Width = 94.488250000000000000
+          Height = 18.897650000000000000
+          DisplayFormat.FormatStr = '%2.2f'
+          DisplayFormat.Kind = fkNumeric
+          Memo.UTF8 = (
+            '[frxValeTransporteDetalhe."Valor_Passagem"]')
+        end
+        object Memo9: TfrxMemoView
+          Left = 608.504330000000000000
+          Top = 3.779530000000000000
+          Width = 94.488250000000000000
+          Height = 18.897650000000000000
+          DisplayFormat.FormatStr = '%2.2f'
+          DisplayFormat.Kind = fkNumeric
+          Memo.UTF8 = (
+            '[frxValeTransporteDetalhe."Valor_Total"]')
         end
       end
     end
@@ -645,7 +713,8 @@ object DMCadTomador: TDMCadTomador
       'Mes=Mes'
       'Ano=Ano'
       'Cod_Passagem=Cod_Passagem'
-      'Valor_Total=Valor_Total')
+      'Valor_Total=Valor_Total'
+      'Nome_Linha=Nome_Linha')
     DataSource = dsVTVA
     BCDToCurrency = False
     Left = 312
@@ -704,6 +773,11 @@ object DMCadTomador: TDMCadTomador
       item
         Name = 'Cod_Passagem'
         DataType = ftInteger
+      end
+      item
+        Name = 'Nome_Linha'
+        DataType = ftString
+        Size = 30
       end>
     IndexDefs = <>
     IndexFieldNames = 'Cod_Funcionario'
@@ -713,7 +787,7 @@ object DMCadTomador: TDMCadTomador
     Left = 264
     Top = 120
     Data = {
-      FF0000009619E0BD01000000180000000A000000000003000000FF000F436F64
+      1E0100009619E0BD01000000180000000B0000000000030000001E010F436F64
       5F46756E63696F6E6172696F0400010000000000104E6F6D655F46756E63696F
       6E6172696F0100490000000100055749445448020002003C000E56616C6F725F
       506173736167656D08000400000000000D517464655F506173736167656D0800
@@ -721,7 +795,8 @@ object DMCadTomador: TDMCadTomador
       446961732046616C746108000400000000000D4469617320417465737461646F
       0800040000000000034D6573040001000000000003416E6F0100490000000100
       0557494454480200020014000C436F645F506173736167656D04000100000000
-      000000}
+      000A4E6F6D655F4C696E68610100490000000100055749445448020002001E00
+      0000}
     object cdsVTVACod_Funcionario: TIntegerField
       DisplayLabel = 'C'#243'digo Funcion'#225'rio'
       FieldName = 'Cod_Funcionario'
@@ -765,7 +840,12 @@ object DMCadTomador: TDMCadTomador
     object cdsVTVAValor_Total: TFloatField
       FieldKind = fkCalculated
       FieldName = 'Valor_Total'
+      DisplayFormat = '##0.00'
       Calculated = True
+    end
+    object cdsVTVANome_Linha: TStringField
+      FieldName = 'Nome_Linha'
+      Size = 30
     end
   end
   object dsVTVA: TDataSource
@@ -808,6 +888,7 @@ object DMCadTomador: TDMCadTomador
         Size = 20
       end>
     IndexDefs = <>
+    IndexFieldNames = 'cod_funcionario'
     Params = <>
     StoreDefs = True
     Left = 208
@@ -870,7 +951,7 @@ object DMCadTomador: TDMCadTomador
       'ano=ano')
     DataSource = dsmVTAuxiliar
     BCDToCurrency = False
-    Left = 384
+    Left = 432
     Top = 256
   end
 end

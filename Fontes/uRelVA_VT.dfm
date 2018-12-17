@@ -1,6 +1,6 @@
 object frmRelVA_VT: TfrmRelVA_VT
-  Left = 240
-  Top = 72
+  Left = 267
+  Top = 112
   Width = 1055
   Height = 518
   Caption = 'Rela'#231#227'o de VA e VT'
@@ -363,85 +363,15 @@ object frmRelVA_VT: TfrmRelVA_VT
     Height = 366
     Align = alClient
     TabOrder = 1
-    object SMDBGrid1: TSMDBGrid
+    object SMDBGrid2: TSMDBGrid
       Left = 1
       Top = 1
       Width = 1037
       Height = 364
       Align = alClient
-      DataSource = DMCadTomador.dsmVTAuxiliar
-      Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
-      TabOrder = 0
-      TitleFont.Charset = DEFAULT_CHARSET
-      TitleFont.Color = clWindowText
-      TitleFont.Height = -11
-      TitleFont.Name = 'MS Sans Serif'
-      TitleFont.Style = []
-      Flat = False
-      BandsFont.Charset = DEFAULT_CHARSET
-      BandsFont.Color = clWindowText
-      BandsFont.Height = -11
-      BandsFont.Name = 'MS Sans Serif'
-      BandsFont.Style = []
-      Groupings = <>
-      GridStyle.Style = gsCustom
-      GridStyle.OddColor = clWindow
-      GridStyle.EvenColor = clWindow
-      TitleHeight.PixelCount = 24
-      FooterColor = clBtnFace
-      ExOptions = [eoENTERlikeTAB, eoKeepSelection, eoStandardPopup, eoBLOBEditor, eoTitleWordWrap, eoShowFilterBar]
-      RegistryKey = 'Software\Scalabium'
-      RegistrySection = 'SMDBGrid'
-      WidthOfIndicator = 11
-      DefaultRowHeight = 17
-      ScrollBars = ssHorizontal
-      ColCount = 6
-      RowCount = 2
-      Columns = <
-        item
-          Expanded = False
-          FieldName = 'cod_funcionario'
-          Title.Alignment = taCenter
-          Width = 93
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'nome_funcionario'
-          Title.Alignment = taCenter
-          Width = 428
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'valor_passagem'
-          Title.Alignment = taCenter
-          Width = 106
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'valor_total'
-          Title.Alignment = taCenter
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'dias_Trabalhados'
-          Title.Alignment = taCenter
-          Width = 103
-          Visible = True
-        end>
-    end
-    object SMDBGrid2: TSMDBGrid
-      Left = 1
-      Top = 232
-      Width = 1037
-      Height = 136
-      Align = alCustom
       DataSource = DMCadTomador.dsVTVA
       Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
-      TabOrder = 1
+      TabOrder = 0
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
       TitleFont.Height = -11
@@ -471,26 +401,31 @@ object frmRelVA_VT: TfrmRelVA_VT
         item
           Expanded = False
           FieldName = 'Cod_Funcionario'
+          Width = 110
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'Nome_Funcionario'
+          Width = 340
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'Valor_Passagem'
+          Width = 108
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'Qtde_Passagem'
+          Width = 106
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'Dias Trabalhados'
+          Width = 106
           Visible = True
         end
         item
@@ -501,6 +436,7 @@ object frmRelVA_VT: TfrmRelVA_VT
         item
           Expanded = False
           FieldName = 'Dias Atestado'
+          Width = 88
           Visible = True
         end
         item

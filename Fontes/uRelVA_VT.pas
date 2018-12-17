@@ -20,7 +20,6 @@ type
     Label2: TLabel;
     DateEditReferencia: TDateEdit;
     ProgressBar1: TProgressBar;
-    SMDBGrid1: TSMDBGrid;
     Label3: TLabel;
     edtTomador: TEdit;
     edtNomeTomador: TEdit;
@@ -178,6 +177,7 @@ begin
       if fDMSage.cdsProcEvento.Locate('cd_funcionario;cd_evento',VarArrayOf([fDMCadTomador.cdsVTVACod_Funcionario.AsInteger,'225']),[loCaseInsensitive]) then
         fDMCadTomador.cdsVTVADiasFalta.AsFloat        := fDMSage.cdsProcEventoreferencia.AsFloat;
       fDMCadTomador.cdsVTVACod_Passagem.AsInteger     := fDMSage.cdsValeTransportecd_linha.AsInteger;
+      fDMCadTomador.cdsVTVANome_Linha.AsString        := fDMSage.cdsValeTransportedescricao.AsString;
       fDMCadTomador.cdsVTVAMes.AsInteger              := StrToInt(vMes);
       fDMCadTomador.cdsVTVAAno.AsString               := vAno;
       fDMCadTomador.cdsVTVA.Post;

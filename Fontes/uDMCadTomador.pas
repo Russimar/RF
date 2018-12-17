@@ -123,6 +123,7 @@ type
     mVTAuxiliarano: TStringField;
     frxValeTransporte: TfrxDBDataset;
     cdsVTVAValor_Total: TFloatField;
+    cdsVTVANome_Linha: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure frxValeTransporteNext(Sender: TObject);
     procedure frxValeTransporteFirst(Sender: TObject);
