@@ -124,6 +124,8 @@ type
     frxValeTransporte: TfrxDBDataset;
     cdsVTVAValor_Total: TFloatField;
     cdsVTVANome_Linha: TStringField;
+    cdsVTVACod_VR: TIntegerField;
+    cdsVTVANome_Refeicao: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure frxValeTransporteNext(Sender: TObject);
     procedure frxValeTransporteFirst(Sender: TObject);

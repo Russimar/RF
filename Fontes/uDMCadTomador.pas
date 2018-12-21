@@ -124,10 +124,14 @@ type
     frxValeTransporte: TfrxDBDataset;
     cdsVTVAValor_Total: TFloatField;
     cdsVTVANome_Linha: TStringField;
+    cdsVTVACod_VR: TIntegerField;
+    cdsVTVANome_Refeicao: TStringField;
+    frxValeRefeicao: TfrxDBDataset;
     procedure DataModuleCreate(Sender: TObject);
     procedure frxValeTransporteNext(Sender: TObject);
     procedure frxValeTransporteFirst(Sender: TObject);
     procedure cdsVTVACalcFields(DataSet: TDataSet);
+    procedure frxValeRefeicaoFirst(Sender: TObject);
   private
     { Private declarations }
   public
@@ -142,6 +146,7 @@ type
     procedure prc_Posiciona_Tomador(ID_Tomador: Integer);
     procedure prc_Posiciona_Tomador_Dia(Ano: SmallInt; Mes: string; ID_TOMADOR: Integer);
     function fnc_Monta_Impressao_VT: string;
+    function fnc_Monta_Impressao_VR: string;
     { Public declarations }
   end;
 
@@ -236,10 +241,23 @@ var
   vTexto, vMes: string;
 begin
   vMes := ExtensoMes(StrToInt(cdsVTVAMes.AsString));
-  vTexto := '   Recebi de ' + vNomeEmpresa +
-            ' a importância de ' + UpperCase(ACBrExtenso1.ValorToTexto(mVTAuxiliarvalor_total.AsFloat)) +
-            ' em vales transporte conforme quantidade abaixo discriminada, para utilização no período de ' +
-            vMes + ' de ' + mVTAuxiliarano.AsString + ' autorizando o desconto em meu salário até o máximo de 6%(seis por cento).' ;
+  vTexto := '   Recebi de ' + vNomeEmpresa + ' a importância de '
+          + UpperCase(ACBrExtenso1.ValorToTexto(mVTAuxiliarvalor_total.AsFloat))
+          + ' em vales transporte conforme quantidade abaixo discriminada, para utilização no período de '
+          + vMes + ' de ' + mVTAuxiliarano.AsString + ' autorizando o desconto em meu salário até o máximo de 6%(seis por cento).';
+
+  Result := vTexto;
+end;
+
+function TDMCadTomador.fnc_Monta_Impressao_VR: string;
+var
+  vTexto, vMes: string;
+begin
+  vMes := ExtensoMes(StrToInt(cdsVTVAMes.AsString));
+  vTexto := '   Recebi de ' + vNomeEmpresa + ' a importância de '
+         + UpperCase(ACBrExtenso1.ValorToTexto(mVTAuxiliarvalor_total.AsFloat))
+         + ' em vales refeição/alimentação conforme quantidade abaixo discriminada, para utilização no período de '
+         + vMes + ' de ' + mVTAuxiliarano.AsString + ' autorizando o desconto em meu salário até o máximo de 6%(seis por cento).';
 
   Result := vTexto;
 end;
@@ -266,6 +284,16 @@ procedure TDMCadTomador.cdsVTVACalcFields(DataSet: TDataSet);
 begin
   if (cdsVTVAValor_Passagem.AsFloat > 0) and (cdsVTVAValor_Passagem.AsFloat > 0) and (cdsVTVAQtde_Passagem.AsFloat > 0) and (cdsVTVADiasTrabalhados.AsFloat > 0) then
     cdsVTVAValor_Total.AsFloat := (cdsVTVAValor_Passagem.AsFloat * cdsVTVAQtde_Passagem.AsFloat) * (cdsVTVADiasTrabalhados.AsFloat - cdsVTVADiasFalta.AsFloat - cdsVTVADiasAtestado.AsFloat);
+end;
+
+procedure TDMCadTomador.frxValeRefeicaoFirst(Sender: TObject);
+begin
+  TfrxMemoView(frxReport1.FindComponent('Memo5')).Text := '';
+  if cdsVTVAValor_Passagem.AsFloat > 0 then
+  begin
+    TfrxMemoView(frxReport1.FindComponent('Memo5')).Text := fnc_Monta_Impressao_VT;
+  end;
+
 end;
 
 end.

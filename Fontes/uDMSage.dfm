@@ -617,41 +617,54 @@ object DMSage: TDMSage
   object sdsValeRefeicao: TSQLDataSet
     CommandText = 
       'SELECT vr.cd_funcionario'#13#10'      ,vr.cd_vale'#13#10'      ,vr.qt_dia_ut' +
-      'il'#13#10'      ,vr.qt_sabado'#13#10'      ,vr.qt_domingo'#13#10'      ,vr.qt_feri' +
-      'ado'#13#10'      ,vlvr.descricao'#13#10'      ,vlvr.vl_vale'#13#10'  FROM FunVR vr' +
-      #13#10'  inner join ValeVR vlvr on vr.cd_vale = vlvr.cd_vale'#13#10
+      'il'#13#10'      ,vlvr.descricao'#13#10'      ,vlvr.vl_vale'#13#10'      ,fc.nome'#13#10 +
+      '      ,fc.cd_empresa'#13#10'      ,ft.cd_tomador'#13#10'  FROM FunVR vr'#13#10'  i' +
+      'nner join ValeVR vlvr on vr.cd_vale = vlvr.cd_vale'#13#10'  inner join' +
+      ' FUNCIONARIO FC ON VR.CD_FUNCIONARIO = FC.CD_FUNCIONARIO   '#13#10'  L' +
+      'EFT join FUNTOMADOR  FT ON FT.CD_FUNCIONARIO = FC.CD_FUNCIONARIO' +
+      ' '#13#10
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.Conexao_SQLServer
     Left = 224
     Top = 24
-    object IntegerField1: TIntegerField
+    object sdsValeRefeicaocd_funcionario: TIntegerField
+      DisplayLabel = 'C'#243'd.Funcion'#225'rio'
       FieldName = 'cd_funcionario'
       Required = True
     end
-    object SmallintField1: TSmallintField
+    object sdsValeRefeicaonome: TStringField
+      DisplayLabel = 'Nome Funcion'#225'rio'
+      FieldName = 'nome'
+      FixedChar = True
+      Size = 40
+    end
+    object sdsValeRefeicaocd_vale: TSmallintField
+      DisplayLabel = 'C'#243'd.Vale'
       FieldName = 'cd_vale'
       Required = True
     end
-    object SmallintField2: TSmallintField
+    object sdsValeRefeicaoqt_dia_util: TSmallintField
+      DisplayLabel = 'Qtde Dias'
       FieldName = 'qt_dia_util'
     end
-    object SmallintField3: TSmallintField
-      FieldName = 'qt_sabado'
-    end
-    object SmallintField4: TSmallintField
-      FieldName = 'qt_domingo'
-    end
-    object SmallintField5: TSmallintField
-      FieldName = 'qt_feriado'
-    end
-    object StringField1: TStringField
+    object sdsValeRefeicaodescricao: TStringField
       FieldName = 'descricao'
       FixedChar = True
       Size = 30
     end
-    object FloatField1: TFloatField
+    object sdsValeRefeicaovl_vale: TFloatField
+      DisplayLabel = 'Valor Vale'
       FieldName = 'vl_vale'
+    end
+    object sdsValeRefeicaocd_empresa: TSmallintField
+      DisplayLabel = 'Empresa'
+      FieldName = 'cd_empresa'
+      Required = True
+    end
+    object sdsValeRefeicaocd_tomador: TIntegerField
+      DisplayLabel = 'C'#243'd.Tomador'
+      FieldName = 'cd_tomador'
     end
   end
   object dspValeRefeicao: TDataSetProvider
@@ -666,32 +679,43 @@ object DMSage: TDMSage
     Left = 312
     Top = 24
     object cdsValeRefeicaocd_funcionario: TIntegerField
+      DisplayLabel = 'C'#243'd.Funcion'#225'rio'
       FieldName = 'cd_funcionario'
       Required = True
     end
+    object cdsValeRefeicaonome: TStringField
+      DisplayLabel = 'Nome Funcion'#225'rio'
+      FieldName = 'nome'
+      FixedChar = True
+      Size = 40
+    end
     object cdsValeRefeicaocd_vale: TSmallintField
+      DisplayLabel = 'C'#243'd.Vale'
       FieldName = 'cd_vale'
       Required = True
     end
     object cdsValeRefeicaoqt_dia_util: TSmallintField
+      DisplayLabel = 'Qtde Dias'
       FieldName = 'qt_dia_util'
     end
-    object cdsValeRefeicaoqt_sabado: TSmallintField
-      FieldName = 'qt_sabado'
-    end
-    object cdsValeRefeicaoqt_domingo: TSmallintField
-      FieldName = 'qt_domingo'
-    end
-    object cdsValeRefeicaoqt_feriado: TSmallintField
-      FieldName = 'qt_feriado'
-    end
     object cdsValeRefeicaodescricao: TStringField
+      DisplayLabel = 'Descri'#231#227'o'
       FieldName = 'descricao'
       FixedChar = True
       Size = 30
     end
     object cdsValeRefeicaovl_vale: TFloatField
+      DisplayLabel = 'Valor Vale'
       FieldName = 'vl_vale'
+    end
+    object cdsValeRefeicaocd_empresa: TSmallintField
+      DisplayLabel = 'Empresa'
+      FieldName = 'cd_empresa'
+      Required = True
+    end
+    object cdsValeRefeicaocd_tomador: TIntegerField
+      DisplayLabel = 'C'#243'd.Tomador'
+      FieldName = 'cd_tomador'
     end
   end
   object dsProcEvento: TDataSource

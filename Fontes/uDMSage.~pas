@@ -107,14 +107,6 @@ type
     dspValeTransporte: TDataSetProvider;
     cdsValeTransporte: TClientDataSet;
     sdsValeRefeicao: TSQLDataSet;
-    IntegerField1: TIntegerField;
-    SmallintField1: TSmallintField;
-    SmallintField2: TSmallintField;
-    SmallintField3: TSmallintField;
-    SmallintField4: TSmallintField;
-    SmallintField5: TSmallintField;
-    StringField1: TStringField;
-    FloatField1: TFloatField;
     dspValeRefeicao: TDataSetProvider;
     cdsValeRefeicao: TClientDataSet;
     sdsValeTransportecd_funcionario: TIntegerField;
@@ -151,14 +143,6 @@ type
     cdsProcEventoreferencia: TFloatField;
     cdsProcEventoreferencia_editada: TStringField;
     cdsProcEventovalor: TFloatField;
-    cdsValeRefeicaocd_funcionario: TIntegerField;
-    cdsValeRefeicaocd_vale: TSmallintField;
-    cdsValeRefeicaoqt_dia_util: TSmallintField;
-    cdsValeRefeicaoqt_sabado: TSmallintField;
-    cdsValeRefeicaoqt_domingo: TSmallintField;
-    cdsValeRefeicaoqt_feriado: TSmallintField;
-    cdsValeRefeicaodescricao: TStringField;
-    cdsValeRefeicaovl_vale: TFloatField;
     sdsValeTransportenome: TStringField;
     cdsValeTransportenome: TStringField;
     dsProcEvento: TDataSource;
@@ -166,6 +150,22 @@ type
     sdsValeTransportecd_tomador: TIntegerField;
     cdsValeTransportecd_empresa: TSmallintField;
     cdsValeTransportecd_tomador: TIntegerField;
+    sdsValeRefeicaocd_funcionario: TIntegerField;
+    sdsValeRefeicaocd_vale: TSmallintField;
+    sdsValeRefeicaoqt_dia_util: TSmallintField;
+    sdsValeRefeicaodescricao: TStringField;
+    sdsValeRefeicaovl_vale: TFloatField;
+    sdsValeRefeicaonome: TStringField;
+    sdsValeRefeicaocd_empresa: TSmallintField;
+    sdsValeRefeicaocd_tomador: TIntegerField;
+    cdsValeRefeicaocd_funcionario: TIntegerField;
+    cdsValeRefeicaonome: TStringField;
+    cdsValeRefeicaocd_vale: TSmallintField;
+    cdsValeRefeicaoqt_dia_util: TSmallintField;
+    cdsValeRefeicaodescricao: TStringField;
+    cdsValeRefeicaovl_vale: TFloatField;
+    cdsValeRefeicaocd_empresa: TSmallintField;
+    cdsValeRefeicaocd_tomador: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -176,8 +176,7 @@ type
     ctValeRefeicao : string;
     procedure prc_Abrir_Tomador_Sage;
     procedure prc_Abrir_Vale_Transporte(ID_Empresa, ID_Tomador : Integer); overload;
-//    procedure prc_Abrir_Vale_Transporte(ID_Empresa, ID_Funcionario : Integer); overload;
-    procedure prc_Abrir_Vale_Refeicao(ID_Empresa : Integer);
+    procedure prc_Abrir_Vale_Refeicao(ID_Empresa, ID_Tomador : Integer);
     procedure prc_Abrir_ProcEvento(ID_Empresa, ID_Tomador, Mes: Integer; Ano : String);
     { Public declarations }
   end;
@@ -225,10 +224,17 @@ begin
 end;
 
 
-procedure TDMSage.prc_Abrir_Vale_Refeicao(ID_Empresa : Integer);
+procedure TDMSage.prc_Abrir_Vale_Refeicao(ID_Empresa, ID_Tomador : Integer);
+var
+  vSql : String;
 begin
   cdsValeRefeicao.Close;
-  sdsValeRefeicao.CommandText := ctValeRefeicao + ' and cd_empresa = ' + IntToStr(ID_Empresa) + ' and enterprise_id <> ' + QuotedStr('9999') + ' order by cd_funcionario';
+  vSql :=  ' WHERE FT.CD_EMPRESA = ' + IntToStr(ID_Empresa) + ' AND FC.CD_EMPRESA = ' + IntToStr(ID_Empresa);
+  vSql := vSql + ' AND FT.DT_LOTACAO = (SELECT MAX(DT_LOTACAO) FROM FUNTOMADOR FT1 WHERE FT.CD_FUNCIONARIO = FT1.CD_FUNCIONARIO) ';
+  vSql := vSql + ' AND FT.CD_TOMADOR = ' + IntToStr(ID_Tomador) + ' AND FT.CD_EMPRESA = ' + IntToStr(ID_Empresa);
+  vSql := vSql + ' AND VR.CD_EMPRESA = ' + IntToStr(ID_Empresa);;
+  vSql := vSql + ' ORDER BY VR.CD_FUNCIONARIO';
+  sdsValeRefeicao.CommandText := ctValeRefeicao + vSql;
   cdsValeRefeicao.Open;
 end;
 

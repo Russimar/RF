@@ -28,6 +28,7 @@ type
     btnImprimir: TNxButton;
     rdgTipoImpressa: TRadioGroup;
     SMDBGrid2: TSMDBGrid;
+    dsLocal: TDataSource;
     procedure btnConsultaTomadorClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
@@ -122,7 +123,7 @@ begin
   fDMCadTomador.prc_Posiciona_Tomador_Dia(edtAno.AsInteger, vMes, StrToInt(edtTomador.Text));
   fDMSage.prc_Abrir_ProcEvento(ComboEmpresa.KeyValue, StrToInt(edtTomador.Text), ComboMes.ItemIndex + 1, edtAno.Text);
   fDMSage.prc_Abrir_Vale_Transporte(ComboEmpresa.KeyValue,StrToInt(edtTomador.Text));
-  fDMSage.prc_Abrir_Vale_Refeicao(ComboEmpresa.KeyValue);
+  fDMSage.prc_Abrir_Vale_Refeicao(ComboEmpresa.KeyValue,StrToInt(edtTomador.Text));
   fDMCadTomador.cdsVTVA.EmptyDataSet;
   fDMCadTomador.mVTAuxiliar.EmptyDataSet;
   case rdgTipoImpressa.ItemIndex of
@@ -131,6 +132,7 @@ begin
     1:
       prc_Montar_VT;
   end;
+
 
 end;
 
@@ -156,11 +158,45 @@ end;
 
 procedure TfrmRelVA_VT.prc_Montar_VR;
 begin
-//
+  fDMCadTomador.cdsVTVA.EmptyDataSet;
+  fDMSage.cdsValeRefeicao.First;
+  while not fDMSage.cdsValeRefeicao.Eof do
+  begin
+    if fDMSage.cdsValeRefeicaoqt_dia_util.AsInteger > 0 then
+    begin
+      fDMCadTomador.cdsVTVA.Insert;
+      fDMCadTomador.cdsVTVACod_Funcionario.AsInteger  := fDMSage.cdsValeRefeicaocd_funcionario.AsInteger;
+      fDMCadTomador.cdsVTVANome_Funcionario.AsString  := fDMSage.cdsValeRefeicaonome.AsString;
+      fDMCadTomador.cdsVTVAValor_Passagem.AsFloat     := fDMSage.cdsValeRefeicaovl_vale.AsFloat;
+      fDMCadTomador.cdsVTVAQtde_Passagem.AsFloat      := fDMSage.cdsValeRefeicaoqt_dia_util.AsFloat;
+      fDMCadTomador.cdsVTVADiasTrabalhados.AsFloat    := fDMCadTomador.qTomador_DiasDIAS.AsInteger;
+      if fDMSage.cdsProcEvento.Locate('cd_funcionario;cd_evento',VarArrayOf([fDMCadTomador.cdsVTVACod_Funcionario.AsInteger,'938']),[loCaseInsensitive]) then
+        fDMCadTomador.cdsVTVADiasAtestado.AsFloat     := fDMSage.cdsProcEventoreferencia.AsFloat;
+      if fDMSage.cdsProcEvento.Locate('cd_funcionario;cd_evento',VarArrayOf([fDMCadTomador.cdsVTVACod_Funcionario.AsInteger,'225']),[loCaseInsensitive]) then
+        fDMCadTomador.cdsVTVADiasFalta.AsFloat        := fDMSage.cdsProcEventoreferencia.AsFloat;
+      fDMCadTomador.cdsVTVACod_VR.AsInteger     := fDMSage.cdsValeRefeicaocd_vale.AsInteger;
+      fDMCadTomador.cdsVTVANome_Refeicao.AsString     := fDMSage.cdsValeRefeicaodescricao.AsString;
+      fDMCadTomador.cdsVTVAMes.AsInteger              := StrToInt(vMes);
+      fDMCadTomador.cdsVTVAAno.AsString               := vAno;
+      fDMCadTomador.cdsVTVA.Post;
+      if fDMCadTomador.mVTAuxiliar.Locate('cod_funcionario',fDMCadTomador.cdsVTVACod_Funcionario.AsInteger,[loCaseInsensitive]) then
+        fDMCadTomador.mVTAuxiliar.Edit
+      else
+        fDMCadTomador.mVTAuxiliar.Insert;
+      fDMCadTomador.mVTAuxiliarcod_funcionario.AsInteger := fDMSage.cdsValeRefeicaocd_funcionario.AsInteger;
+      fDMCadTomador.mVTAuxiliarnome_funcionario.AsString := fDMSage.cdsValeRefeicaonome.AsString;
+      fDMCadTomador.mVTAuxiliarvalor_total.AsFloat       := fDMCadTomador.mVTAuxiliarvalor_total.AsFloat + fDMCadTomador.cdsVTVAValor_Total.AsFloat;
+      fDMCadTomador.mVTAuxiliarMes.AsInteger              := StrToInt(vMes);
+      fDMCadTomador.mVTAuxiliarAno.AsString               := vAno;
+      fDMCadTomador.mVTAuxiliar.Post;
+    end;
+    fDMSage.cdsValeRefeicao.Next;
+  end;
 end;
 
 procedure TfrmRelVA_VT.prc_Montar_VT;
 begin
+  fDMCadTomador.cdsVTVA.EmptyDataSet;
   fDMSage.cdsValeTransporte.First;
   while not fDMSage.cdsValeTransporte.Eof do
   begin

@@ -488,7 +488,7 @@ object DMCadTomador: TDMCadTomador
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 43449.885001122700000000
-    ReportOptions.LastChange = 43450.970399571760000000
+    ReportOptions.LastChange = 43454.928505868050000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -563,7 +563,7 @@ object DMCadTomador: TDMCadTomador
           Font.Style = [fsBold]
           HAlign = haCenter
           Memo.UTF8 = (
-            'RECIBO DE VALE TRANSPORTE')
+            'RECIBO DE VALE REFEI'#195#8225#195#402'O')
           ParentFont = False
         end
         object Memo2: TfrxMemoView
@@ -778,6 +778,15 @@ object DMCadTomador: TDMCadTomador
         Name = 'Nome_Linha'
         DataType = ftString
         Size = 30
+      end
+      item
+        Name = 'Cod_VR'
+        DataType = ftInteger
+      end
+      item
+        Name = 'Nome_Refeicao'
+        DataType = ftString
+        Size = 40
       end>
     IndexDefs = <>
     IndexFieldNames = 'Cod_Funcionario'
@@ -787,7 +796,7 @@ object DMCadTomador: TDMCadTomador
     Left = 264
     Top = 120
     Data = {
-      1E0100009619E0BD01000000180000000B0000000000030000001E010F436F64
+      4F0100009619E0BD01000000180000000D0000000000030000004F010F436F64
       5F46756E63696F6E6172696F0400010000000000104E6F6D655F46756E63696F
       6E6172696F0100490000000100055749445448020002003C000E56616C6F725F
       506173736167656D08000400000000000D517464655F506173736167656D0800
@@ -796,56 +805,76 @@ object DMCadTomador: TDMCadTomador
       0800040000000000034D6573040001000000000003416E6F0100490000000100
       0557494454480200020014000C436F645F506173736167656D04000100000000
       000A4E6F6D655F4C696E68610100490000000100055749445448020002001E00
-      0000}
+      06436F645F565204000100000000000D4E6F6D655F526566656963616F010049
+      00000001000557494454480200020028000000}
     object cdsVTVACod_Funcionario: TIntegerField
       DisplayLabel = 'C'#243'digo Funcion'#225'rio'
+      DisplayWidth = 18
       FieldName = 'Cod_Funcionario'
     end
     object cdsVTVANome_Funcionario: TStringField
       DisplayLabel = 'Nome Funcion'#225'rio'
+      DisplayWidth = 65
       FieldName = 'Nome_Funcionario'
       Size = 60
     end
     object cdsVTVAValor_Passagem: TFloatField
       DisplayLabel = 'Valor Passagem'
+      DisplayWidth = 15
       FieldName = 'Valor_Passagem'
       DisplayFormat = '##0.00'
     end
     object cdsVTVAQtde_Passagem: TFloatField
       DisplayLabel = 'Qtde Passagem'
+      DisplayWidth = 15
       FieldName = 'Qtde_Passagem'
       DisplayFormat = '##0.00'
     end
     object cdsVTVADiasTrabalhados: TFloatField
+      DisplayWidth = 17
       FieldName = 'Dias Trabalhados'
       DisplayFormat = '##0.00'
     end
     object cdsVTVADiasFalta: TFloatField
+      DisplayWidth = 12
       FieldName = 'Dias Falta'
       DisplayFormat = '##0.00'
     end
     object cdsVTVADiasAtestado: TFloatField
+      DisplayWidth = 13
       FieldName = 'Dias Atestado'
       DisplayFormat = '##0.00'
     end
     object cdsVTVAMes: TIntegerField
+      DisplayWidth = 12
       FieldName = 'Mes'
     end
     object cdsVTVAAno: TStringField
+      DisplayWidth = 24
       FieldName = 'Ano'
     end
     object cdsVTVACod_Passagem: TIntegerField
+      DisplayWidth = 15
       FieldName = 'Cod_Passagem'
     end
     object cdsVTVAValor_Total: TFloatField
+      DisplayWidth = 12
       FieldKind = fkCalculated
       FieldName = 'Valor_Total'
       DisplayFormat = '##0.00'
       Calculated = True
     end
     object cdsVTVANome_Linha: TStringField
+      DisplayWidth = 36
       FieldName = 'Nome_Linha'
       Size = 30
+    end
+    object cdsVTVACod_VR: TIntegerField
+      FieldName = 'Cod_VR'
+    end
+    object cdsVTVANome_Refeicao: TStringField
+      FieldName = 'Nome_Refeicao'
+      Size = 40
     end
   end
   object dsVTVA: TDataSource
@@ -953,5 +982,22 @@ object DMCadTomador: TDMCadTomador
     BCDToCurrency = False
     Left = 432
     Top = 256
+  end
+  object frxValeRefeicao: TfrxDBDataset
+    UserName = 'frxValeRefeicao'
+    OnFirst = frxValeRefeicaoFirst
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'cod_funcionario=cod_funcionario'
+      'nome_funcionario=nome_funcionario'
+      'valor_passagem=valor_passagem'
+      'valor_total=valor_total'
+      'dias_Trabalhados=dias_Trabalhados'
+      'mes=mes'
+      'ano=ano')
+    DataSource = dsmVTAuxiliar
+    BCDToCurrency = False
+    Left = 376
+    Top = 328
   end
 end

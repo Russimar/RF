@@ -1,7 +1,7 @@
 object frmRelVA_VT: TfrmRelVA_VT
-  Left = 267
-  Top = 112
-  Width = 1055
+  Left = 165
+  Top = 118
+  Width = 1128
   Height = 518
   Caption = 'Rela'#231#227'o de VA e VT'
   Color = clBtnFace
@@ -18,7 +18,7 @@ object frmRelVA_VT: TfrmRelVA_VT
   object pnlCabecalho: TPanel
     Left = 0
     Top = 0
-    Width = 1039
+    Width = 1112
     Height = 113
     Align = alTop
     Color = clSilver
@@ -110,7 +110,7 @@ object frmRelVA_VT: TfrmRelVA_VT
     object ProgressBar1: TProgressBar
       Left = 1
       Top = 95
-      Width = 1037
+      Width = 1110
       Height = 17
       Align = alBottom
       TabOrder = 4
@@ -359,17 +359,17 @@ object frmRelVA_VT: TfrmRelVA_VT
   object pnlPrincipal: TPanel
     Left = 0
     Top = 113
-    Width = 1039
+    Width = 1112
     Height = 366
     Align = alClient
     TabOrder = 1
     object SMDBGrid2: TSMDBGrid
       Left = 1
       Top = 1
-      Width = 1037
+      Width = 1110
       Height = 364
       Align = alClient
-      DataSource = DMCadTomador.dsVTVA
+      DataSource = dsLocal
       Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
       TabOrder = 0
       TitleFont.Charset = DEFAULT_CHARSET
@@ -395,70 +395,13 @@ object frmRelVA_VT: TfrmRelVA_VT
       WidthOfIndicator = 11
       DefaultRowHeight = 17
       ScrollBars = ssHorizontal
-      ColCount = 12
+      ColCount = 15
       RowCount = 2
-      Columns = <
-        item
-          Expanded = False
-          FieldName = 'Cod_Funcionario'
-          Width = 110
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'Nome_Funcionario'
-          Width = 340
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'Valor_Passagem'
-          Width = 108
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'Qtde_Passagem'
-          Width = 106
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'Dias Trabalhados'
-          Width = 106
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'Dias Falta'
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'Dias Atestado'
-          Width = 88
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'Mes'
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'Ano'
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'Cod_Passagem'
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'Valor_Total'
-          Visible = True
-        end>
     end
+  end
+  object dsLocal: TDataSource
+    DataSet = DMCadTomador.cdsVTVA
+    Left = 1072
+    Top = 64
   end
 end
