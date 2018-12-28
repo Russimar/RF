@@ -36,6 +36,7 @@ type
     procedure edtTomadorExit(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnImprimirClick(Sender: TObject);
+    procedure edtTomadorChange(Sender: TObject);
   private
     fDMCadTomador: TDMCadTomador;
     fDMSage: TDMSage;
@@ -132,13 +133,12 @@ begin
     1:
       prc_Montar_VT;
   end;
-
-
 end;
 
 procedure TfrmRelVA_VT.rdgTipoImpressaExit(Sender: TObject);
 begin
   fDMCadTomador.cdsVTVA.EmptyDataSet;
+  fDMCadTomador.mVTAuxiliar.EmptyDataSet;
 end;
 
 procedure TfrmRelVA_VT.edtTomadorExit(Sender: TObject);
@@ -159,6 +159,7 @@ end;
 procedure TfrmRelVA_VT.prc_Montar_VR;
 begin
   fDMCadTomador.cdsVTVA.EmptyDataSet;
+  fDMCadTomador.mVTAuxiliar.EmptyDataSet;
   fDMSage.cdsValeRefeicao.First;
   while not fDMSage.cdsValeRefeicao.Eof do
   begin
@@ -197,6 +198,7 @@ end;
 procedure TfrmRelVA_VT.prc_Montar_VT;
 begin
   fDMCadTomador.cdsVTVA.EmptyDataSet;
+  fDMCadTomador.mVTAuxiliar.EmptyDataSet;
   fDMSage.cdsValeTransporte.First;
   while not fDMSage.cdsValeTransporte.Eof do
   begin
@@ -259,7 +261,15 @@ begin
     ShowMessage('Relatório não localizado! ' + vArq);
     Exit;
   end;
+  fDMCadTomador.frxReport1.variables['Nome_Departamento'] :=  QuotedStr(fDMCadTomador.qTomadorNOME.AsString);
   fDMCadTomador.frxReport1.ShowReport;
+  fDMCadTomador.cdsVTVA.Filtered := False;
+end;
+
+procedure TfrmRelVA_VT.edtTomadorChange(Sender: TObject);
+begin
+  fDMCadTomador.cdsVTVA.EmptyDataSet;
+  fDMCadTomador.mVTAuxiliar.EmptyDataSet;
 end;
 
 end.

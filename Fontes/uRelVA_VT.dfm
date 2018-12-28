@@ -122,6 +122,7 @@ object frmRelVA_VT: TfrmRelVA_VT
       Width = 60
       Height = 21
       TabOrder = 5
+      OnChange = edtTomadorChange
       OnExit = edtTomadorExit
     end
     object edtNomeTomador: TEdit

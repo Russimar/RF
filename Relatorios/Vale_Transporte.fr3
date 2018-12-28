@@ -1,31 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TfrxReport Tag="1" Version="5.6.8" DotMatrixReport="False" IniFile="\Software\Fast Reports" PreviewOptions.Buttons="4095" PreviewOptions.Zoom="1" PrintOptions.Printer="Default" PrintOptions.PrintOnSheet="0" ReportOptions.CreateDate="43449,8850011227" ReportOptions.Description.Text="" ReportOptions.LastChange="43450,9703995718" ScriptLanguage="PascalScript" ScriptText.Text="begin&#13;&#10;&#13;&#10;end." OnReportPrint="frxReportOnReportPrint">
+<TfrxReport Tag="1" Version="5.6.8" DotMatrixReport="False" IniFile="\Software\Fast Reports" PreviewOptions.Buttons="4095" PreviewOptions.Zoom="1" PrintOptions.Printer="Default" PrintOptions.PrintOnSheet="0" ReportOptions.CreateDate="43449,8850011227" ReportOptions.Description.Text="" ReportOptions.LastChange="43462,5967438426" ScriptLanguage="PascalScript" ScriptText.Text="begin&#13;&#10;&#13;&#10;end." OnReportPrint="frxReportOnReportPrint">
   <Datasets>
     <item DataSet="frxValeTransporteDetalhe" DataSetName="frxValeTransporteDetalhe"/>
     <item DataSet="frxValeTransporte" DataSetName="frxValeTransporte"/>
   </Datasets>
+  <Variables>
+    <item Name=" Variaveis"/>
+    <item Name="Nome_Departamento"/>
+  </Variables>
   <TfrxDataPage Name="Data" Height="1000" Left="0" Top="0" Width="1000"/>
   <TfrxReportPage Name="Page1" PaperWidth="210" PaperHeight="297" PaperSize="9" LeftMargin="10" RightMargin="10" TopMargin="10" BottomMargin="10" ColumnWidth="0" ColumnPositions.Text="" HGuides.Text="" VGuides.Text="">
-    <TfrxMasterData Name="MasterData1" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="253,22851" Left="0" Top="18,89765" Width="718,1107" ColumnWidth="0" ColumnGap="0" DataSet="frxValeTransporte" DataSetName="frxValeTransporte" RowCount="0">
-      <TfrxMemoView Name="Memo5" Left="2,00046134" Top="136,06308" Width="714,33070866" Height="94,48825" Font.Charset="1" Font.Color="0" Font.Height="-15" Font.Name="Arial" Font.Style="0" Frame.Style="fsDot" Frame.Typ="15" GapY="5" HAlign="haBlock" LineSpacing="6" ParentFont="False" Text=""/>
+    <TfrxMasterData Name="MasterData1" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="264,5671" Left="0" Top="18,89765" Width="718,1107" ColumnWidth="0" ColumnGap="0" DataSet="frxValeTransporte" DataSetName="frxValeTransporte" RowCount="0">
+      <TfrxMemoView Name="Memo5" Left="2,00046134" Top="136,06308" Width="714,33070866" Height="94,48825" Font.Charset="1" Font.Color="0" Font.Height="-15" Font.Name="Arial" Font.Style="0" Frame.Style="fsDot" Frame.Typ="15" GapX="4" GapY="5" HAlign="haBlock" LineSpacing="6" ParentFont="False" Text=""/>
       <TfrxShapeView Name="Shape1" Left="2" Top="7,55906" Width="714,33117" Height="60,47248"/>
       <TfrxMemoView Name="Memo1" Left="173,85838" Top="22,67718" Width="336,37817" Height="18,89765" Font.Charset="1" Font.Color="0" Font.Height="-19" Font.Name="Arial" Font.Style="1" HAlign="haCenter" ParentFont="False" Text="RECIBO DE VALE TRANSPORTE"/>
-      <TfrxMemoView Name="Memo2" Left="0" Top="49,13389" Width="170,07885" Height="18,89765" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="1" ParentFont="False" Text="(Decreto nº 95.247 de 17/11/1987"/>
+      <TfrxMemoView Name="Memo2" Left="6" Top="49,13389" Width="170,07885" Height="18,89765" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="1" ParentFont="False" Text="(Decreto nº 95.247 de 17/11/1987"/>
       <TfrxMemoView Name="Memo3" Left="3,77953" Top="78,81107" Width="506,45702" Height="18,89765" Font.Charset="1" Font.Color="0" Font.Height="-16" Font.Name="Arial" Font.Style="1" ParentFont="False" Text="Nome do(a) Empregado(a): [frxValeTransporte.&#34;Nome_Funcionario&#34;]"/>
       <TfrxMemoView Name="Memo4" Left="525,35467" Top="78,81107" Width="173,85838" Height="18,89765" Font.Charset="1" Font.Color="0" Font.Height="-16" Font.Name="Arial" Font.Style="1" HAlign="haRight" ParentFont="False" Text="Reg.Nº: [frxValeTransporte.&#34;Cod_Funcionario&#34;]"/>
-      <TfrxShapeView Name="Shape2" Left="2" Top="75,5906" Width="714,33117" Height="30,23624"/>
+      <TfrxShapeView Name="Shape2" Left="2" Top="75,5906" Width="714,33117" Height="30,23624" Frame.LeftLine.Width="4"/>
+      <TfrxMemoView Name="Memo12" Left="3,77953" Top="245,88992" Width="102,04731" Height="15,11812" DisplayFormat.FormatStr="000" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-13" Font.Name="Arial" Font.Style="1" ParentFont="False" Text="Cod.Passagem"/>
+      <TfrxMemoView Name="Memo13" Left="113,3859" Top="245,88992" Width="241,88992" Height="15,11812" DisplayFormat.FormatStr="000" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-13" Font.Name="Arial" Font.Style="1" ParentFont="False" Text="Nome Linha"/>
+      <TfrxMemoView Name="Memo14" Left="415,7483" Top="245,88992" Width="105,82684" Height="15,11812" DisplayFormat.FormatStr="000" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-13" Font.Name="Arial" Font.Style="1" HAlign="haRight" ParentFont="False" Text="Valor Passagem"/>
+      <TfrxMemoView Name="Memo15" Left="608,50433" Top="245,88992" Width="105,82684" Height="15,11812" DisplayFormat.FormatStr="000" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-13" Font.Name="Arial" Font.Style="1" HAlign="haRight" ParentFont="False" Text="Valor Total"/>
+      <TfrxLineView Name="Line1" Left="3,77953" Top="263,11039" Width="714,33117" Height="0" Color="0" Diagonal="True"/>
     </TfrxMasterData>
-    <TfrxFooter Name="Footer1" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="139,84261" Left="0" Top="340,1577" Width="718,1107">
+    <TfrxFooter Name="Footer1" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="222,99227" Left="0" Top="351,49629" Width="718,1107">
       <TfrxShapeView Name="Shape3" Left="2,00046134" Top="4" Width="714,33070866" Height="22,67718"/>
-      <TfrxMemoView Name="Memo10" Left="8,89765" Top="4,22047" Width="139,84261" Height="18,89765" Text="Salário Base Mês R$:"/>
+      <TfrxMemoView Name="Memo10" Left="8,89765" Top="8,22047" Width="139,84261" Height="15,11812" Text="Salário Base Mês R$:"/>
       <TfrxLineView Name="Line2" Left="360,39394" Top="4,22047" Width="0" Height="22,67718" Color="0" Diagonal="True"/>
-      <TfrxMemoView Name="Memo11" Left="367,953" Top="4,22047" Width="113,3859" Height="18,89765" Text="Total Desconto:"/>
+      <TfrxMemoView Name="Memo11" Left="367,953" Top="8,22047" Width="113,3859" Height="15,11812" Text="Total Desconto:"/>
+      <TfrxMemoView Name="Nome_Departamento" Left="427,08689" Top="49,13389" Width="268,34663" Height="18,89765" Font.Charset="1" Font.Color="0" Font.Height="-13" Font.Name="Arial" Font.Style="1" ParentFont="False" Text="[Nome_Departamento]"/>
+      <TfrxMemoView Name="Date" Left="396,85065" Top="94,94496" Width="317,48052" Height="18,89765" DisplayFormat.FormatStr="dddd, dd' de 'mmmm' de 'yyyy" DisplayFormat.Kind="fkDateTime" Font.Charset="1" Font.Color="0" Font.Height="-13" Font.Name="Arial" Font.Style="0" HAlign="haRight" ParentFont="False" Text="[Date]"/>
+      <TfrxLineView Name="Line3" Left="18,89765" Top="158,74026" Width="366,61441" Height="0" Color="0" Diagonal="True"/>
+      <TfrxMemoView Name="Memo16" Left="163,28355" Top="166,07885" Width="71,81107" Height="15,11812" DisplayFormat.FormatStr="000" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-13" Font.Name="Arial" Font.Style="1" ParentFont="False" Text="Assinatura"/>
     </TfrxFooter>
-    <TfrxDetailData Name="DetailData1" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="22,67718" Left="0" Top="294,80334" Width="718,1107" ColumnWidth="0" ColumnGap="0" DataSet="frxValeTransporteDetalhe" DataSetName="frxValeTransporteDetalhe" RowCount="0">
-      <TfrxMemoView Name="Memo6" Left="3,77953" Top="3,77953" Width="94,48825" Height="18,89765" DisplayFormat.FormatStr="000" DisplayFormat.Kind="fkNumeric" Text="[frxValeTransporteDetalhe.&#34;Cod_Passagem&#34;]"/>
-      <TfrxMemoView Name="Memo7" Left="105,82684" Top="3,77953" Width="302,3624" Height="18,89765" Text="[frxValeTransporteDetalhe.&#34;Nome_Linha&#34;]"/>
-      <TfrxMemoView Name="Memo8" Left="415,7483" Top="3,77953" Width="94,48825" Height="18,89765" DisplayFormat.FormatStr="%2.2f" DisplayFormat.Kind="fkNumeric" Text="[frxValeTransporteDetalhe.&#34;Valor_Passagem&#34;]"/>
-      <TfrxMemoView Name="Memo9" Left="608,50433" Top="3,77953" Width="94,48825" Height="18,89765" DisplayFormat.FormatStr="%2.2f" DisplayFormat.Kind="fkNumeric" Text="[frxValeTransporteDetalhe.&#34;Valor_Total&#34;]"/>
+    <TfrxDetailData Name="DetailData1" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="22,67718" Left="0" Top="306,14193" Width="718,1107" ColumnWidth="0" ColumnGap="0" DataSet="frxValeTransporteDetalhe" DataSetName="frxValeTransporteDetalhe" RowCount="0">
+      <TfrxMemoView Name="Memo6" Left="3,77953" Top="3,77953" Width="102,04731" Height="18,89765" DisplayFormat.FormatStr="000" DisplayFormat.Kind="fkNumeric" Text="[frxValeTransporteDetalhe.&#34;Cod_Passagem&#34;]"/>
+      <TfrxMemoView Name="Memo7" Left="113,3859" Top="3,77953" Width="302,3624" Height="18,89765" Text="[frxValeTransporteDetalhe.&#34;Nome_Linha&#34;]"/>
+      <TfrxMemoView Name="Memo8" Left="427,08689" Top="3,77953" Width="94,48825" Height="18,89765" DisplayFormat.FormatStr="%2.2f" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-13" Font.Name="Arial" Font.Style="0" HAlign="haRight" ParentFont="False" Text="[frxValeTransporteDetalhe.&#34;Valor_Passagem&#34;]"/>
+      <TfrxMemoView Name="Memo9" Left="619,84292" Top="3,77953" Width="94,48825" Height="18,89765" DisplayFormat.FormatStr="%2.2f" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-13" Font.Name="Arial" Font.Style="0" HAlign="haRight" ParentFont="False" Text="[frxValeTransporteDetalhe.&#34;Valor_Total&#34;]"/>
     </TfrxDetailData>
   </TfrxReportPage>
 </TfrxReport>

@@ -488,7 +488,7 @@ object DMCadTomador: TDMCadTomador
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 43449.885001122700000000
-    ReportOptions.LastChange = 43454.928505868050000000
+    ReportOptions.LastChange = 43462.596743842590000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -506,7 +506,15 @@ object DMCadTomador: TDMCadTomador
         DataSet = frxValeTransporte
         DataSetName = 'frxValeTransporte'
       end>
-    Variables = <>
+    Variables = <
+      item
+        Name = ' Variaveis'
+        Value = Null
+      end
+      item
+        Name = 'Nome_Departamento'
+        Value = Null
+      end>
     Style = <>
     object Data: TfrxDataPage
       Height = 1000.000000000000000000
@@ -522,7 +530,7 @@ object DMCadTomador: TDMCadTomador
       BottomMargin = 10.000000000000000000
       object MasterData1: TfrxMasterData
         FillType = ftBrush
-        Height = 253.228510000000000000
+        Height = 264.567100000000000000
         Top = 18.897650000000000000
         Width = 718.110700000000000000
         DataSet = frxValeTransporte
@@ -540,6 +548,7 @@ object DMCadTomador: TDMCadTomador
           Font.Style = []
           Frame.Style = fsDot
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          GapX = 4.000000000000000000
           GapY = 5.000000000000000000
           HAlign = haBlock
           LineSpacing = 6.000000000000000000
@@ -563,10 +572,11 @@ object DMCadTomador: TDMCadTomador
           Font.Style = [fsBold]
           HAlign = haCenter
           Memo.UTF8 = (
-            'RECIBO DE VALE REFEI'#195#8225#195#402'O')
+            'RECIBO DE VALE TRANSPORTE')
           ParentFont = False
         end
         object Memo2: TfrxMemoView
+          Left = 6.000000000000000000
           Top = 49.133890000000000000
           Width = 170.078850000000000000
           Height = 18.897650000000000000
@@ -613,12 +623,86 @@ object DMCadTomador: TDMCadTomador
           Top = 75.590600000000000000
           Width = 714.331170000000000000
           Height = 30.236240000000000000
+          Frame.LeftLine.Width = 4.000000000000000000
+        end
+        object Memo12: TfrxMemoView
+          Left = 3.779530000000000000
+          Top = 245.889920000000000000
+          Width = 102.047310000000000000
+          Height = 15.118120000000000000
+          DisplayFormat.FormatStr = '000'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Memo.UTF8 = (
+            'Cod.Passagem')
+          ParentFont = False
+        end
+        object Memo13: TfrxMemoView
+          Left = 113.385900000000000000
+          Top = 245.889920000000000000
+          Width = 241.889920000000000000
+          Height = 15.118120000000000000
+          DisplayFormat.FormatStr = '000'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Memo.UTF8 = (
+            'Nome Linha')
+          ParentFont = False
+        end
+        object Memo14: TfrxMemoView
+          Left = 415.748300000000000000
+          Top = 245.889920000000000000
+          Width = 105.826840000000000000
+          Height = 15.118120000000000000
+          DisplayFormat.FormatStr = '000'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          HAlign = haRight
+          Memo.UTF8 = (
+            'Valor Passagem')
+          ParentFont = False
+        end
+        object Memo15: TfrxMemoView
+          Left = 608.504330000000000000
+          Top = 245.889920000000000000
+          Width = 105.826840000000000000
+          Height = 15.118120000000000000
+          DisplayFormat.FormatStr = '000'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          HAlign = haRight
+          Memo.UTF8 = (
+            'Valor Total')
+          ParentFont = False
+        end
+        object Line1: TfrxLineView
+          Left = 3.779530000000000000
+          Top = 263.110390000000000000
+          Width = 714.331170000000000000
+          Color = clBlack
+          Diagonal = True
         end
       end
       object Footer1: TfrxFooter
         FillType = ftBrush
-        Height = 139.842610000000000000
-        Top = 340.157700000000000000
+        Height = 222.992270000000000000
+        Top = 351.496290000000000000
         Width = 718.110700000000000000
         object Shape3: TfrxShapeView
           Left = 2.000461340000000000
@@ -628,9 +712,9 @@ object DMCadTomador: TDMCadTomador
         end
         object Memo10: TfrxMemoView
           Left = 8.897650000000000000
-          Top = 4.220470000000000000
+          Top = 8.220470000000000000
           Width = 139.842610000000000000
-          Height = 18.897650000000000000
+          Height = 15.118120000000000000
           Memo.UTF8 = (
             'Sal'#195#161'rio Base M'#195#170's R$:')
         end
@@ -643,17 +727,71 @@ object DMCadTomador: TDMCadTomador
         end
         object Memo11: TfrxMemoView
           Left = 367.953000000000000000
-          Top = 4.220470000000000000
+          Top = 8.220470000000000000
           Width = 113.385900000000000000
-          Height = 18.897650000000000000
+          Height = 15.118120000000000000
           Memo.UTF8 = (
             'Total Desconto:')
+        end
+        object Nome_Departamento: TfrxMemoView
+          Left = 427.086890000000000000
+          Top = 49.133890000000000000
+          Width = 268.346630000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Memo.UTF8 = (
+            '[Nome_Departamento]')
+          ParentFont = False
+        end
+        object Date: TfrxMemoView
+          Left = 396.850650000000000000
+          Top = 94.944960000000000000
+          Width = 317.480520000000000000
+          Height = 18.897650000000000000
+          DisplayFormat.FormatStr = 'dddd, dd'#39' de '#39'mmmm'#39' de '#39'yyyy'
+          DisplayFormat.Kind = fkDateTime
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          HAlign = haRight
+          Memo.UTF8 = (
+            '[Date]')
+          ParentFont = False
+        end
+        object Line3: TfrxLineView
+          Left = 18.897650000000000000
+          Top = 158.740260000000000000
+          Width = 366.614410000000000000
+          Color = clBlack
+          Diagonal = True
+        end
+        object Memo16: TfrxMemoView
+          Left = 163.283550000000000000
+          Top = 166.078850000000000000
+          Width = 71.811070000000000000
+          Height = 15.118120000000000000
+          DisplayFormat.FormatStr = '000'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Memo.UTF8 = (
+            'Assinatura')
+          ParentFont = False
         end
       end
       object DetailData1: TfrxDetailData
         FillType = ftBrush
         Height = 22.677180000000000000
-        Top = 294.803340000000000000
+        Top = 306.141930000000000000
         Width = 718.110700000000000000
         DataSet = frxValeTransporteDetalhe
         DataSetName = 'frxValeTransporteDetalhe'
@@ -661,7 +799,7 @@ object DMCadTomador: TDMCadTomador
         object Memo6: TfrxMemoView
           Left = 3.779530000000000000
           Top = 3.779530000000000000
-          Width = 94.488250000000000000
+          Width = 102.047310000000000000
           Height = 18.897650000000000000
           DisplayFormat.FormatStr = '000'
           DisplayFormat.Kind = fkNumeric
@@ -669,7 +807,7 @@ object DMCadTomador: TDMCadTomador
             '[frxValeTransporteDetalhe."Cod_Passagem"]')
         end
         object Memo7: TfrxMemoView
-          Left = 105.826840000000000000
+          Left = 113.385900000000000000
           Top = 3.779530000000000000
           Width = 302.362400000000000000
           Height = 18.897650000000000000
@@ -677,30 +815,45 @@ object DMCadTomador: TDMCadTomador
             '[frxValeTransporteDetalhe."Nome_Linha"]')
         end
         object Memo8: TfrxMemoView
-          Left = 415.748300000000000000
+          Left = 427.086890000000000000
           Top = 3.779530000000000000
           Width = 94.488250000000000000
           Height = 18.897650000000000000
           DisplayFormat.FormatStr = '%2.2f'
           DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          HAlign = haRight
           Memo.UTF8 = (
             '[frxValeTransporteDetalhe."Valor_Passagem"]')
+          ParentFont = False
         end
         object Memo9: TfrxMemoView
-          Left = 608.504330000000000000
+          Left = 619.842920000000000000
           Top = 3.779530000000000000
           Width = 94.488250000000000000
           Height = 18.897650000000000000
           DisplayFormat.FormatStr = '%2.2f'
           DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          HAlign = haRight
           Memo.UTF8 = (
             '[frxValeTransporteDetalhe."Valor_Total"]')
+          ParentFont = False
         end
       end
     end
   end
   object frxValeTransporteDetalhe: TfrxDBDataset
     UserName = 'frxValeTransporteDetalhe'
+    OnFirst = frxValeTransporteDetalheFirst
     CloseDataSource = False
     FieldAliases.Strings = (
       'Cod_Funcionario=Cod_Funcionario'

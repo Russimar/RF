@@ -132,6 +132,7 @@ type
     procedure frxValeTransporteFirst(Sender: TObject);
     procedure cdsVTVACalcFields(DataSet: TDataSet);
     procedure frxValeRefeicaoFirst(Sender: TObject);
+    procedure frxValeTransporteDetalheFirst(Sender: TObject);
   private
     { Private declarations }
   public
@@ -294,6 +295,13 @@ begin
     TfrxMemoView(frxReport1.FindComponent('Memo5')).Text := fnc_Monta_Impressao_VT;
   end;
 
+end;
+
+procedure TDMCadTomador.frxValeTransporteDetalheFirst(Sender: TObject);
+begin
+  cdsVTVA.Filtered := False;
+  cdsVTVA.Filter   := 'Cod_Funcionario = ' + IntToStr(mVTAuxiliarcod_funcionario.AsInteger);
+  cdsVTVA.Filtered := True;
 end;
 
 end.
