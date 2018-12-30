@@ -11,6 +11,8 @@ inherited frmCadTomador: TfrmCadTomador
   inherited RzPageControl1: TRzPageControl
     Width = 994
     Height = 613
+    ActivePage = TS_Cadastro
+    TabIndex = 1
     OnChange = RzPageControl1Change
     FixedDimension = 19
     inherited TS_Consulta: TRzTabSheet

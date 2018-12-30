@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, Grids, DBGrids, SMDBGrid, ComCtrls, ToolEdit, uDMCadTomador,
   StdCtrls, Mask, CurrEdit, RxLookup, Buttons, USel_Tomador, rsDBUtils,
-  NxCollection, DB, DBClient, uDMSage;
+  NxCollection, DB, DBClient, uDMSage, frxExportPDF, frxExportMail;
 
 type
   TfrmRelVA_VT = class(TForm)
@@ -127,6 +127,7 @@ begin
   fDMSage.prc_Abrir_Vale_Refeicao(ComboEmpresa.KeyValue,StrToInt(edtTomador.Text));
   fDMCadTomador.cdsVTVA.EmptyDataSet;
   fDMCadTomador.mVTAuxiliar.EmptyDataSet;
+  fDMCadTomador.mVRAuxiliar.EmptyDataSet;
   case rdgTipoImpressa.ItemIndex of
     0:
       prc_Montar_VR;
@@ -139,6 +140,7 @@ procedure TfrmRelVA_VT.rdgTipoImpressaExit(Sender: TObject);
 begin
   fDMCadTomador.cdsVTVA.EmptyDataSet;
   fDMCadTomador.mVTAuxiliar.EmptyDataSet;
+  fDMCadTomador.mVRAuxiliar.EmptyDataSet;
 end;
 
 procedure TfrmRelVA_VT.edtTomadorExit(Sender: TObject);
@@ -160,6 +162,7 @@ procedure TfrmRelVA_VT.prc_Montar_VR;
 begin
   fDMCadTomador.cdsVTVA.EmptyDataSet;
   fDMCadTomador.mVTAuxiliar.EmptyDataSet;
+  fDMCadTomador.mVRAuxiliar.EmptyDataSet;
   fDMSage.cdsValeRefeicao.First;
   while not fDMSage.cdsValeRefeicao.Eof do
   begin
@@ -170,26 +173,31 @@ begin
       fDMCadTomador.cdsVTVANome_Funcionario.AsString  := fDMSage.cdsValeRefeicaonome.AsString;
       fDMCadTomador.cdsVTVAValor_Passagem.AsFloat     := fDMSage.cdsValeRefeicaovl_vale.AsFloat;
       fDMCadTomador.cdsVTVAQtde_Passagem.AsFloat      := fDMSage.cdsValeRefeicaoqt_dia_util.AsFloat;
+      fDMCadTomador.cdsVTVAValor_Refeicao.AsFloat     := fDMCadTomador.qTomador_DiasVALOR_VA.AsFloat;
       fDMCadTomador.cdsVTVADiasTrabalhados.AsFloat    := fDMCadTomador.qTomador_DiasDIAS.AsInteger;
       if fDMSage.cdsProcEvento.Locate('cd_funcionario;cd_evento',VarArrayOf([fDMCadTomador.cdsVTVACod_Funcionario.AsInteger,'938']),[loCaseInsensitive]) then
         fDMCadTomador.cdsVTVADiasAtestado.AsFloat     := fDMSage.cdsProcEventoreferencia.AsFloat;
       if fDMSage.cdsProcEvento.Locate('cd_funcionario;cd_evento',VarArrayOf([fDMCadTomador.cdsVTVACod_Funcionario.AsInteger,'225']),[loCaseInsensitive]) then
         fDMCadTomador.cdsVTVADiasFalta.AsFloat        := fDMSage.cdsProcEventoreferencia.AsFloat;
-      fDMCadTomador.cdsVTVACod_VR.AsInteger     := fDMSage.cdsValeRefeicaocd_vale.AsInteger;
+      fDMCadTomador.cdsVTVACod_VR.AsInteger           := fDMSage.cdsValeRefeicaocd_vale.AsInteger;
       fDMCadTomador.cdsVTVANome_Refeicao.AsString     := fDMSage.cdsValeRefeicaodescricao.AsString;
+      fDMCadTomador.cdsVTVAPerc_Refeicao.AsFloat      := fDMCadTomador.qTomador_DiasPERC_VA.AsFloat;
       fDMCadTomador.cdsVTVAMes.AsInteger              := StrToInt(vMes);
       fDMCadTomador.cdsVTVAAno.AsString               := vAno;
       fDMCadTomador.cdsVTVA.Post;
-      if fDMCadTomador.mVTAuxiliar.Locate('cod_funcionario',fDMCadTomador.cdsVTVACod_Funcionario.AsInteger,[loCaseInsensitive]) then
-        fDMCadTomador.mVTAuxiliar.Edit
+      if fDMCadTomador.mVRAuxiliar.Locate('cod_funcionario',fDMCadTomador.cdsVTVACod_Funcionario.AsInteger,[loCaseInsensitive]) then
+        fDMCadTomador.mVRAuxiliar.Edit
       else
-        fDMCadTomador.mVTAuxiliar.Insert;
-      fDMCadTomador.mVTAuxiliarcod_funcionario.AsInteger := fDMSage.cdsValeRefeicaocd_funcionario.AsInteger;
-      fDMCadTomador.mVTAuxiliarnome_funcionario.AsString := fDMSage.cdsValeRefeicaonome.AsString;
-      fDMCadTomador.mVTAuxiliarvalor_total.AsFloat       := fDMCadTomador.mVTAuxiliarvalor_total.AsFloat + fDMCadTomador.cdsVTVAValor_Total.AsFloat;
-      fDMCadTomador.mVTAuxiliarMes.AsInteger              := StrToInt(vMes);
-      fDMCadTomador.mVTAuxiliarAno.AsString               := vAno;
-      fDMCadTomador.mVTAuxiliar.Post;
+        fDMCadTomador.mVRAuxiliar.Insert;
+      fDMCadTomador.mVRAuxiliarcod_funcionario.AsInteger := fDMSage.cdsValeRefeicaocd_funcionario.AsInteger;
+      fDMCadTomador.mVRAuxiliarnome_funcionario.AsString := fDMSage.cdsValeRefeicaonome.AsString;
+      fDMCadTomador.mVRAuxiliarvalor_desconto.AsFloat    := fDMCadTomador.cdsVTVAValor_Total.AsFloat * (fDMCadTomador.qTomador_DiasPERC_VA.AsFloat / 100);
+      fDMCadTomador.mVRAuxiliarvalor_total.AsFloat       := fDMCadTomador.mVRAuxiliarvalor_total.AsFloat + fDMCadTomador.cdsVTVAValor_Total.AsFloat;
+      fDMCadTomador.mVRAuxiliarmes.AsInteger             := StrToInt(vMes);
+      fDMCadTomador.mVRAuxiliarano.AsString              := vAno;
+      fDMCadTomador.mVRAuxiliarperc_refeicao.AsFloat     := fDMCadTomador.qTomador_DiasPERC_VA.AsFloat;
+      fDMCadTomador.mVRAuxiliardias_trabalhados.AsFloat  := fDMCadTomador.cdsVTVADiasTrabalhados.AsFloat;
+      fDMCadTomador.mVRAuxiliar.Post;
     end;
     fDMSage.cdsValeRefeicao.Next;
   end;
@@ -199,6 +207,7 @@ procedure TfrmRelVA_VT.prc_Montar_VT;
 begin
   fDMCadTomador.cdsVTVA.EmptyDataSet;
   fDMCadTomador.mVTAuxiliar.EmptyDataSet;
+  fDMCadTomador.mVRAuxiliar.EmptyDataSet;
   fDMSage.cdsValeTransporte.First;
   while not fDMSage.cdsValeTransporte.Eof do
   begin
@@ -243,12 +252,18 @@ end;
 procedure TfrmRelVA_VT.btnImprimirClick(Sender: TObject);
 var
   vArq : String;
+  pdf : TfrxPDFExport;
+  mail : TfrxMailExport;
 begin
   if fDMCadTomador.cdsVTVA.IsEmpty then
   begin
     ShowMessage('Nenhuma informação na consulta');
     exit;
   end;
+
+  mail := TfrxMailExport.Create(nil);
+  pdf  := TfrxPDFExport.Create(nil);
+
 
   if rdgTipoImpressa.ItemIndex = 1 then
     vArq := ExtractFilePath(Application.ExeName) + 'Relatorios\Vale_Transporte.fr3'
@@ -261,8 +276,33 @@ begin
     ShowMessage('Relatório não localizado! ' + vArq);
     Exit;
   end;
+  fDMCadTomador.frxMailExport1.Lines.Clear;
   fDMCadTomador.frxReport1.variables['Nome_Departamento'] :=  QuotedStr(fDMCadTomador.qTomadorNOME.AsString);
-  fDMCadTomador.frxReport1.ShowReport;
+
+
+  mail.Address := 'russimar@terra.com.br';
+  if rdgTipoImpressa.ItemIndex = 0 then
+    mail.Subject := 'Vale Refeição mês: ' + ComboMes.Text + '/' + edtAno.Text
+  else
+    mail.Subject := 'Vale Transporte mês: ' + ComboMes.Text + '/' + edtAno.Text;
+  mail.Login := 'russimar';
+  mail.ExportFilter := pdf;
+  mail.FilterDesc := 'PFD por e-mail';
+
+  mail.Password := '992599';
+  mail.Lines.Add('Email Teste de envio');
+  mail.FromMail := 'russimar@terra.com.br';
+  mail.SmtpHost := 'smtp.terra.com.br';
+  mail.SmtpPort := 587;
+  mail.UseIniFile := False;
+  mail.ShowDialog := False;
+  mail.ShowExportDialog := False;
+  fDMCadTomador.frxReport1.PrepareReport(True);
+  fDMCadTomador.frxReport1.Export(mail);
+
+  mail.Destroy;
+
+//  fDMCadTomador.frxReport1.ShowReport;
   fDMCadTomador.cdsVTVA.Filtered := False;
 end;
 
@@ -270,6 +310,7 @@ procedure TfrmRelVA_VT.edtTomadorChange(Sender: TObject);
 begin
   fDMCadTomador.cdsVTVA.EmptyDataSet;
   fDMCadTomador.mVTAuxiliar.EmptyDataSet;
+  fDMCadTomador.mVRAuxiliar.EmptyDataSet;
 end;
 
 end.

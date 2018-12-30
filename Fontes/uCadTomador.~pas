@@ -101,6 +101,7 @@ begin
   fDlgTomadoresSage.dsTomadorSage.DataSet := fDMSage.cdsTomadorSage;
   fDlgTomadoresSage.ShowModal;
   FreeAndNil(fDlgTomadoresSage);
+  NxButton1.Click;
 end;
 
 procedure TfrmCadTomador.RzPageControl1Change(Sender: TObject);

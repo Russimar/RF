@@ -4,7 +4,7 @@ object DMCadTomador: TDMCadTomador
   Left = 254
   Top = 136
   Height = 458
-  Width = 856
+  Width = 894
   object sdsTomador: TSQLDataSet
     NoMetadata = True
     GetMetadata = False
@@ -408,8 +408,8 @@ object DMCadTomador: TDMCadTomador
       'SELECT ID_TOMADOR, NOME FROM TOMADOR'
       'WHERE ID_TOMADOR = :ID_TOMADOR')
     SQLConnection = dmDatabase.scoPrincipal
-    Left = 440
-    Top = 136
+    Left = 376
+    Top = 192
     object qTomadorID_TOMADOR: TIntegerField
       FieldName = 'ID_TOMADOR'
       Required = True
@@ -488,15 +488,15 @@ object DMCadTomador: TDMCadTomador
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 43449.885001122700000000
-    ReportOptions.LastChange = 43462.596743842590000000
+    ReportOptions.LastChange = 43464.453071585650000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
       ''
       'end.')
     OnReportPrint = 'frxReportOnReportPrint'
-    Left = 312
-    Top = 200
+    Left = 720
+    Top = 208
     Datasets = <
       item
         DataSet = frxValeTransporteDetalhe
@@ -734,9 +734,9 @@ object DMCadTomador: TDMCadTomador
             'Total Desconto:')
         end
         object Nome_Departamento: TfrxMemoView
-          Left = 427.086890000000000000
+          Left = 397.086890000000000000
           Top = 49.133890000000000000
-          Width = 268.346630000000000000
+          Width = 317.480520000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -786,6 +786,14 @@ object DMCadTomador: TDMCadTomador
           Memo.UTF8 = (
             'Assinatura')
           ParentFont = False
+        end
+        object Line4: TfrxLineView
+          Left = 7.559060000000000000
+          Top = 215.433210000000000000
+          Width = 702.992580000000000000
+          Color = clBlack
+          Frame.Style = fsDot
+          Diagonal = True
         end
       end
       object DetailData1: TfrxDetailData
@@ -867,13 +875,17 @@ object DMCadTomador: TDMCadTomador
       'Ano=Ano'
       'Cod_Passagem=Cod_Passagem'
       'Valor_Total=Valor_Total'
-      'Nome_Linha=Nome_Linha')
+      'Nome_Linha=Nome_Linha'
+      'Cod_VR=Cod_VR'
+      'Nome_Refeicao=Nome_Refeicao'
+      'Valor_Refeicao=Valor_Refeicao'
+      'Perc_Refeicao=Perc_Refeicao')
     DataSource = dsVTVA
     BCDToCurrency = False
-    Left = 312
-    Top = 256
+    Left = 760
+    Top = 264
   end
-  object ACBrExtenso1: TACBrExtenso
+  object ACBrExtensoReais: TACBrExtenso
     StrMoeda = 'Real'
     StrMoedas = 'Reais'
     StrCentavo = 'Centavo'
@@ -940,6 +952,14 @@ object DMCadTomador: TDMCadTomador
         Name = 'Nome_Refeicao'
         DataType = ftString
         Size = 40
+      end
+      item
+        Name = 'Valor_Refeicao'
+        DataType = ftFloat
+      end
+      item
+        Name = 'Perc_Refeicao'
+        DataType = ftFloat
       end>
     IndexDefs = <>
     IndexFieldNames = 'Cod_Funcionario'
@@ -949,7 +969,7 @@ object DMCadTomador: TDMCadTomador
     Left = 264
     Top = 120
     Data = {
-      4F0100009619E0BD01000000180000000D0000000000030000004F010F436F64
+      7C0100009619E0BD01000000180000000F0000000000030000007C010F436F64
       5F46756E63696F6E6172696F0400010000000000104E6F6D655F46756E63696F
       6E6172696F0100490000000100055749445448020002003C000E56616C6F725F
       506173736167656D08000400000000000D517464655F506173736167656D0800
@@ -959,7 +979,8 @@ object DMCadTomador: TDMCadTomador
       0557494454480200020014000C436F645F506173736167656D04000100000000
       000A4E6F6D655F4C696E68610100490000000100055749445448020002001E00
       06436F645F565204000100000000000D4E6F6D655F526566656963616F010049
-      00000001000557494454480200020028000000}
+      00000001000557494454480200020028000E56616C6F725F526566656963616F
+      08000400000000000D506572635F526566656963616F08000400000000000000}
     object cdsVTVACod_Funcionario: TIntegerField
       DisplayLabel = 'C'#243'digo Funcion'#225'rio'
       DisplayWidth = 18
@@ -1028,6 +1049,17 @@ object DMCadTomador: TDMCadTomador
     object cdsVTVANome_Refeicao: TStringField
       FieldName = 'Nome_Refeicao'
       Size = 40
+    end
+    object cdsVTVAValor_Refeicao: TFloatField
+      FieldName = 'Valor_Refeicao'
+    end
+    object cdsVTVAPerc_Refeicao: TFloatField
+      FieldName = 'Perc_Refeicao'
+    end
+    object cdsVTVAValor_Desconto: TFloatField
+      FieldKind = fkCalculated
+      FieldName = 'Valor_Desconto'
+      Calculated = True
     end
   end
   object dsVTVA: TDataSource
@@ -1115,7 +1147,7 @@ object DMCadTomador: TDMCadTomador
   end
   object dsmVTAuxiliar: TDataSource
     DataSet = mVTAuxiliar
-    Left = 272
+    Left = 296
     Top = 344
   end
   object frxValeTransporte: TfrxDBDataset
@@ -1133,24 +1165,155 @@ object DMCadTomador: TDMCadTomador
       'ano=ano')
     DataSource = dsmVTAuxiliar
     BCDToCurrency = False
-    Left = 432
-    Top = 256
+    Left = 720
+    Top = 264
   end
   object frxValeRefeicao: TfrxDBDataset
     UserName = 'frxValeRefeicao'
     OnFirst = frxValeRefeicaoFirst
+    OnNext = frxValeRefeicaoNext
     CloseDataSource = False
     FieldAliases.Strings = (
       'cod_funcionario=cod_funcionario'
       'nome_funcionario=nome_funcionario'
-      'valor_passagem=valor_passagem'
-      'valor_total=valor_total'
-      'dias_Trabalhados=dias_Trabalhados'
+      'perc_refeicao=perc_refeicao'
+      'dias_trabalhados=dias_trabalhados'
       'mes=mes'
-      'ano=ano')
-    DataSource = dsmVTAuxiliar
+      'ano=ano'
+      'valor_total=valor_total'
+      'valor_desconto=valor_desconto')
+    DataSource = dsmVRAuxiliar
     BCDToCurrency = False
-    Left = 376
-    Top = 328
+    Left = 720
+    Top = 320
+  end
+  object mVRAuxiliar: TClientDataSet
+    Active = True
+    Aggregates = <>
+    FieldDefs = <
+      item
+        Name = 'cod_funcionario'
+        DataType = ftInteger
+      end
+      item
+        Name = 'nome_funcionario'
+        DataType = ftString
+        Size = 100
+      end
+      item
+        Name = 'perc_refeicao'
+        DataType = ftFloat
+      end
+      item
+        Name = 'dias_trabalhados'
+        DataType = ftFloat
+      end
+      item
+        Name = 'mes'
+        DataType = ftInteger
+      end
+      item
+        Name = 'ano'
+        DataType = ftString
+        Size = 4
+      end
+      item
+        Name = 'valor_total'
+        DataType = ftFloat
+      end
+      item
+        Name = 'valor_desconto'
+        DataType = ftFloat
+      end>
+    IndexDefs = <>
+    IndexFieldNames = 'cod_funcionario'
+    Params = <>
+    StoreDefs = True
+    Left = 208
+    Top = 296
+    Data = {
+      D50000009619E0BD010000001800000008000000000003000000D5000F636F64
+      5F66756E63696F6E6172696F0400010000000000106E6F6D655F66756E63696F
+      6E6172696F01004900000001000557494454480200020064000D706572635F72
+      6566656963616F080004000000000010646961735F74726162616C6861646F73
+      0800040000000000036D6573040001000000000003616E6F0100490000000100
+      0557494454480200020004000B76616C6F725F746F74616C0800040000000000
+      0E76616C6F725F646573636F6E746F08000400000000000000}
+    object mVRAuxiliarcod_funcionario: TIntegerField
+      FieldName = 'cod_funcionario'
+    end
+    object mVRAuxiliarnome_funcionario: TStringField
+      FieldName = 'nome_funcionario'
+      Size = 100
+    end
+    object mVRAuxiliarperc_refeicao: TFloatField
+      FieldName = 'perc_refeicao'
+    end
+    object mVRAuxiliardias_trabalhados: TFloatField
+      FieldName = 'dias_trabalhados'
+    end
+    object mVRAuxiliarmes: TIntegerField
+      FieldName = 'mes'
+    end
+    object mVRAuxiliarano: TStringField
+      FieldName = 'ano'
+      Size = 4
+    end
+    object mVRAuxiliarvalor_total: TFloatField
+      FieldName = 'valor_total'
+    end
+    object mVRAuxiliarvalor_desconto: TFloatField
+      FieldName = 'valor_desconto'
+    end
+  end
+  object dsmVRAuxiliar: TDataSource
+    DataSet = mVRAuxiliar
+    Left = 296
+    Top = 296
+  end
+  object ACBrExtensoPorCento: TACBrExtenso
+    StrMoeda = 'por Cento'
+    StrMoedas = 'por Cento'
+    Left = 104
+    Top = 312
+  end
+  object frxMailExport1: TfrxMailExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    ShowExportDialog = True
+    SmtpPort = 587
+    UseIniFile = False
+    TimeOut = 60
+    ConfurmReading = False
+    UseMAPI = SMTP
+    MAPISendFlag = 0
+    Left = 768
+    Top = 208
+  end
+  object frxPDFExport1: TfrxPDFExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    PrintOptimized = False
+    Outline = False
+    Background = False
+    HTMLTags = True
+    Quality = 95
+    Transparency = False
+    Author = 'FastReport'
+    Subject = 'FastReport PDF export'
+    ProtectionFlags = [ePrint, eModify, eCopy, eAnnot]
+    HideToolbar = False
+    HideMenubar = False
+    HideWindowUI = False
+    FitWindow = False
+    CenterWindow = False
+    PrintScaling = False
+    PdfA = False
+    Left = 808
+    Top = 208
   end
 end
