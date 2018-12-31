@@ -1,6 +1,6 @@
 object fMenu: TfMenu
-  Left = -1266
-  Top = 60
+  Left = 241
+  Top = 16
   Width = 887
   Height = 685
   HorzScrollBar.Range = 68
@@ -87,7 +87,6 @@ object fMenu: TfMenu
       Caption = 'ToolButton1'
       ImageIndex = 0
       Wrap = True
-      OnClick = CMPD1Click
     end
     object ToolButton2: TToolButton
       Left = 0
@@ -113,13 +112,17 @@ object fMenu: TfMenu
       end>
   end
   object MainMenu1: TMainMenu
-    Left = 623
+    Left = 624
     Top = 175
     object Manuteno1: TMenuItem
       Caption = 'Manuten'#231#227'o'
-      object CMPD1: TMenuItem
+      object Parmetros1: TMenuItem
+        Caption = 'Par'#226'metros'
+        OnClick = Parmetros1Click
+      end
+      object Tomador1: TMenuItem
         Caption = 'Tomador'
-        OnClick = CMPD1Click
+        OnClick = Tomador1Click
       end
     end
     object Janelas1: TMenuItem
@@ -151,7 +154,7 @@ object fMenu: TfMenu
     Left = 656
     Top = 176
     Bitmap = {
-      494C010102000A00040030003000FFFFFFFFFF00FFFFFFFFFFFFFFFF424D3600
+      494C010102000A00040030003000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000C000000090000000010020000000000000B0
       0100000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -3719,7 +3722,8 @@ object fMenu: TfMenu
       00001FFF000000000000000000000000FFFFFFFFFFFFFFFE00007FFF00000000
       0000000000000000FFFFFFFFFFFFFFFFC003FFFF000000000000000000000000
       FFFFFFFFFFFFFFFFFFFFFFFF000000000000000000000000FFFFFFFFFFFFFFFF
-      FFFFFFFF000000000000000000000000}
+      FFFFFFFF00000000000000000000000000000000000000000000000000000000
+      000000000000}
   end
   object UCControls1: TUCControls
     GroupName = 'Menu'

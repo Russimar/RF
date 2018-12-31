@@ -136,7 +136,6 @@ begin
     prc_Habilitar_Campos(Sender);
     prc_Habilita_Dias(Sender);
   end;
-
 end;
 
 procedure TfrmCadTomador.prc_Gravar_Registro;

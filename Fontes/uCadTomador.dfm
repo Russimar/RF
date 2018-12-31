@@ -1,6 +1,6 @@
 inherited frmCadTomador: TfrmCadTomador
-  Left = 191
-  Top = 37
+  Left = 353
+  Top = 46
   Width = 1010
   Height = 652
   Caption = 'Cadastro de Tomadores'
@@ -11,8 +11,6 @@ inherited frmCadTomador: TfrmCadTomador
   inherited RzPageControl1: TRzPageControl
     Width = 994
     Height = 613
-    ActivePage = TS_Cadastro
-    TabIndex = 1
     OnChange = RzPageControl1Change
     FixedDimension = 19
     inherited TS_Consulta: TRzTabSheet
@@ -759,9 +757,6 @@ inherited frmCadTomador: TfrmCadTomador
   inherited UCControls1: TUCControls
     UserControl = fMenu.UserControl1
     Left = 876
-    Top = 61
-  end
-  inherited ApplicationEvents1: TApplicationEvents
     Top = 61
   end
   inherited PopupMenu1: TPopupMenu

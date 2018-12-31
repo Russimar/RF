@@ -1,6 +1,6 @@
 object frmCadPadrao: TfrmCadPadrao
-  Left = 128
-  Top = 158
+  Left = 199
+  Top = 146
   Width = 928
   Height = 480
   Caption = 'Cadastro Padr'#227'o'
@@ -18,7 +18,7 @@ object frmCadPadrao: TfrmCadPadrao
     Left = 0
     Top = 0
     Width = 912
-    Height = 442
+    Height = 441
     ActivePage = TS_Consulta
     ActivePageDefault = TS_Consulta
     Align = alClient
@@ -423,7 +423,7 @@ object frmCadPadrao: TfrmCadPadrao
         Left = 0
         Top = 82
         Width = 908
-        Height = 337
+        Height = 336
         Align = alClient
         Ctl3D = False
         Font.Charset = DEFAULT_CHARSET
@@ -689,7 +689,7 @@ object frmCadPadrao: TfrmCadPadrao
         Left = 0
         Top = 41
         Width = 908
-        Height = 378
+        Height = 377
         ActivePage = TS_Dados
         Align = alClient
         TabIndex = 0
@@ -701,7 +701,7 @@ object frmCadPadrao: TfrmCadPadrao
             Left = 0
             Top = 0
             Width = 904
-            Height = 355
+            Height = 354
             Align = alClient
             Enabled = False
             TabOrder = 0
@@ -719,7 +719,7 @@ object frmCadPadrao: TfrmCadPadrao
   object ApplicationEvents1: TApplicationEvents
     OnException = ApplicationEvents1Exception
     Left = 851
-    Top = 45
+    Top = 61
   end
   object PopupMenu1: TPopupMenu
     Left = 791

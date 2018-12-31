@@ -16,7 +16,9 @@ uses
   uDlgTomadoresSage in 'uDlgTomadoresSage.pas' {DlgTomadoresSage},
   uDlgDiasTrabalhados in 'uDlgDiasTrabalhados.pas' {DlgDiasTrabalhados},
   USel_Tomador in 'USel_Tomador.pas' {frmSel_Tomador},
-  uRelVA_VT in 'uRelVA_VT.pas' {frmRelVA_VT};
+  uRelVA_VT in 'uRelVA_VT.pas' {frmRelVA_VT},
+  uCadParametros in 'uCadParametros.pas' {frmCadParametros},
+  uDMCADParametros in 'uDMCADParametros.pas' {DMCadParametros: TDataModule};
 
 {$R *.res}
 

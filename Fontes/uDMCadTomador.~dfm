@@ -1274,6 +1274,8 @@ object DMCadTomador: TDMCadTomador
   object ACBrExtensoPorCento: TACBrExtenso
     StrMoeda = 'por Cento'
     StrMoedas = 'por Cento'
+    StrCentavo = 'Centavo'
+    StrCentavos = 'Centavos'
     Left = 104
     Top = 312
   end
@@ -1315,5 +1317,52 @@ object DMCadTomador: TDMCadTomador
     PdfA = False
     Left = 808
     Top = 208
+  end
+  object qParametros: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQL.Strings = (
+      'SELECT * FROM PARAMETROS')
+    SQLConnection = dmDatabase.scoPrincipal
+    Left = 520
+    Top = 192
+    object qParametrosID: TIntegerField
+      FieldName = 'ID'
+      Required = True
+    end
+    object qParametrosEMAIL: TStringField
+      FieldName = 'EMAIL'
+      Size = 100
+    end
+    object qParametrosHOST: TStringField
+      FieldName = 'HOST'
+      Size = 100
+    end
+    object qParametrosPORTA: TIntegerField
+      FieldName = 'PORTA'
+    end
+    object qParametrosSENHA: TStringField
+      FieldName = 'SENHA'
+      Size = 30
+    end
+    object qParametrosUSUARIO: TStringField
+      FieldName = 'USUARIO'
+      Size = 50
+    end
+    object qParametrosAUTENTICACAO: TStringField
+      FieldName = 'AUTENTICACAO'
+      FixedChar = True
+      Size = 10
+    end
+    object qParametrosTELA_ENVIO: TStringField
+      FieldName = 'TELA_ENVIO'
+      FixedChar = True
+      Size = 1
+    end
+    object qParametrosCONFIRMACAO_LEITURA: TStringField
+      FieldName = 'CONFIRMACAO_LEITURA'
+      FixedChar = True
+      Size = 1
+    end
   end
 end

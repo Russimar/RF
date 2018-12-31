@@ -12,7 +12,7 @@ type
     ToolBar1: TToolBar;
     MainMenu1: TMainMenu;
     Manuteno1: TMenuItem;
-    CMPD1: TMenuItem;
+    Tomador1: TMenuItem;
     ImageList1: TImageList;
     UCControls1: TUCControls;
     UserControl1: TUserControl;
@@ -32,12 +32,14 @@ type
     Janelas1: TMenuItem;
     Ativas1: TMenuItem;
     ToolButton2: TToolButton;
+    Parmetros1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure UserControl1AfterLogin(Sender: TObject);
     procedure EfetuarLogoff1Click(Sender: TObject);
-    procedure CMPD1Click(Sender: TObject);
     procedure ToolButton2Click(Sender: TObject);
+    procedure Tomador1Click(Sender: TObject);
+    procedure Parmetros1Click(Sender: TObject);
   private
     procedure prc_Habilita_Menu;
     function GetBuildInfoAsString: string;
@@ -61,7 +63,7 @@ var
 implementation
 
 uses
-  DmdDatabase, uUtilPadrao, uCadTomador, uRelVA_VT;
+  DmdDatabase, uUtilPadrao, uCadTomador, uRelVA_VT, uCadParametros;
 
 const
   cArquivoConfiguracao = 'Config.ini';
@@ -206,14 +208,19 @@ begin
 end;
 
 
-procedure TfMenu.CMPD1Click(Sender: TObject);
+procedure TfMenu.ToolButton2Click(Sender: TObject);
+begin
+  OpenForm(TfrmRelVA_VT,wsMaximized);
+end;
+
+procedure TfMenu.Tomador1Click(Sender: TObject);
 begin
   OpenForm(TfrmCadTomador,wsMaximized);
 end;
 
-procedure TfMenu.ToolButton2Click(Sender: TObject);
+procedure TfMenu.Parmetros1Click(Sender: TObject);
 begin
-  OpenForm(TfrmRelVA_VT,wsMaximized);
+  OpenForm(TfrmCadParametros,wsMaximized);
 end;
 
 end.

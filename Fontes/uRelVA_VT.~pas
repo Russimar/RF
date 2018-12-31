@@ -29,6 +29,7 @@ type
     rdgTipoImpressa: TRadioGroup;
     SMDBGrid2: TSMDBGrid;
     dsLocal: TDataSource;
+    btnEnviaEmail: TNxButton;
     procedure btnConsultaTomadorClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
@@ -37,6 +38,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnImprimirClick(Sender: TObject);
     procedure edtTomadorChange(Sender: TObject);
+    procedure btnEnviaEmailClick(Sender: TObject);
   private
     fDMCadTomador: TDMCadTomador;
     fDMSage: TDMSage;
@@ -252,18 +254,12 @@ end;
 procedure TfrmRelVA_VT.btnImprimirClick(Sender: TObject);
 var
   vArq : String;
-  pdf : TfrxPDFExport;
-  mail : TfrxMailExport;
 begin
   if fDMCadTomador.cdsVTVA.IsEmpty then
   begin
     ShowMessage('Nenhuma informação na consulta');
     exit;
   end;
-
-  mail := TfrxMailExport.Create(nil);
-  pdf  := TfrxPDFExport.Create(nil);
-
 
   if rdgTipoImpressa.ItemIndex = 1 then
     vArq := ExtractFilePath(Application.ExeName) + 'Relatorios\Vale_Transporte.fr3'
@@ -276,33 +272,9 @@ begin
     ShowMessage('Relatório não localizado! ' + vArq);
     Exit;
   end;
-  fDMCadTomador.frxMailExport1.Lines.Clear;
   fDMCadTomador.frxReport1.variables['Nome_Departamento'] :=  QuotedStr(fDMCadTomador.qTomadorNOME.AsString);
 
-
-  mail.Address := 'russimar@terra.com.br';
-  if rdgTipoImpressa.ItemIndex = 0 then
-    mail.Subject := 'Vale Refeição mês: ' + ComboMes.Text + '/' + edtAno.Text
-  else
-    mail.Subject := 'Vale Transporte mês: ' + ComboMes.Text + '/' + edtAno.Text;
-  mail.Login := 'russimar';
-  mail.ExportFilter := pdf;
-  mail.FilterDesc := 'PFD por e-mail';
-
-  mail.Password := '992599';
-  mail.Lines.Add('Email Teste de envio');
-  mail.FromMail := 'russimar@terra.com.br';
-  mail.SmtpHost := 'smtp.terra.com.br';
-  mail.SmtpPort := 587;
-  mail.UseIniFile := False;
-  mail.ShowDialog := False;
-  mail.ShowExportDialog := False;
-  fDMCadTomador.frxReport1.PrepareReport(True);
-  fDMCadTomador.frxReport1.Export(mail);
-
-  mail.Destroy;
-
-//  fDMCadTomador.frxReport1.ShowReport;
+  fDMCadTomador.frxReport1.ShowReport;
   fDMCadTomador.cdsVTVA.Filtered := False;
 end;
 
@@ -311,6 +283,65 @@ begin
   fDMCadTomador.cdsVTVA.EmptyDataSet;
   fDMCadTomador.mVTAuxiliar.EmptyDataSet;
   fDMCadTomador.mVRAuxiliar.EmptyDataSet;
+end;
+
+procedure TfrmRelVA_VT.btnEnviaEmailClick(Sender: TObject);
+var
+  mail : TfrxMailExport;
+  pdf  : TfrxPDFExport;
+  vTexto, vArq : String;
+begin
+  if fDMCadTomador.cdsVTVA.IsEmpty then
+  begin
+    ShowMessage('Nenhuma informação na consulta');
+    exit;
+  end;
+
+  if rdgTipoImpressa.ItemIndex = 1 then
+    vArq := ExtractFilePath(Application.ExeName) + 'Relatorios\Vale_Transporte.fr3'
+  else
+    vArq := ExtractFilePath(Application.ExeName) + 'Relatorios\Vale_Refeicao.fr3';
+  if FileExists(vArq) then
+    fDMCadTomador.frxReport1.Report.LoadFromFile(vArq)
+  else
+  begin
+    ShowMessage('Relatório não localizado! ' + vArq);
+    Exit;
+  end;
+  if fDMCadTomador.qParametrosEMAIL.AsString = '' then
+  begin
+    ShowMessage('Email não configurado nos parâmetros!');
+    Exit;
+  end;
+
+  fDMCadTomador.frxReport1.variables['Nome_Departamento'] :=  QuotedStr(fDMCadTomador.qTomadorNOME.AsString);
+
+  mail := TfrxMailExport.Create(nil);
+  pdf  := TfrxPDFExport.Create(nil);
+
+//  mail.Address := '';
+  if rdgTipoImpressa.ItemIndex = 0 then
+    vTexto := 'Vale Refeição mês: ' + ComboMes.Text + '/' + edtAno.Text
+  else
+    vTexto := 'Vale Transporte mês: ' + ComboMes.Text + '/' + edtAno.Text;
+  mail.Subject := vTexto;
+  mail.Login := fDMCadTomador.qParametrosUSUARIO.AsString;
+  mail.ExportFilter := pdf;
+  mail.FilterDesc := 'PFD por e-mail';
+  mail.Password := fDMCadTomador.qParametrosSENHA.AsString;
+  mail.Lines.Add('Segue em anexo ' + vTexto);
+  mail.FromMail := fDMCadTomador.qParametrosEMAIL.AsString;
+  mail.FromCompany := ComboEmpresa.Text;
+  mail.SmtpHost := fDMCadTomador.qParametrosHOST.AsString;
+  mail.SmtpPort := fDMCadTomador.qParametrosPORTA.AsInteger;
+  mail.UseIniFile := False;
+  mail.ShowExportDialog := False;
+  mail.ShowDialog := fDMCadTomador.qParametrosTELA_ENVIO.AsString = 'S';
+  mail.ConfurmReading := fDMCadTomador.qParametrosCONFIRMACAO_LEITURA.AsString = 'S';
+  fDMCadTomador.frxReport1.PrepareReport(True);
+  fDMCadTomador.frxReport1.Export(mail);
+  mail.Destroy;
+  fDMCadTomador.cdsVTVA.Filtered := False;
 end;
 
 end.

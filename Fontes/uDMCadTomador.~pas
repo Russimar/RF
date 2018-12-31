@@ -143,6 +143,16 @@ type
     ACBrExtensoPorCento: TACBrExtenso;
     frxMailExport1: TfrxMailExport;
     frxPDFExport1: TfrxPDFExport;
+    qParametros: TSQLQuery;
+    qParametrosID: TIntegerField;
+    qParametrosEMAIL: TStringField;
+    qParametrosHOST: TStringField;
+    qParametrosPORTA: TIntegerField;
+    qParametrosSENHA: TStringField;
+    qParametrosUSUARIO: TStringField;
+    qParametrosAUTENTICACAO: TStringField;
+    qParametrosTELA_ENVIO: TStringField;
+    qParametrosCONFIRMACAO_LEITURA: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure frxValeTransporteNext(Sender: TObject);
     procedure frxValeTransporteFirst(Sender: TObject);
@@ -194,6 +204,7 @@ end;
 procedure TDMCadTomador.DataModuleCreate(Sender: TObject);
 begin
   ctCommand := sdsConsulta.CommandText;
+  qParametros.Open;
 end;
 
 procedure TDMCadTomador.prc_Localizar(ID: Integer);

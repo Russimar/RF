@@ -759,9 +759,6 @@ inherited frmCadTomador: TfrmCadTomador
     Left = 876
     Top = 61
   end
-  inherited ApplicationEvents1: TApplicationEvents
-    Top = 61
-  end
   inherited PopupMenu1: TPopupMenu
     Left = 823
     Top = 62

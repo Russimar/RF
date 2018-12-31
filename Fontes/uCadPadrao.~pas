@@ -110,6 +110,7 @@ end;
 procedure TfrmCadPadrao.SMDBGrid1DblClick(Sender: TObject);
 begin
   RzPageControl1.ActivePage := TS_Cadastro;
+  RzPageControl2.ActivePage := TS_Dados;
 end;
 
 procedure TfrmCadPadrao.FormClose(Sender: TObject; var Action: TCloseAction);
