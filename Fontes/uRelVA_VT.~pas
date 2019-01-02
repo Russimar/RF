@@ -44,6 +44,7 @@ type
     fDMSage: TDMSage;
     procedure prc_Montar_VR;
     procedure prc_Montar_VT;
+    procedure prc_Montar_Relatorio;
     { Private declarations }
   public
     vMes: string;
@@ -59,7 +60,7 @@ var
 implementation
 
 uses
-  uUtilPadrao;
+  uUtilPadrao, classe.imprimir, classe.validaemail;
 
 {$R *.dfm}
 
@@ -252,28 +253,14 @@ begin
 end;
 
 procedure TfrmRelVA_VT.btnImprimirClick(Sender: TObject);
-var
-  vArq : String;
 begin
   if fDMCadTomador.cdsVTVA.IsEmpty then
   begin
     ShowMessage('Nenhuma informação na consulta');
     exit;
   end;
-
-  if rdgTipoImpressa.ItemIndex = 1 then
-    vArq := ExtractFilePath(Application.ExeName) + 'Relatorios\Vale_Transporte.fr3'
-  else
-    vArq := ExtractFilePath(Application.ExeName) + 'Relatorios\Vale_Refeicao.fr3';
-  if FileExists(vArq) then
-    fDMCadTomador.frxReport1.Report.LoadFromFile(vArq)
-  else
-  begin
-    ShowMessage('Relatório não localizado! ' + vArq);
-    Exit;
-  end;
+  prc_Montar_Relatorio;
   fDMCadTomador.frxReport1.variables['Nome_Departamento'] :=  QuotedStr(fDMCadTomador.qTomadorNOME.AsString);
-
   fDMCadTomador.frxReport1.ShowReport;
   fDMCadTomador.cdsVTVA.Filtered := False;
 end;
@@ -289,25 +276,10 @@ procedure TfrmRelVA_VT.btnEnviaEmailClick(Sender: TObject);
 var
   mail : TfrxMailExport;
   pdf  : TfrxPDFExport;
-  vTexto, vArq : String;
+  vTexto : String;
 begin
-  if fDMCadTomador.cdsVTVA.IsEmpty then
-  begin
-    ShowMessage('Nenhuma informação na consulta');
-    exit;
-  end;
+  prc_Montar_Relatorio;
 
-  if rdgTipoImpressa.ItemIndex = 1 then
-    vArq := ExtractFilePath(Application.ExeName) + 'Relatorios\Vale_Transporte.fr3'
-  else
-    vArq := ExtractFilePath(Application.ExeName) + 'Relatorios\Vale_Refeicao.fr3';
-  if FileExists(vArq) then
-    fDMCadTomador.frxReport1.Report.LoadFromFile(vArq)
-  else
-  begin
-    ShowMessage('Relatório não localizado! ' + vArq);
-    Exit;
-  end;
   if fDMCadTomador.qParametrosEMAIL.AsString = '' then
   begin
     ShowMessage('Email não configurado nos parâmetros!');
@@ -315,15 +287,15 @@ begin
   end;
 
   fDMCadTomador.frxReport1.variables['Nome_Departamento'] :=  QuotedStr(fDMCadTomador.qTomadorNOME.AsString);
-
   mail := TfrxMailExport.Create(nil);
   pdf  := TfrxPDFExport.Create(nil);
-
-//  mail.Address := '';
+  mail.Address := '';
   if rdgTipoImpressa.ItemIndex = 0 then
     vTexto := 'Vale Refeição mês: ' + ComboMes.Text + '/' + edtAno.Text
   else
     vTexto := 'Vale Transporte mês: ' + ComboMes.Text + '/' + edtAno.Text;
+
+
   mail.Subject := vTexto;
   mail.Login := fDMCadTomador.qParametrosUSUARIO.AsString;
   mail.ExportFilter := pdf;
@@ -342,6 +314,26 @@ begin
   fDMCadTomador.frxReport1.Export(mail);
   mail.Destroy;
   fDMCadTomador.cdsVTVA.Filtered := False;
+end;
+
+procedure TfrmRelVA_VT.prc_Montar_Relatorio;
+var
+  Imprimir : TImprimir;
+begin
+  if fDMCadTomador.cdsVTVA.IsEmpty then
+  begin
+    ShowMessage('Nenhuma informação na consulta');
+    exit;
+  end;
+  Imprimir := TImprimir.Create;
+
+  if rdgTipoImpressa.ItemIndex = 1 then
+    Imprimir.Caminho := 'Relatorios\Vale_Transporte.fr3'
+  else
+    Imprimir.Caminho := 'Relatorios\Vale_Refeicao.fr3';
+
+  fDMCadTomador.frxReport1.Report.LoadFromFile(Imprimir.Caminho);
+
 end;
 
 end.

@@ -3,7 +3,7 @@ unit uUtilPadrao;
 interface
 
 uses
-  SysUtils, Dialogs, Classes, StrUtils, SqlExpr, DB, DBCtrls, JPEG;
+  SysUtils, Dialogs, Classes, StrUtils, SqlExpr, DB, DBCtrls, JPEG, Forms;
 
 function Monta_Numero(Campo: string; Tamanho: Integer): string;
 function ValidaCNPJ(numCNPJ: string): Boolean;
@@ -218,7 +218,7 @@ function ExtensoMes(n: Integer): String;
 begin
   Case n Of
     01 : result := 'Janeiro';
-    02 : nresult := 'Fevereiro';
+    02 : result := 'Fevereiro';
     03 : result := 'Março';
     04 : result := 'Abril';
     05 : result := 'Maio';
@@ -231,5 +231,6 @@ begin
     12 : result := 'Dezembro';
   end;
 end;
+
 end.
 

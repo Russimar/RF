@@ -18,7 +18,9 @@ uses
   USel_Tomador in 'USel_Tomador.pas' {frmSel_Tomador},
   uRelVA_VT in 'uRelVA_VT.pas' {frmRelVA_VT},
   uCadParametros in 'uCadParametros.pas' {frmCadParametros},
-  uDMCADParametros in 'uDMCADParametros.pas' {DMCadParametros: TDataModule};
+  uDMCADParametros in 'uDMCADParametros.pas' {DMCadParametros: TDataModule},
+  classe.imprimir in 'Classes\classe.imprimir.pas',
+  classe.validaemail in 'Classes\classe.validaemail.pas';
 
 {$R *.res}
 
