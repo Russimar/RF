@@ -166,6 +166,35 @@ type
     cdsValeRefeicaovl_vale: TFloatField;
     cdsValeRefeicaocd_empresa: TSmallintField;
     cdsValeRefeicaocd_tomador: TIntegerField;
+    sdsFuncionario: TSQLDataSet;
+    dspFuncionario: TDataSetProvider;
+    cdsFuncionario: TClientDataSet;
+    sdsFuncionariocd_empresa: TSmallintField;
+    sdsFuncionariocd_funcionario: TIntegerField;
+    sdsFuncionarionome: TStringField;
+    sdsFuncionarioendereco: TStringField;
+    sdsFuncionarionr_endereco: TIntegerField;
+    sdsFuncionariocompl_endereco: TStringField;
+    sdsFuncionariobairro: TStringField;
+    sdsFuncionariocidade: TStringField;
+    sdsFuncionarioestado: TStringField;
+    sdsFuncionariocep: TIntegerField;
+    sdsFuncionariosexo: TStringField;
+    sdsFuncionarioestado_civil: TSmallintField;
+    sdsFuncionariodt_admissao: TSQLTimeStampField;
+    cdsFuncionariocd_empresa: TSmallintField;
+    cdsFuncionariocd_funcionario: TIntegerField;
+    cdsFuncionarionome: TStringField;
+    cdsFuncionarioendereco: TStringField;
+    cdsFuncionarionr_endereco: TIntegerField;
+    cdsFuncionariocompl_endereco: TStringField;
+    cdsFuncionariobairro: TStringField;
+    cdsFuncionariocidade: TStringField;
+    cdsFuncionarioestado: TStringField;
+    cdsFuncionariocep: TIntegerField;
+    cdsFuncionariosexo: TStringField;
+    cdsFuncionarioestado_civil: TSmallintField;
+    cdsFuncionariodt_admissao: TSQLTimeStampField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -178,6 +207,7 @@ type
     procedure prc_Abrir_Vale_Transporte(ID_Empresa, ID_Tomador : Integer); overload;
     procedure prc_Abrir_Vale_Refeicao(ID_Empresa, ID_Tomador : Integer);
     procedure prc_Abrir_ProcEvento(ID_Empresa, ID_Tomador, Mes: Integer; Ano : String);
+    procedure prc_Abrir_Funcionario_Sage;
     { Public declarations }
   end;
 
@@ -197,6 +227,13 @@ begin
   ctProcEvento  := sdsProcEvento.CommandText;
   ctValeTransporte := sdsValeTransporte.CommandText;
   ctValeRefeicao := sdsValeRefeicao.CommandText;
+end;
+
+procedure TDMSage.prc_Abrir_Funcionario_Sage;
+begin
+  cdsFuncionario.Close;
+//  sdsTomadorSage.CommandText := ctTomadorSage + ' where cd_empresa = ' + IntToStr(vFilial);
+  cdsFuncionario.Open;
 end;
 
 procedure TDMSage.prc_Abrir_ProcEvento(ID_Empresa, ID_Tomador, Mes: Integer; Ano : String);

@@ -1,6 +1,6 @@
 inherited frmCadTomador: TfrmCadTomador
-  Left = 353
-  Top = 46
+  Left = 207
+  Top = 24
   Width = 1010
   Height = 652
   Caption = 'Cadastro de Tomadores'
@@ -16,6 +16,9 @@ inherited frmCadTomador: TfrmCadTomador
     inherited TS_Consulta: TRzTabSheet
       inherited pnlConsulta: TPanel
         Width = 990
+        inherited NxButton2: TNxButton
+          PopupMenu = nil
+        end
         object btnAtualiza: TNxButton
           Left = 788
           Top = 3
@@ -92,12 +95,14 @@ inherited frmCadTomador: TfrmCadTomador
             Expanded = False
             FieldName = 'ID_FILIAL'
             Title.Alignment = taCenter
+            Width = 56
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'ID_TOMADOR'
             Title.Alignment = taCenter
+            Width = 72
             Visible = True
           end
           item
@@ -764,9 +769,6 @@ inherited frmCadTomador: TfrmCadTomador
     Top = 62
     inherited Aniversariantes1: TMenuItem
       Caption = 'Recibo Vale Alimenta'#231#227'o'
-    end
-    object ReciboValeTransporte1: TMenuItem
-      Caption = 'Recibo Vale Transporte'
     end
   end
   object popOpcoes: TPopupMenu

@@ -80,13 +80,14 @@ object fMenu: TfMenu
     ParentShowHint = False
     ShowHint = True
     TabOrder = 0
-    object ToolButton1: TToolButton
+    object Tomador: TToolButton
       Left = 0
       Top = 2
-      Hint = 'Cadastro Empresa'
-      Caption = 'ToolButton1'
+      Hint = 'Cadastro Tomador'
+      Caption = 'Tomador'
       ImageIndex = 0
       Wrap = True
+      OnClick = TomadorClick
     end
     object ToolButton2: TToolButton
       Left = 0
@@ -118,11 +119,14 @@ object fMenu: TfMenu
       Caption = 'Manuten'#231#227'o'
       object Parmetros1: TMenuItem
         Caption = 'Par'#226'metros'
-        OnClick = Parmetros1Click
       end
       object Tomador1: TMenuItem
         Caption = 'Tomador'
         OnClick = Tomador1Click
+      end
+      object Funcionrio1: TMenuItem
+        Caption = 'Funcion'#225'rio'
+        OnClick = Funcionrio1Click
       end
     end
     object Janelas1: TMenuItem
@@ -4824,5 +4828,10 @@ object fMenu: TfMenu
     Connection = dmDatabase.scoPrincipal
     Left = 552
     Top = 8
+  end
+  object ApplicationEvents1: TApplicationEvents
+    OnException = ApplicationEvents1Exception
+    Left = 512
+    Top = 208
   end
 end

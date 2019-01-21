@@ -3,9 +3,9 @@ unit uMenu;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, ImgList,
-  ComCtrls, Menus, ToolWin, IniFiles, ExtCtrls, StdCtrls, UCBase, UCDBXConn,
-  ActnList, jpeg;
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ImgList, ComCtrls, Menus, ToolWin, IniFiles, ExtCtrls, StdCtrls,
+  UCBase, UCDBXConn, ActnList, jpeg, AppEvnts;
 
 type
   TfMenu = class(TForm)
@@ -28,18 +28,22 @@ type
     Label1: TLabel;
     Image1: TImage;
     lblDataBase: TLabel;
-    ToolButton1: TToolButton;
+    Tomador: TToolButton;
     Janelas1: TMenuItem;
     Ativas1: TMenuItem;
     ToolButton2: TToolButton;
     Parmetros1: TMenuItem;
+    ApplicationEvents1: TApplicationEvents;
+    Funcionrio1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure UserControl1AfterLogin(Sender: TObject);
     procedure EfetuarLogoff1Click(Sender: TObject);
     procedure ToolButton2Click(Sender: TObject);
+    procedure ApplicationEvents1Exception(Sender: TObject; E: Exception);
+    procedure TomadorClick(Sender: TObject);
     procedure Tomador1Click(Sender: TObject);
-    procedure Parmetros1Click(Sender: TObject);
+    procedure Funcionrio1Click(Sender: TObject);
   private
     procedure prc_Habilita_Menu;
     function GetBuildInfoAsString: string;
@@ -50,9 +54,9 @@ type
   public
     vPath: string;
     vVersao: string;
-    vPathLogo : string;
-    vDataAtual : TDateTime;
-    procedure OpenForm(FClass: TFormClass; vEstado: TWindowState; TipoPessoa: String = '');
+    vPathLogo: string;
+    vDataAtual: TDateTime;
+    procedure OpenForm(FClass: TFormClass; vEstado: TWindowState; TipoPessoa: string = '');
 
     { Public declarations }
   end;
@@ -63,7 +67,8 @@ var
 implementation
 
 uses
-  DmdDatabase, uUtilPadrao, uCadTomador, uRelVA_VT, uCadParametros;
+  DmdDatabase, uUtilPadrao, uCadTomador, uRelVA_VT, uCadParametros,
+  uCadFuncionario;
 
 const
   cArquivoConfiguracao = 'Config.ini';
@@ -80,13 +85,13 @@ procedure TfMenu.FormCreate(Sender: TObject);
 var
   TaskBarH: THandle;
   TaskBarR: TRect;
-  Config : TIniFile;
+  Config: TIniFile;
 begin
   UserControl1.Execute;
   vPath := ExtractFilePath(Application.ExeName);
   lblDataBase.Caption := dmDatabase.scoPrincipal.Params.Values['DATABASE'];
   Config := TIniFile.Create(fnc_ArquivoConfiguracao);
-  vPathLogo := Config.ReadString('IMAGEM','LOGOMENU','');
+  vPathLogo := Config.ReadString('IMAGEM', 'LOGOMENU', '');
    // obtem o retangulo com o taskbar
   TaskBarH := FindWindow('Shell_TrayWnd', nil);
   GetWindowRect(TaskBarH, TaskBarR);
@@ -105,24 +110,23 @@ end;
 procedure TfMenu.FormShow(Sender: TObject);
 begin
   vDataAtual := Date;
-  lblDataBase.Top  := Image1.Top - 10;
+  lblDataBase.Top := Image1.Top - 10;
   lblDataBase.Left := Image1.Left - 10;
 
-  Label1.Top  := Image1.Top - 30;
+  Label1.Top := Image1.Top - 30;
   Label1.Left := Image1.Left - 20;
-
 
   Image1.Picture.LoadFromFile(vPathLogo);
   stat1.Panels[0].Text := vUsuario;
-  stat1.Panels[1].Text := FormatDateTime(' dd "de" MMMM "de" yyyy',vDataAtual)
+  stat1.Panels[1].Text := FormatDateTime(' dd "de" MMMM "de" yyyy', vDataAtual)
 
 end;
 
 procedure TfMenu.GetBuildInfo(exeName: string; var V1, V2, V3, V4: word);
 var
-  VerInfoSize, VerValueSize, Dummy : DWORD;
-  VerInfo : Pointer;
-  VerValue : PVSFixedFileInfo;
+  VerInfoSize, VerValueSize, Dummy: DWORD;
+  VerInfo: Pointer;
+  VerValue: PVSFixedFileInfo;
 begin
   VerInfoSize := GetFileVersionInfoSize(PChar(exeName), Dummy);
   if VerInfoSize > 0 then
@@ -132,7 +136,7 @@ begin
       if GetFileVersionInfo(PChar(ParamStr(0)), 0, VerInfoSize, VerInfo) then
       begin
         VerQueryValue(VerInfo, '\', Pointer(VerValue), VerValueSize);
-        with VerValue^do
+        with VerValue^ do
         begin
           V1 := dwFileVersionMS shr 16;
           V2 := dwFileVersionMS and $FFFF;
@@ -182,9 +186,9 @@ begin
   UserControl1.Logoff;
 end;
 
-procedure TfMenu.OpenForm(FClass: TFormClass; vEstado: TWindowState; TipoPessoa: String = '');
+procedure TfMenu.OpenForm(FClass: TFormClass; vEstado: TWindowState; TipoPessoa: string = '');
 var
-  existe : TForm;
+  existe: TForm;
   j: Byte;
 begin
   existe := nil;
@@ -200,17 +204,51 @@ begin
   end
   else
   begin
-    Application.CreateForm(FClass,existe);
+    Application.CreateForm(FClass, existe);
     existe.FormStyle := fsMDIChild;
     existe.Show;
   end;
   existe.WindowState := vEstado;
 end;
 
-
 procedure TfMenu.ToolButton2Click(Sender: TObject);
 begin
-  OpenForm(TfrmRelVA_VT,wsMaximized);
+  OpenForm(TfrmRelVA_VT, wsMaximized);
+end;
+
+procedure TfMenu.ApplicationEvents1Exception(Sender: TObject; E: Exception);
+var
+  CaminhoArquivoLog: string;
+  ArquivoLog: TextFile;
+  DataHora: string;
+  vErro: string;
+begin
+  CaminhoArquivoLog := GetCurrentDir + '\LogExcessoes.txt';
+
+  AssignFile(ArquivoLog, CaminhoArquivoLog);
+  if FileExists(CaminhoArquivoLog) then
+    Append(ArquivoLog)
+  else
+    Rewrite(ArquivoLog);
+  DataHora := FormatDateTime('dd-mm-yyyy_hh-nn-ss', Now);
+//  GravarImagemFormulario(DataHora);
+
+  Writeln(ArquivoLog, 'Data/Hora.......: ' + DatetimeToStr(Now));
+  Writeln(ArquivoLog, 'Mensagem........: ' + E.Message);
+  Writeln(ArquivoLog, 'Classe Exceção..: ' + E.ClassName);
+  Writeln(ArquivoLog, 'Formulário......: ' + Screen.ActiveForm.Name);
+//  Writeln(ArquivoLog, 'Unit............: ' + Sender.UnitName);
+  Writeln(ArquivoLog, 'Controle Visual.: ' + Screen.ActiveControl.Name);
+  Writeln(ArquivoLog, 'Usuário.........: ' + ObterNomeUsuario);
+  Writeln(ArquivoLog, 'Versão Windows..: ' + ObterVersaoWindows);
+  WriteLn(ArquivoLog, StringOfChar('-', 70));
+  CloseFile(ArquivoLog);
+  MessageDlg('Ocorreu um Erro Interno no sistema, favor entrar em contato com o suporte técnico', mtWarning, [mbOK], 0);
+end;
+
+procedure TfMenu.TomadorClick(Sender: TObject);
+begin
+  OpenForm(TfrmCadTomador, wsMaximized);
 end;
 
 procedure TfMenu.Tomador1Click(Sender: TObject);
@@ -218,9 +256,9 @@ begin
   OpenForm(TfrmCadTomador,wsMaximized);
 end;
 
-procedure TfMenu.Parmetros1Click(Sender: TObject);
+procedure TfMenu.Funcionrio1Click(Sender: TObject);
 begin
-  OpenForm(TfrmCadParametros,wsMaximized);
+  OpenForm(TfrmCadFuncionario,wsMaximized);
 end;
 
 end.

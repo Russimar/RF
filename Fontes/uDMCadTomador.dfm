@@ -8,7 +8,7 @@ object DMCadTomador: TDMCadTomador
   object sdsTomador: TSQLDataSet
     NoMetadata = True
     GetMetadata = False
-    CommandText = 'SELECT * FROM TOMADOR'#13#10
+    CommandText = 'SELECT * FROM TOMADOR'#13#10'WHERE 0=0'#13#10
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoPrincipal

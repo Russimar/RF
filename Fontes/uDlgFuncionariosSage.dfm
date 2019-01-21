@@ -1,9 +1,9 @@
-object DlgTomadoresSage: TDlgTomadoresSage
+object DlgFuncionariosSage: TDlgFuncionariosSage
   Left = 263
   Top = 125
   Width = 928
   Height = 480
-  Caption = 'Tomadores Sistema Sage'
+  Caption = 'Funcion'#225'rios Sage'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -27,7 +27,7 @@ object DlgTomadoresSage: TDlgTomadoresSage
       Width = 910
       Height = 383
       Align = alClient
-      DataSource = dsTomadorSage
+      DataSource = dsFuncionarioSage
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
       TabOrder = 0
       TitleFont.Charset = DEFAULT_CHARSET
@@ -207,7 +207,7 @@ object DlgTomadoresSage: TDlgTomadoresSage
       end
     end
   end
-  object dsTomadorSage: TDataSource
+  object dsFuncionarioSage: TDataSource
     Left = 801
     Top = 17
   end

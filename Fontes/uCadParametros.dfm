@@ -1,22 +1,28 @@
 inherited frmCadParametros: TfrmCadParametros
-  Left = 280
+  Left = 141
   Top = 143
+  Width = 1067
   Caption = 'Par'#226'metros'
+  OldCreateOrder = True
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   inherited RzPageControl1: TRzPageControl
-    ActivePage = TS_Cadastro
-    TabIndex = 1
+    Width = 1051
     OnChange = RzPageControl1Change
     FixedDimension = 19
     inherited TS_Consulta: TRzTabSheet
+      inherited pnlConsulta: TPanel
+        Width = 1047
+      end
       inherited pnlPesquisa: TPanel
+        Width = 1047
         inherited NxButton1: TNxButton
           OnClick = NxButton1Click
         end
       end
       inherited SMDBGrid1: TSMDBGrid
+        Width = 1047
         DataSource = DMCadParametros.dsConsulta
         ColCount = 7
         Columns = <
@@ -44,6 +50,7 @@ inherited frmCadParametros: TfrmCadParametros
             Expanded = False
             FieldName = 'PORTA'
             Title.Alignment = taCenter
+            Width = 64
             Visible = True
           end
           item
@@ -64,14 +71,17 @@ inherited frmCadParametros: TfrmCadParametros
     end
     inherited TS_Cadastro: TRzTabSheet
       inherited Panel3: TPanel
+        Width = 1047
         inherited btnConfirmar: TNxButton
           OnClick = btnConfirmarClick
         end
       end
       inherited RzPageControl2: TRzPageControl
+        Width = 1047
         FixedDimension = 19
         inherited TS_Dados: TRzTabSheet
           inherited pnlCadastro: TPanel
+            Width = 1043
             object Label2: TLabel
               Left = 32
               Top = 16

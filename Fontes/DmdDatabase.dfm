@@ -14,7 +14,7 @@ object dmDatabase: TdmDatabase
     LoginPrompt = False
     Params.Strings = (
       'DriverName=Interbase'
-      'Database=E:\projetos\Dados\dados.fdb'
+      'Database=E:\projetos\Dados\DADOS.fdb'
       'RoleName=RoleName'
       'User_Name=sysdba'
       'Password=masterkey'
@@ -51,14 +51,14 @@ object dmDatabase: TdmDatabase
     Params.Strings = (
       'DriverName=MSSQL'
       'HostName=.\SQLExpress'
-      'DataBase=Sage_Gestao_Contabil_RF'
+      'DataBase=Sage_Gestao_Contabil_RF_New'
       'User_Name=sa'
       'Password=GUI180400'
       'BlobSize=-1'
       'ErrorResourceFile='
       'LocaleCode=0000'
       'MSSQL TransIsolation=ReadCommited'
-      'OS Authentication=False')
+      'OS Authentication=True')
     VendorLib = 'oledb'
     Connected = True
     Left = 39

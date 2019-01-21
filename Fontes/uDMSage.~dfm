@@ -723,4 +723,154 @@ object DMSage: TDMSage
     Left = 208
     Top = 192
   end
+  object sdsFuncionario: TSQLDataSet
+    CommandText = 
+      'SELECT fun.cd_empresa'#13#10'      ,fun.cd_funcionario'#13#10'      ,fun.nom' +
+      'e'#13#10'      ,fun.endereco'#13#10'      ,fun.nr_endereco'#13#10'      ,fun.compl' +
+      '_endereco'#13#10'      ,fun.bairro'#13#10'      ,fun.cidade'#13#10'      ,fun.esta' +
+      'do'#13#10'      ,fun.cep'#13#10'      ,fun.sexo'#13#10'      ,fun.estado_civil'#13#10'  ' +
+      '    ,ffunc.dt_admissao'#13#10'  FROM Funcionario fun'#13#10'  INNER JOIN CRD' +
+      'EMPRESA emp ON emp.cd_empresa = fun.cd_empresa'#13#10'  INNER JOIN FUN' +
+      'FUNCIONAL ffunc on ffunc.cd_empresa = fun.cd_empresa and ffunc.c' +
+      'd_funcionario = fun.cd_funcionario'#13#10'WHERE emp.cnpj_cpf is not nu' +
+      'll '#13#10'order by fun.nome'#13#10
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = dmDatabase.Conexao_SQLServer
+    Left = 344
+    Top = 176
+    object sdsFuncionariocd_empresa: TSmallintField
+      FieldName = 'cd_empresa'
+      Required = True
+    end
+    object sdsFuncionariocd_funcionario: TIntegerField
+      FieldName = 'cd_funcionario'
+      Required = True
+    end
+    object sdsFuncionarionome: TStringField
+      FieldName = 'nome'
+      FixedChar = True
+      Size = 40
+    end
+    object sdsFuncionarioendereco: TStringField
+      FieldName = 'endereco'
+      FixedChar = True
+      Size = 40
+    end
+    object sdsFuncionarionr_endereco: TIntegerField
+      FieldName = 'nr_endereco'
+    end
+    object sdsFuncionariocompl_endereco: TStringField
+      FieldName = 'compl_endereco'
+      FixedChar = True
+      Size = 15
+    end
+    object sdsFuncionariobairro: TStringField
+      FieldName = 'bairro'
+      FixedChar = True
+    end
+    object sdsFuncionariocidade: TStringField
+      FieldName = 'cidade'
+      FixedChar = True
+      Size = 50
+    end
+    object sdsFuncionarioestado: TStringField
+      FieldName = 'estado'
+      FixedChar = True
+      Size = 2
+    end
+    object sdsFuncionariocep: TIntegerField
+      FieldName = 'cep'
+    end
+    object sdsFuncionariosexo: TStringField
+      FieldName = 'sexo'
+      FixedChar = True
+      Size = 1
+    end
+    object sdsFuncionarioestado_civil: TSmallintField
+      FieldName = 'estado_civil'
+    end
+    object sdsFuncionariodt_admissao: TSQLTimeStampField
+      FieldName = 'dt_admissao'
+    end
+  end
+  object dspFuncionario: TDataSetProvider
+    DataSet = sdsFuncionario
+    Left = 376
+    Top = 176
+  end
+  object cdsFuncionario: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspFuncionario'
+    Left = 408
+    Top = 176
+    object cdsFuncionariocd_empresa: TSmallintField
+      DisplayLabel = 'Cod.Empresa'
+      FieldName = 'cd_empresa'
+      Required = True
+    end
+    object cdsFuncionariocd_funcionario: TIntegerField
+      DisplayLabel = 'Cod.Funcion'#225'rio'
+      FieldName = 'cd_funcionario'
+      Required = True
+    end
+    object cdsFuncionarionome: TStringField
+      DisplayLabel = 'Nome'
+      FieldName = 'nome'
+      FixedChar = True
+      Size = 40
+    end
+    object cdsFuncionarioendereco: TStringField
+      DisplayLabel = 'Endere'#231'o'
+      FieldName = 'endereco'
+      FixedChar = True
+      Size = 40
+    end
+    object cdsFuncionarionr_endereco: TIntegerField
+      DisplayLabel = 'N'#250'mero'
+      FieldName = 'nr_endereco'
+    end
+    object cdsFuncionariocompl_endereco: TStringField
+      DisplayLabel = 'Complemento'
+      FieldName = 'compl_endereco'
+      FixedChar = True
+      Size = 15
+    end
+    object cdsFuncionariobairro: TStringField
+      DisplayLabel = 'Bairro'
+      FieldName = 'bairro'
+      FixedChar = True
+    end
+    object cdsFuncionariocidade: TStringField
+      DisplayLabel = 'Cidade'
+      FieldName = 'cidade'
+      FixedChar = True
+      Size = 50
+    end
+    object cdsFuncionarioestado: TStringField
+      DisplayLabel = 'UF'
+      FieldName = 'estado'
+      FixedChar = True
+      Size = 2
+    end
+    object cdsFuncionariocep: TIntegerField
+      DisplayLabel = 'CEP'
+      FieldName = 'cep'
+    end
+    object cdsFuncionariosexo: TStringField
+      DisplayLabel = 'Sexo'
+      FieldName = 'sexo'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsFuncionarioestado_civil: TSmallintField
+      DisplayLabel = 'Estado Civil'
+      FieldName = 'estado_civil'
+    end
+    object cdsFuncionariodt_admissao: TSQLTimeStampField
+      DisplayLabel = 'Data Admiss'#227'o'
+      FieldName = 'dt_admissao'
+    end
+  end
 end

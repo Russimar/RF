@@ -3,7 +3,7 @@ unit uUtilPadrao;
 interface
 
 uses
-  SysUtils, Dialogs, Classes, StrUtils, SqlExpr, DB, DBCtrls, JPEG;
+  SysUtils, Dialogs, Classes, StrUtils, SqlExpr, DB, DBCtrls, JPEG, Windows, Registry;
 
 function Monta_Numero(Campo: string; Tamanho: Integer): string;
 function ValidaCNPJ(numCNPJ: string): Boolean;
@@ -11,6 +11,9 @@ function ValidaCPF(numCPF: string): Boolean;
 function VerificaDuplicidade(vCnpj, vTipo: string; ID: Integer; ID_Filial: Integer = 0): string;
 procedure SalvaImagem(FieldImg : TField; nFile : TFileName; ComponentDBImg : TDBImage; FieldExt : String = 'EXTENSAO');
 function ExtensoMes(n: Integer): String;
+function ObterNomeUsuario : String;
+function ObterVersaoWindows : String;
+procedure GravarImagemFormulario(const NomeArquivo : String);
 
 var
   vUsuario: string;
@@ -230,6 +233,50 @@ begin
     11 : result := 'Novembro';
     12 : result := 'Dezembro';
   end;
+end;
+
+function ObterNomeUsuario : String;
+var
+  Size : DWORD;
+begin
+  // retorna o login do usuário do sistema operacional
+  Size := 1024;
+  SetLength(Result, Size);
+  GetUserName(PChar(Result), Size);
+  SetLength(Result, Size - 1);
+end;
+
+function ObterVersaoWindows : String;
+var
+  vNome,
+  vVersao,
+  vCurrentBuild: String;
+  Reg : TRegistry;
+begin
+  Reg := TRegistry.Create;
+  Reg.Access := KEY_READ; //Colocando nosso Registro em modo Leitura
+  Reg.RootKey := HKEY_LOCAL_MACHINE; //Definindo a Raiz
+  //Abrindo a chave
+  Reg.OpenKey('\SOFTWARE\Microsoft\Windows NT\CurrentVersion\', true);
+  //Obtém os parâmetros
+  vNome := Reg.ReadString('ProductName');
+  vVersao := Reg.ReadString('CurrentVersion');
+  vCurrentBuild := Reg.ReadString('CurrentBuild');
+  //Monta uma string de retorno com a versão
+  Result := vNome + ' - ' + vVersao + ' - ' + vCurrentBuild;
+end;
+
+procedure GravarImagemFormulario(const NomeArquivo : String);
+var
+  JPEG : TJPEGImage;
+begin
+  JPEG := TJPEGImage.Create;
+  try
+  finally
+
+  end;
+
+
 end;
 
 end.

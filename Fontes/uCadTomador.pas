@@ -40,7 +40,6 @@ type
     Label9: TLabel;
     DBEdit8: TDBEdit;
     DBCheckBox1: TDBCheckBox;
-    ReciboValeTransporte1: TMenuItem;
     procedure NxButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure AtualizaDeptoSage1Click(Sender: TObject);

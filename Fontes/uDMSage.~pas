@@ -166,6 +166,35 @@ type
     cdsValeRefeicaovl_vale: TFloatField;
     cdsValeRefeicaocd_empresa: TSmallintField;
     cdsValeRefeicaocd_tomador: TIntegerField;
+    sdsFuncionario: TSQLDataSet;
+    dspFuncionario: TDataSetProvider;
+    cdsFuncionario: TClientDataSet;
+    sdsFuncionariocd_empresa: TSmallintField;
+    sdsFuncionariocd_funcionario: TIntegerField;
+    sdsFuncionarionome: TStringField;
+    sdsFuncionarioendereco: TStringField;
+    sdsFuncionarionr_endereco: TIntegerField;
+    sdsFuncionariocompl_endereco: TStringField;
+    sdsFuncionariobairro: TStringField;
+    sdsFuncionariocidade: TStringField;
+    sdsFuncionarioestado: TStringField;
+    sdsFuncionariocep: TIntegerField;
+    sdsFuncionariosexo: TStringField;
+    sdsFuncionarioestado_civil: TSmallintField;
+    sdsFuncionariodt_admissao: TSQLTimeStampField;
+    cdsFuncionariocd_empresa: TSmallintField;
+    cdsFuncionariocd_funcionario: TIntegerField;
+    cdsFuncionarionome: TStringField;
+    cdsFuncionarioendereco: TStringField;
+    cdsFuncionarionr_endereco: TIntegerField;
+    cdsFuncionariocompl_endereco: TStringField;
+    cdsFuncionariobairro: TStringField;
+    cdsFuncionariocidade: TStringField;
+    cdsFuncionarioestado: TStringField;
+    cdsFuncionariocep: TIntegerField;
+    cdsFuncionariosexo: TStringField;
+    cdsFuncionarioestado_civil: TSmallintField;
+    cdsFuncionariodt_admissao: TSQLTimeStampField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

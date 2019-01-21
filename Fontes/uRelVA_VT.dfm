@@ -1,6 +1,6 @@
 object frmRelVA_VT: TfrmRelVA_VT
-  Left = 165
-  Top = 118
+  Left = 152
+  Top = 108
   Width = 1128
   Height = 518
   Caption = 'Rela'#231#227'o de VA e VT'
@@ -203,7 +203,7 @@ object frmRelVA_VT: TfrmRelVA_VT
       Top = 2
       Width = 161
       Height = 30
-      Caption = 'Efetuar Pesquisa'
+      Caption = 'Pesquisar'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
@@ -435,6 +435,7 @@ object frmRelVA_VT: TfrmRelVA_VT
       ParentFont = False
       TabOrder = 11
       Transparent = True
+      Visible = False
       OnClick = btnEnviaEmailClick
     end
   end

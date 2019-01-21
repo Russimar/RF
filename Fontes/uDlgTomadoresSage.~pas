@@ -17,6 +17,7 @@ type
     NxButton2: TNxButton;
     procedure NxButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure NxButton2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -75,6 +76,11 @@ procedure TDlgTomadoresSage.FormShow(Sender: TObject);
 begin
   fDMCadTomador := TDMCadTomador.Create(Self);
   oDBUtils.SetDataSourceProperties(Self, fDMCadTomador);
+end;
+
+procedure TDlgTomadoresSage.NxButton2Click(Sender: TObject);
+begin
+  Close;
 end;
 
 end.

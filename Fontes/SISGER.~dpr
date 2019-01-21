@@ -13,12 +13,16 @@ uses
   uCadTomador in 'uCadTomador.pas' {frmCadTomador},
   uDMCadTomador in 'uDMCadTomador.pas' {DMCadTomador: TDataModule},
   uDMSage in 'uDMSage.pas' {DMSage: TDataModule},
-  uDlgTomadoresSage in 'uDlgTomadoresSage.pas' {DlgTomadoresSage},
+  uDlgFuncionariosSage in 'uDlgFuncionariosSage.pas' {DlgFuncionariosSage},
   uDlgDiasTrabalhados in 'uDlgDiasTrabalhados.pas' {DlgDiasTrabalhados},
   USel_Tomador in 'USel_Tomador.pas' {frmSel_Tomador},
   uRelVA_VT in 'uRelVA_VT.pas' {frmRelVA_VT},
   uCadParametros in 'uCadParametros.pas' {frmCadParametros},
-  uDMCADParametros in 'uDMCADParametros.pas' {DMCadParametros: TDataModule};
+  uDMCADParametros in 'uDMCADParametros.pas' {DMCadParametros: TDataModule},
+  classe.imprimir in 'Classes\classe.imprimir.pas',
+  classe.validaemail in 'Classes\classe.validaemail.pas',
+  uCadFuncionario in 'uCadFuncionario.pas' {frmCadFuncionario},
+  uDMCadFuncionario in 'uDMCadFuncionario.pas' {DMFuncionario: TDataModule};
 
 {$R *.res}
 
