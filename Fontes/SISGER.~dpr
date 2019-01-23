@@ -22,7 +22,9 @@ uses
   classe.imprimir in 'Classes\classe.imprimir.pas',
   classe.validaemail in 'Classes\classe.validaemail.pas',
   uCadFuncionario in 'uCadFuncionario.pas' {frmCadFuncionario},
-  uDMCadFuncionario in 'uDMCadFuncionario.pas' {DMFuncionario: TDataModule};
+  uDMCadFuncionario in 'uDMCadFuncionario.pas' {DMFuncionario: TDataModule},
+  uDlgTomadoresSage in 'uDlgTomadoresSage.pas' {DlgTomadoresSage},
+  uCadFaltaAtestados in 'uCadFaltaAtestados.pas' {frmFaltaAtestado};
 
 {$R *.res}
 
@@ -32,6 +34,7 @@ begin
     Application.Title := 'SIGDUC (Sistema Gerenciador de Dados dos Usuários do CMPD)';
     Application.CreateForm(TfrmAbertura, frmAbertura);
   Application.CreateForm(TdmDatabase, dmDatabase);
+  Application.CreateForm(TfrmFaltaAtestado, frmFaltaAtestado);
   frmAbertura.Show;
     frmAbertura.Refresh;
     Application.CreateForm(TdmDataBase, dmDataBase);

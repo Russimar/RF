@@ -1,6 +1,6 @@
 object frmRelVA_VT: TfrmRelVA_VT
-  Left = 152
-  Top = 108
+  Left = 69
+  Top = 70
   Width = 1128
   Height = 518
   Caption = 'Rela'#231#227'o de VA e VT'

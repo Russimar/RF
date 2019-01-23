@@ -23,7 +23,8 @@ uses
   classe.validaemail in 'Classes\classe.validaemail.pas',
   uCadFuncionario in 'uCadFuncionario.pas' {frmCadFuncionario},
   uDMCadFuncionario in 'uDMCadFuncionario.pas' {DMFuncionario: TDataModule},
-  uDlgTomadoresSage in 'uDlgTomadoresSage.pas' {DlgTomadoresSage};
+  uDlgTomadoresSage in 'uDlgTomadoresSage.pas' {DlgTomadoresSage},
+  uCadFaltaAtestados in 'uCadFaltaAtestados.pas' {frmFaltaAtestado};
 
 {$R *.res}
 

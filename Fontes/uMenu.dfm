@@ -128,6 +128,10 @@ object fMenu: TfMenu
         Caption = 'Funcion'#225'rio'
         OnClick = Funcionrio1Click
       end
+      object FaltaseAtestados1: TMenuItem
+        Caption = 'Faltas e Atestados'
+        OnClick = FaltaseAtestados1Click
+      end
     end
     object Janelas1: TMenuItem
       Caption = 'Janelas'

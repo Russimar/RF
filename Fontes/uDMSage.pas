@@ -246,7 +246,7 @@ begin
   vSql := vSql + ' and month(ft.dt_lotacao) = ' + IntToStr(Mes);
   vSql := vSql + ' where p.cd_empresa = ' + IntToStr(vFilial);
   vSql := vSql + ' and ft.cd_tomador = ' + IntToStr(ID_Tomador);
-  vSql := vSql + ' and p.cd_evento in (225, 938)';
+//  vSql := vSql + ' and p.cd_evento in (225, 938)';
   vSql := vSql + ' and p.mes = ' + IntToStr(Mes);
   vSql := vSql + ' and p.ano = ' + Ano;
   sdsProcEvento.CommandText := ctProcEvento + vSql;

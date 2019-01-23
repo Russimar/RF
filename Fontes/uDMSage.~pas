@@ -207,6 +207,7 @@ type
     procedure prc_Abrir_Vale_Transporte(ID_Empresa, ID_Tomador : Integer); overload;
     procedure prc_Abrir_Vale_Refeicao(ID_Empresa, ID_Tomador : Integer);
     procedure prc_Abrir_ProcEvento(ID_Empresa, ID_Tomador, Mes: Integer; Ano : String);
+    procedure prc_Abrir_Funcionario_Sage;
     { Public declarations }
   end;
 
@@ -226,6 +227,13 @@ begin
   ctProcEvento  := sdsProcEvento.CommandText;
   ctValeTransporte := sdsValeTransporte.CommandText;
   ctValeRefeicao := sdsValeRefeicao.CommandText;
+end;
+
+procedure TDMSage.prc_Abrir_Funcionario_Sage;
+begin
+  cdsFuncionario.Close;
+//  sdsTomadorSage.CommandText := ctTomadorSage + ' where cd_empresa = ' + IntToStr(vFilial);
+  cdsFuncionario.Open;
 end;
 
 procedure TDMSage.prc_Abrir_ProcEvento(ID_Empresa, ID_Tomador, Mes: Integer; Ano : String);

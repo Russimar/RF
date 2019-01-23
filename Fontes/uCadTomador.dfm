@@ -164,18 +164,21 @@ inherited frmCadTomador: TfrmCadTomador
             Expanded = False
             FieldName = 'DOCUMENTO'
             Title.Alignment = taCenter
+            Width = 64
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'FPAS'
             Title.Alignment = taCenter
+            Width = 64
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'STATUS'
             Title.Alignment = taCenter
+            Width = 64
             Visible = True
           end>
       end
@@ -417,12 +420,14 @@ inherited frmCadTomador: TfrmCadTomador
                     Expanded = False
                     FieldName = 'PERC_VA'
                     Title.Alignment = taCenter
+                    Width = 64
                     Visible = True
                   end
                   item
                     Expanded = False
                     FieldName = 'VALOR_LANCHE'
                     Title.Alignment = taCenter
+                    Width = 64
                     Visible = True
                   end>
               end

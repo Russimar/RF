@@ -35,6 +35,7 @@ type
     Parmetros1: TMenuItem;
     ApplicationEvents1: TApplicationEvents;
     Funcionrio1: TMenuItem;
+    FaltaseAtestados1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure UserControl1AfterLogin(Sender: TObject);
@@ -44,6 +45,7 @@ type
     procedure TomadorClick(Sender: TObject);
     procedure Tomador1Click(Sender: TObject);
     procedure Funcionrio1Click(Sender: TObject);
+    procedure FaltaseAtestados1Click(Sender: TObject);
   private
     procedure prc_Habilita_Menu;
     function GetBuildInfoAsString: string;
@@ -68,7 +70,7 @@ implementation
 
 uses
   DmdDatabase, uUtilPadrao, uCadTomador, uRelVA_VT, uCadParametros,
-  uCadFuncionario;
+  uCadFuncionario, uCadFaltaAtestados;
 
 const
   cArquivoConfiguracao = 'Config.ini';
@@ -259,6 +261,11 @@ end;
 procedure TfMenu.Funcionrio1Click(Sender: TObject);
 begin
   OpenForm(TfrmCadFuncionario,wsMaximized);
+end;
+
+procedure TfMenu.FaltaseAtestados1Click(Sender: TObject);
+begin
+  OpenForm(TfrmFaltaAtestado, wsMaximized);
 end;
 
 end.
