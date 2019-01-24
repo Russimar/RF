@@ -229,10 +229,10 @@ begin
       fDMCadTomador.cdsVTVAValor_Passagem.AsFloat := fDMSage.cdsValeTransportevl_vale.AsFloat;
       fDMCadTomador.cdsVTVAQtde_Passagem.AsFloat := fDMSage.cdsValeTransporteqt_dia_util.AsFloat;
       fDMCadTomador.cdsVTVADiasTrabalhados.AsFloat := fDMCadTomador.qTomador_DiasDIAS.AsInteger;
-      if fDMSage.cdsProcEvento.Locate('cd_funcionario;cd_evento', VarArrayOf([fDMCadTomador.cdsVTVACod_Funcionario.AsInteger, '938']), [loCaseInsensitive]) then
-        fDMCadTomador.cdsVTVADiasAtestado.AsFloat := fDMSage.cdsProcEventoreferencia.AsFloat;
-      if fDMSage.cdsProcEvento.Locate('cd_funcionario;cd_evento', VarArrayOf([fDMCadTomador.cdsVTVACod_Funcionario.AsInteger, '225']), [loCaseInsensitive]) then
-        fDMCadTomador.cdsVTVADiasFalta.AsFloat := fDMSage.cdsProcEventoreferencia.AsFloat;
+      if fDMCadFuncionario.cdsFaltasAtestado.Locate('ID_FUNCIONARIO;ID_FILIAL;TIPO;ANO;MES', VarArrayOf([fDMCadTomador.cdsVTVACod_Funcionario.AsInteger,ComboEmpresa.KeyValue,'A',vAno,vMes]), [loCaseInsensitive]) then
+        fDMCadTomador.cdsVTVADiasAtestado.AsFloat := fDMCadFuncionario.cdsFaltasAtestadoDIAS.AsFloat;
+      if fDMCadFuncionario.cdsFaltasAtestado.Locate('ID_FUNCIONARIO;ID_FILIAL;TIPO;ANO;MES', VarArrayOf([fDMCadTomador.cdsVTVACod_Funcionario.AsInteger,ComboEmpresa.KeyValue,'F',vAno,vMes]), [loCaseInsensitive]) then
+        fDMCadTomador.cdsVTVADiasFalta.AsFloat := fDMCadFuncionario.cdsFaltasAtestadoDIAS.AsFloat;
       fDMCadTomador.cdsVTVACod_Passagem.AsInteger := fDMSage.cdsValeTransportecd_linha.AsInteger;
       fDMCadTomador.cdsVTVANome_Linha.AsString := fDMSage.cdsValeTransportedescricao.AsString;
       fDMCadTomador.cdsVTVAMes.AsInteger := StrToInt(vMes);

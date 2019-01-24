@@ -3,8 +3,8 @@ object DMFuncionario: TDMFuncionario
   OnCreate = DataModuleCreate
   Left = 372
   Top = 206
-  Height = 317
-  Width = 477
+  Height = 414
+  Width = 550
   object sdsConsulta: TSQLDataSet
     NoMetadata = True
     GetMetadata = False
@@ -375,11 +375,6 @@ object DMFuncionario: TDMFuncionario
       FixedChar = True
       Size = 1
     end
-    object sdsFaltasAtestadoTIPO_DESCONTO: TStringField
-      FieldName = 'TIPO_DESCONTO'
-      FixedChar = True
-      Size = 1
-    end
     object sdsFaltasAtestadoDIAS: TFloatField
       FieldName = 'DIAS'
     end
@@ -388,6 +383,10 @@ object DMFuncionario: TDMFuncionario
     end
     object sdsFaltasAtestadoMES: TStringField
       FieldName = 'MES'
+      Size = 2
+    end
+    object sdsFaltasAtestadoTIPO_DESCONTO: TStringField
+      FieldName = 'TIPO_DESCONTO'
       Size = 2
     end
   end
@@ -427,12 +426,6 @@ object DMFuncionario: TDMFuncionario
       FixedChar = True
       Size = 1
     end
-    object cdsFaltasAtestadoTIPO_DESCONTO: TStringField
-      DisplayLabel = 'Tipo Desconto'
-      FieldName = 'TIPO_DESCONTO'
-      FixedChar = True
-      Size = 1
-    end
     object cdsFaltasAtestadoDIAS: TFloatField
       DisplayLabel = 'Num. Dias'
       FieldName = 'DIAS'
@@ -453,10 +446,110 @@ object DMFuncionario: TDMFuncionario
       Size = 70
       Calculated = True
     end
+    object cdsFaltasAtestadoTIPO_DESCONTO: TStringField
+      DisplayLabel = 'Tipo Desconto'
+      FieldName = 'TIPO_DESCONTO'
+      Size = 2
+    end
   end
   object dsFaltasAtestado: TDataSource
     DataSet = cdsFaltasAtestado
     Left = 192
     Top = 184
+  end
+  object sdsDiasAdicionais: TSQLDataSet
+    NoMetadata = True
+    GetMetadata = False
+    CommandText = 'SELECT * FROM DIAS_ADICIONAIS WHERE 0=0'
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = dmDatabase.scoPrincipal
+    Left = 64
+    Top = 240
+    object sdsDiasAdicionaisID: TIntegerField
+      FieldName = 'ID'
+      Required = True
+    end
+    object sdsDiasAdicionaisID_FUNCIONARIO: TIntegerField
+      FieldName = 'ID_FUNCIONARIO'
+      Required = True
+    end
+    object sdsDiasAdicionaisID_FILIAL: TIntegerField
+      FieldName = 'ID_FILIAL'
+      Required = True
+    end
+    object sdsDiasAdicionaisDIAS: TFloatField
+      FieldName = 'DIAS'
+    end
+    object sdsDiasAdicionaisANO: TSmallintField
+      FieldName = 'ANO'
+    end
+    object sdsDiasAdicionaisMES: TStringField
+      FieldName = 'MES'
+      Size = 2
+    end
+    object sdsDiasAdicionaisTIPO_ACRESCIMO: TStringField
+      FieldName = 'TIPO_ACRESCIMO'
+      Size = 2
+    end
+  end
+  object dspDiasAdicionais: TDataSetProvider
+    DataSet = sdsDiasAdicionais
+    Options = [poAllowCommandText]
+    Left = 112
+    Top = 240
+  end
+  object cdsDiasAdicionais: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspDiasAdicionais'
+    OnCalcFields = cdsDiasAdicionaisCalcFields
+    Left = 152
+    Top = 240
+    object cdsDiasAdicionaisID: TIntegerField
+      DisplayLabel = 'C'#243'digo'
+      FieldName = 'ID'
+      Required = True
+    end
+    object cdsDiasAdicionaisID_FUNCIONARIO: TIntegerField
+      DisplayLabel = 'Cod.Funcion'#225'rio'
+      FieldName = 'ID_FUNCIONARIO'
+      Required = True
+    end
+    object cdsDiasAdicionaisID_FILIAL: TIntegerField
+      DisplayLabel = 'Cod.Filial'
+      FieldName = 'ID_FILIAL'
+      Required = True
+    end
+    object cdsDiasAdicionaisDIAS: TFloatField
+      DisplayLabel = 'N'#186' Dias'
+      FieldName = 'DIAS'
+    end
+    object cdsDiasAdicionaisANO: TSmallintField
+      DisplayLabel = 'Ano'
+      FieldName = 'ANO'
+    end
+    object cdsDiasAdicionaisMES: TStringField
+      DisplayLabel = 'M'#234's'
+      FieldName = 'MES'
+      Size = 2
+    end
+    object cdsDiasAdicionaisNome_Funcionario: TStringField
+      DisplayLabel = 'Nome Funcion'#225'rio'
+      FieldKind = fkCalculated
+      FieldName = 'Nome_Funcionario'
+      Size = 70
+      Calculated = True
+    end
+    object cdsDiasAdicionaisTIPO_ACRESCIMO: TStringField
+      DisplayLabel = 'Tipo Acr'#233'scimo'
+      FieldName = 'TIPO_ACRESCIMO'
+      Size = 2
+    end
+  end
+  object dsDiasAdicionais: TDataSource
+    DataSet = cdsDiasAdicionais
+    Left = 192
+    Top = 240
   end
 end

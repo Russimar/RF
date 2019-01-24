@@ -90,7 +90,6 @@ type
     sdsFaltasAtestadoID_FUNCIONARIO: TIntegerField;
     sdsFaltasAtestadoID_FILIAL: TIntegerField;
     sdsFaltasAtestadoTIPO: TStringField;
-    sdsFaltasAtestadoTIPO_DESCONTO: TStringField;
     sdsFaltasAtestadoDIAS: TFloatField;
     sdsFaltasAtestadoANO: TSmallintField;
     sdsFaltasAtestadoMES: TStringField;
@@ -98,24 +97,49 @@ type
     cdsFaltasAtestadoID_FUNCIONARIO: TIntegerField;
     cdsFaltasAtestadoID_FILIAL: TIntegerField;
     cdsFaltasAtestadoTIPO: TStringField;
-    cdsFaltasAtestadoTIPO_DESCONTO: TStringField;
     cdsFaltasAtestadoDIAS: TFloatField;
     cdsFaltasAtestadoANO: TSmallintField;
     cdsFaltasAtestadoMES: TStringField;
     cdsFaltasAtestadoNome_Funcionario: TStringField;
+    sdsDiasAdicionais: TSQLDataSet;
+    dspDiasAdicionais: TDataSetProvider;
+    cdsDiasAdicionais: TClientDataSet;
+    dsDiasAdicionais: TDataSource;
+    sdsDiasAdicionaisID: TIntegerField;
+    sdsDiasAdicionaisID_FUNCIONARIO: TIntegerField;
+    sdsDiasAdicionaisID_FILIAL: TIntegerField;
+    sdsDiasAdicionaisDIAS: TFloatField;
+    sdsDiasAdicionaisANO: TSmallintField;
+    sdsDiasAdicionaisMES: TStringField;
+    cdsDiasAdicionaisID: TIntegerField;
+    cdsDiasAdicionaisID_FUNCIONARIO: TIntegerField;
+    cdsDiasAdicionaisID_FILIAL: TIntegerField;
+    cdsDiasAdicionaisDIAS: TFloatField;
+    cdsDiasAdicionaisANO: TSmallintField;
+    cdsDiasAdicionaisMES: TStringField;
+    cdsDiasAdicionaisNome_Funcionario: TStringField;
+    sdsDiasAdicionaisTIPO_ACRESCIMO: TStringField;
+    cdsDiasAdicionaisTIPO_ACRESCIMO: TStringField;
+    sdsFaltasAtestadoTIPO_DESCONTO: TStringField;
+    cdsFaltasAtestadoTIPO_DESCONTO: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure cdsFaltasAtestadoCalcFields(DataSet: TDataSet);
+    procedure cdsDiasAdicionaisCalcFields(DataSet: TDataSet);
   private
     { Private declarations }
   public
     { Public declarations }
     ctCommand : String;
     ctCommand_FaltaAtestado : String;
+    ctCommand_DiasAdicionais : String;
     procedure prc_Localizar(ID: Integer);
     procedure prc_Consultar(x : String);
     procedure prc_Posiciona_Funcionario(ID_Funcionario, ID_Filial: Integer);
     procedure prc_Consulta_Faltas(Mes : String; Ano : Smallint; ID_Filial : Integer);
     procedure prc_Inserir_Faltas;
+    procedure prc_Consulta_DiasAdicionais(Mes : String; Ano : Smallint; ID_Filial : Integer);
+    procedure prc_Inserir_DiasAdicionais;
+
   end;
 
 var
@@ -143,6 +167,7 @@ procedure TDMFuncionario.DataModuleCreate(Sender: TObject);
 begin
   ctCommand := sdsFuncionario.CommandText;
   ctCommand_FaltaAtestado := sdsFaltasAtestado.CommandText;
+  ctCommand_DiasAdicionais := sdsDiasAdicionais.CommandText;
 end;
 
 procedure TDMFuncionario.prc_Consultar(x: String);
@@ -200,6 +225,43 @@ begin
   vAux := dmDatabase.ProximaSequencia('FALTA_ATESTADO', 0);
   cdsFaltasAtestado.Insert;
   cdsFaltasAtestadoID.AsInteger := vAux;
+end;
+
+procedure TDMFuncionario.prc_Consulta_DiasAdicionais(Mes: String;
+  Ano: Smallint; ID_Filial: Integer);
+var
+  vTexto : String;
+begin
+  cdsDiasAdicionais.Close;
+  vTexto := '';
+  if Mes <> '' then
+    vTexto := ' AND MES = ' + QuotedStr(Mes);
+  if Ano > 0 then
+    vTexto := vTexto + ' AND ANO = ' + IntToStr(Ano);
+  if ID_Filial > 0 then
+    vTexto := vTexto + ' AND ID_FILIAL = ' + IntToStr(ID_Filial);
+  cdsDiasAdicionais.CommandText := ctCommand_DiasAdicionais + vTexto;
+  cdsDiasAdicionais.Open;
+end;
+
+procedure TDMFuncionario.prc_Inserir_DiasAdicionais;
+var
+  vAux : Integer;
+begin
+  if not cdsDiasAdicionais.Active then
+    prc_Consulta_DiasAdicionais('13',0,0);
+  vAux := dmDatabase.ProximaSequencia('DIAS_ADICIONAIS', 0);
+  cdsDiasAdicionais.Insert;
+  cdsDiasAdicionaisID.AsInteger := vAux;
+end;
+
+procedure TDMFuncionario.cdsDiasAdicionaisCalcFields(DataSet: TDataSet);
+begin
+  if (cdsDiasAdicionaisID_FUNCIONARIO.AsInteger > 0) and (cdsDiasAdicionaisID_FILIAL.AsInteger > 0) then
+  begin
+    prc_Posiciona_Funcionario(cdsDiasAdicionaisID_FUNCIONARIO.AsInteger,cdsDiasAdicionaisID_FILIAL.AsInteger);
+    cdsDiasAdicionaisNome_Funcionario.AsString := qFuncionarioNOME.AsString;
+  end;
 end;
 
 end.

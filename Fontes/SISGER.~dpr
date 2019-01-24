@@ -24,6 +24,7 @@ uses
   uCadFuncionario in 'uCadFuncionario.pas' {frmCadFuncionario},
   uDMCadFuncionario in 'uDMCadFuncionario.pas' {DMFuncionario: TDataModule},
   uDlgTomadoresSage in 'uDlgTomadoresSage.pas' {DlgTomadoresSage},
+  uCadDiasAdicionais in 'uCadDiasAdicionais.pas' {frmCadDiasAdicionais},
   uCadFaltaAtestados in 'uCadFaltaAtestados.pas' {frmFaltaAtestado};
 
 {$R *.res}
@@ -34,7 +35,6 @@ begin
     Application.Title := 'SIGDUC (Sistema Gerenciador de Dados dos Usuários do CMPD)';
     Application.CreateForm(TfrmAbertura, frmAbertura);
   Application.CreateForm(TdmDatabase, dmDatabase);
-  Application.CreateForm(TfrmFaltaAtestado, frmFaltaAtestado);
   frmAbertura.Show;
     frmAbertura.Refresh;
     Application.CreateForm(TdmDataBase, dmDataBase);

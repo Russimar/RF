@@ -24,6 +24,7 @@ uses
   uCadFuncionario in 'uCadFuncionario.pas' {frmCadFuncionario},
   uDMCadFuncionario in 'uDMCadFuncionario.pas' {DMFuncionario: TDataModule},
   uDlgTomadoresSage in 'uDlgTomadoresSage.pas' {DlgTomadoresSage},
+  uCadDiasAdicionais in 'uCadDiasAdicionais.pas' {frmCadDiasAdicionais},
   uCadFaltaAtestados in 'uCadFaltaAtestados.pas' {frmFaltaAtestado};
 
 {$R *.res}
@@ -39,7 +40,7 @@ begin
     Application.CreateForm(TdmDataBase, dmDataBase);
     frmAbertura.Hide;
     frmAbertura.Free;
-    if (Date > 43600) then
+    if (Date > 43660) then
     begin
       ShowMessage('Sistema Expirou, entre em contato com o desenvolvedor!');
       Exit;

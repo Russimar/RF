@@ -132,6 +132,10 @@ object fMenu: TfMenu
         Caption = 'Faltas e Atestados'
         OnClick = FaltaseAtestados1Click
       end
+      object DiasAdicionais1: TMenuItem
+        Caption = 'Dias Adicionais'
+        OnClick = DiasAdicionais1Click
+      end
     end
     object Janelas1: TMenuItem
       Caption = 'Janelas'

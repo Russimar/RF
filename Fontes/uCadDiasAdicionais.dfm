@@ -1,9 +1,9 @@
-object frmFaltaAtestado: TfrmFaltaAtestado
-  Left = 278
-  Top = 107
+object frmCadDiasAdicionais: TfrmCadDiasAdicionais
+  Left = 279
+  Top = 104
   Width = 1076
   Height = 523
-  Caption = 'Cadastro Falta e Atestados'
+  Caption = 'Cadastro Dias Adicionais'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -99,19 +99,20 @@ object frmFaltaAtestado: TfrmFaltaAtestado
       MaxLength = 4
       TabOrder = 3
     end
-    object rdgTipo: TRadioGroup
+    object rdgTipoAcrescimo: TRadioGroup
       Left = 175
-      Top = 51
-      Width = 185
+      Top = 64
+      Width = 218
       Height = 36
-      Caption = 'Tipo'
-      Columns = 2
+      Caption = 'Tipo Acr'#233'scimo'
+      Columns = 3
       ItemIndex = 0
       Items.Strings = (
-        'Falta'
-        'Atestado')
+        'Todos'
+        'VT'
+        'VA')
       TabOrder = 4
-      OnExit = rdgTipoExit
+      OnExit = rdgTipoAcrescimoExit
     end
     object edtFuncionario: TEdit
       Left = 31
@@ -498,21 +499,6 @@ object frmFaltaAtestado: TfrmFaltaAtestado
       MaxLength = 4
       TabOrder = 8
     end
-    object rdgTipoDesconto: TRadioGroup
-      Left = 375
-      Top = 51
-      Width = 185
-      Height = 36
-      Caption = 'Tipo Desconto'
-      Columns = 3
-      ItemIndex = 0
-      Items.Strings = (
-        'Todos'
-        'VT'
-        'VA')
-      TabOrder = 12
-      OnExit = rdgTipoExit
-    end
   end
   object pnlGeral: TPanel
     Left = 0
@@ -527,7 +513,7 @@ object frmFaltaAtestado: TfrmFaltaAtestado
       Width = 1058
       Height = 330
       Align = alClient
-      DataSource = DMFuncionario.dsFaltasAtestado
+      DataSource = DMFuncionario.dsDiasAdicionais
       Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
       TabOrder = 0
       TitleFont.Charset = DEFAULT_CHARSET
@@ -553,35 +539,20 @@ object frmFaltaAtestado: TfrmFaltaAtestado
       WidthOfIndicator = 11
       DefaultRowHeight = 17
       ScrollBars = ssHorizontal
-      ColCount = 8
+      ColCount = 6
       RowCount = 2
       Columns = <
         item
           Expanded = False
           FieldName = 'ID_FUNCIONARIO'
           Title.Alignment = taCenter
-          Width = 95
+          Width = 102
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'Nome_Funcionario'
           Title.Alignment = taCenter
-          Width = 378
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'TIPO'
-          Title.Alignment = taCenter
-          Width = 36
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'TIPO_DESCONTO'
-          Title.Alignment = taCenter
-          Width = 81
           Visible = True
         end
         item
@@ -592,8 +563,8 @@ object frmFaltaAtestado: TfrmFaltaAtestado
         end
         item
           Expanded = False
-          FieldName = 'ID'
-          Title.Alignment = taCenter
+          FieldName = 'TIPO_ACRESCIMO'
+          Width = 100
           Visible = True
         end
         item

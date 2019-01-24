@@ -1,4 +1,4 @@
-unit uCadFaltaAtestados;
+unit uCadDiasAdicionais;
 
 interface
 
@@ -9,18 +9,17 @@ uses
   RzPanel, RzRadGrp, NxEdit;
 
 type
-  tEmunTipo = (tpFalta, tpAtestado);
-  tEnumTipoDesconto = (tpTodos,tpVT,tpVA);
+  tEmunTipoAcrescimo = (tpTodos, tpVT, tpVA);
 
 type
-  TfrmFaltaAtestado = class(TForm)
+  TfrmCadDiasAdicionais = class(TForm)
     pnlTop: TPanel;
     Label6: TLabel;
     Label1: TLabel;
     ComboEmpresa: TRxDBLookupCombo;
     ComboMes: TComboBox;
     edtAno: TCurrencyEdit;
-    rdgTipo: TRadioGroup;
+    rdgTipoAcrescimo: TRadioGroup;
     Label3: TLabel;
     edtFuncionario: TEdit;
     btnConsultaFuncionario: TBitBtn;
@@ -33,19 +32,18 @@ type
     btnExcluir: TNxButton;
     edtDias: TCurrencyEdit;
     Label2: TLabel;
-    rdgTipoDesconto: TRadioGroup;
     procedure FormShow(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
     procedure edtFuncionarioExit(Sender: TObject);
     procedure btnIncluirClick(Sender: TObject);
-    procedure prc_Gravar_Faltas;
-    procedure prc_Habilita_Botoes_Falta;
+    procedure prc_Gravar_Adicionais;
+    procedure prc_Habilita_Botoes_Adicionais;
     procedure btnGravarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
-    procedure rdgTipoExit(Sender: TObject);
+    procedure rdgTipoAcrescimoExit(Sender: TObject);
   private
-    procedure prc_Tipo_Falta;
+    procedure prc_Tipo_Adicionais;
     { Private declarations }
   public
     { Public declarations }
@@ -53,11 +51,11 @@ type
     fDMCadFuncionario: TDMFuncionario;
     vMes: string;
     vAno: string;
-    vTipo, vTipoDesconto : String;
+    vTipoAcrescimo : String;
   end;
 
 var
-  frmFaltaAtestado: TfrmFaltaAtestado;
+  frmCadDiasAdicionais: TfrmCadDiasAdicionais;
 
 implementation
 
@@ -67,7 +65,7 @@ uses
 
 {$R *.dfm}
 
-procedure TfrmFaltaAtestado.FormShow(Sender: TObject);
+procedure TfrmCadDiasAdicionais.FormShow(Sender: TObject);
 begin
   fDMSage := TDMSage.Create(Self);
   oDBUtils.SetDataSourceProperties(Self, fDMSage);
@@ -78,10 +76,10 @@ begin
   vAno := FormatDateTime('YYYY', Date);
   ComboMes.ItemIndex := StrToInt(vMes) - 1;
   edtAno.Text := vAno;
-  prc_Tipo_Falta;  
+  prc_Tipo_Adicionais;
 end;
 
-procedure TfrmFaltaAtestado.btnConsultarClick(Sender: TObject);
+procedure TfrmCadDiasAdicionais.btnConsultarClick(Sender: TObject);
 begin
   if (ComboEmpresa.KeyValue = '') or (ComboEmpresa.KeyValue = null) then
   begin
@@ -103,11 +101,11 @@ begin
   end;
   vMes := IntToStr(ComboMes.ItemIndex + 1);
   vAno := edtAno.Text;
-  fDMCadFuncionario.prc_Consulta_Faltas(vMes,StrToInt(vAno),ComboEmpresa.KeyValue);
-  prc_Habilita_Botoes_Falta;
+  fDMCadFuncionario.prc_Consulta_DiasAdicionais(vMes,StrToInt(vAno),ComboEmpresa.KeyValue);
+  prc_Habilita_Botoes_Adicionais;
 end;
 
-procedure TfrmFaltaAtestado.edtFuncionarioExit(Sender: TObject);
+procedure TfrmCadDiasAdicionais.edtFuncionarioExit(Sender: TObject);
 begin
   if edtFuncionario.Text <> '' then
   begin
@@ -123,7 +121,7 @@ begin
 
 end;
 
-procedure TfrmFaltaAtestado.btnIncluirClick(Sender: TObject);
+procedure TfrmCadDiasAdicionais.btnIncluirClick(Sender: TObject);
 begin
   if ComboEmpresa.KeyValue = '' then
   begin
@@ -149,10 +147,10 @@ begin
     edtDias.SetFocus;
     Exit;
   end;
-  if rdgTipo.ItemIndex = -1 then
+  if rdgTipoAcrescimo.ItemIndex = -1 then
   begin
     ShowMessage('Informe o Tipo de desconto!');
-    rdgTipo.SetFocus;
+    rdgTipoAcrescimo.SetFocus;
     Exit;
   end;
   if edtFuncionario.Text = '' then
@@ -161,76 +159,70 @@ begin
     edtFuncionario.SetFocus;
     Exit;
   end;
-  prc_Gravar_Faltas;
+  prc_Gravar_Adicionais;
   edtFuncionario.Clear;
   edtNomeFuncionario.Clear;
   edtDias.Clear;
   edtFuncionario.SetFocus;
 end;
 
-procedure TfrmFaltaAtestado.prc_Gravar_Faltas;
+procedure TfrmCadDiasAdicionais.prc_Gravar_Adicionais;
 begin
-  if fDMCadFuncionario.cdsFaltasAtestado.Locate('ID_FUNCIONARIO;ID_FILIAL;MES;ANO;TIPO;TIPO_DESCONTO', VarArrayOf([fDMCadFuncionario.qFuncionarioID.AsInteger,
-     ComboEmpresa.KeyValue, vMes, StrToInt(vAno),vTipo,vTipoDesconto]),[]) then
-    fDMCadFuncionario.cdsFaltasAtestado.Edit
+  if fDMCadFuncionario.cdsDiasAdicionais.Locate('ID_FUNCIONARIO;ID_FILIAL;MES;ANO;TIPO_ACRESCIMO', VarArrayOf([fDMCadFuncionario.qFuncionarioID.AsInteger,
+     ComboEmpresa.KeyValue, vMes, StrToInt(vAno),vTipoAcrescimo]),[]) then
+    fDMCadFuncionario.cdsDiasAdicionais.Edit
   else
-    fDMCadFuncionario.prc_Inserir_Faltas;
-  fDMCadFuncionario.cdsFaltasAtestadoID_FUNCIONARIO.AsInteger := StrToInt(edtFuncionario.Text);
-  fDMCadFuncionario.cdsFaltasAtestadoID_FILIAL.AsInteger := ComboEmpresa.KeyValue;
-  fDMCadFuncionario.cdsFaltasAtestadoTIPO.AsString := vTipo;
-  fDMCadFuncionario.cdsFaltasAtestadoTIPO_DESCONTO.AsString := vTipoDesconto;
-  fDMCadFuncionario.cdsFaltasAtestadoDIAS.AsFloat := edtDias.Value;
-  fDMCadFuncionario.cdsFaltasAtestadoANO.AsInteger := StrToInt(vAno);
-  fDMCadFuncionario.cdsFaltasAtestadoMES.AsString := vMes;
-  fDMCadFuncionario.cdsFaltasAtestado.Post;
+    fDMCadFuncionario.prc_Inserir_DiasAdicionais;
+  fDMCadFuncionario.cdsDiasAdicionaisID_FUNCIONARIO.AsInteger := StrToInt(edtFuncionario.Text);
+  fDMCadFuncionario.cdsDiasAdicionaisID_FILIAL.AsInteger := ComboEmpresa.KeyValue;
+  fDMCadFuncionario.cdsDiasAdicionaisTIPO_ACRESCIMO.AsString := vTipoAcrescimo;
+  fDMCadFuncionario.cdsDiasAdicionaisDIAS.AsFloat := edtDias.Value;
+  fDMCadFuncionario.cdsDiasAdicionaisANO.AsInteger := StrToInt(vAno);
+  fDMCadFuncionario.cdsDiasAdicionaisMES.AsString := vMes;
+  fDMCadFuncionario.cdsDiasAdicionais.Post;
 end;
 
-procedure TfrmFaltaAtestado.prc_Habilita_Botoes_Falta;
+procedure TfrmCadDiasAdicionais.prc_Habilita_Botoes_Adicionais;
 begin
-  btnIncluir.Enabled := fDMCadFuncionario.cdsFaltasAtestado.Active;
-  btnGravar.Enabled := fDMCadFuncionario.cdsFaltasAtestado.Active;
-  btnExcluir.Enabled := fDMCadFuncionario.cdsFaltasAtestado.Active;
+  btnIncluir.Enabled := fDMCadFuncionario.cdsDiasAdicionais.Active;
+  btnGravar.Enabled := fDMCadFuncionario.cdsDiasAdicionais.Active;
+  btnExcluir.Enabled := fDMCadFuncionario.cdsDiasAdicionais.Active;
 end;
 
-procedure TfrmFaltaAtestado.btnGravarClick(Sender: TObject);
+procedure TfrmCadDiasAdicionais.btnGravarClick(Sender: TObject);
 begin
   try
-    fDMCadFuncionario.cdsFaltasAtestado.ApplyUpdates(0);
-    fDMCadFuncionario.cdsFaltasAtestado.Close;
+    fDMCadFuncionario.cdsDiasAdicionais.ApplyUpdates(0);
+    fDMCadFuncionario.cdsDiasAdicionais.Close;
     ShowMessage('Gravação efetuada!');
   finally
-    prc_Habilita_Botoes_Falta;
+    prc_Habilita_Botoes_Adicionais;
   end;
 end;
 
-procedure TfrmFaltaAtestado.FormClose(Sender: TObject;
+procedure TfrmCadDiasAdicionais.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
   Action := caFree;
 end;
 
-procedure TfrmFaltaAtestado.FormCreate(Sender: TObject);
+procedure TfrmCadDiasAdicionais.FormCreate(Sender: TObject);
 begin
   FreeAndNil(fDMCadFuncionario);
 end;
 
-procedure TfrmFaltaAtestado.prc_Tipo_Falta;
+procedure TfrmCadDiasAdicionais.prc_Tipo_Adicionais;
 begin
-  case tEmunTipo(rdgTipo.ItemIndex) of
-    tpFalta : vTipo := 'F';
-    tpAtestado : vTipo := 'A';
+  case tEmunTipoAcrescimo(rdgTipoAcrescimo.ItemIndex) of
+    tpTodos : vTipoAcrescimo := 'T';
+    tpVT : vTipoAcrescimo := 'VT';
+    tpVA : vTipoAcrescimo := 'VA';
   end;
-  case tEnumTipoDesconto(rdgTipoDesconto.ItemIndex) of
-    tpTodos : vTipoDesconto := 'T';
-    tpVT : vTipoDesconto := 'VT';
-    tpVA : vTipoDesconto := 'VA';
-  end;
-
 end;
 
-procedure TfrmFaltaAtestado.rdgTipoExit(Sender: TObject);
+procedure TfrmCadDiasAdicionais.rdgTipoAcrescimoExit(Sender: TObject);
 begin
-  prc_Tipo_Falta;
+  prc_Tipo_Adicionais;
 end;
 
 end.
