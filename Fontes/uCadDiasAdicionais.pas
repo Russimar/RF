@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, NxCollection, Grids, DBGrids, SMDBGrid, StdCtrls, Buttons, ExtCtrls,
   Mask, ToolEdit, CurrEdit, RxLookup, uDMSage, rsDBUtils, uDMCadFuncionario,
-  RzPanel, RzRadGrp, NxEdit;
+  RzPanel, RzRadGrp, NxEdit, uUtilPadrao, USel_Funcionario;
 
 type
   tEmunTipoAcrescimo = (tpTodos, tpVT, tpVA);
@@ -32,6 +32,7 @@ type
     btnExcluir: TNxButton;
     edtDias: TCurrencyEdit;
     Label2: TLabel;
+    btnFechar: TNxButton;
     procedure FormShow(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
     procedure edtFuncionarioExit(Sender: TObject);
@@ -42,6 +43,10 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure rdgTipoAcrescimoExit(Sender: TObject);
+    procedure btnConsultaFuncionarioClick(Sender: TObject);
+    procedure btnExcluirClick(Sender: TObject);
+    procedure edtFuncionarioKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure btnFecharClick(Sender: TObject);
   private
     procedure prc_Tipo_Adicionais;
     { Private declarations }
@@ -51,11 +56,12 @@ type
     fDMCadFuncionario: TDMFuncionario;
     vMes: string;
     vAno: string;
-    vTipoAcrescimo : String;
+    vTipoAcrescimo: string;
   end;
 
 var
   frmCadDiasAdicionais: TfrmCadDiasAdicionais;
+  ffrmSel_Funcionario: TfrmSel_Funcionario;
 
 implementation
 
@@ -101,12 +107,20 @@ begin
   end;
   vMes := IntToStr(ComboMes.ItemIndex + 1);
   vAno := edtAno.Text;
-  fDMCadFuncionario.prc_Consulta_DiasAdicionais(vMes,StrToInt(vAno),ComboEmpresa.KeyValue);
+  fDMCadFuncionario.prc_Consulta_DiasAdicionais(vMes, StrToInt(vAno), ComboEmpresa.KeyValue);
   prc_Habilita_Botoes_Adicionais;
 end;
 
 procedure TfrmCadDiasAdicionais.edtFuncionarioExit(Sender: TObject);
 begin
+  if (ComboEmpresa.KeyValue = '') or (ComboEmpresa.KeyValue = null) then
+  begin
+    ShowMessage('Infome a empresa!');
+    edtNomeFuncionario.Clear;
+    edtFuncionario.Clear;
+    ComboEmpresa.SetFocus;
+    Exit;
+  end;
   if edtFuncionario.Text <> '' then
   begin
     fDMCadFuncionario.prc_Posiciona_Funcionario(StrToInt(edtFuncionario.Text), ComboEmpresa.KeyValue);
@@ -168,8 +182,7 @@ end;
 
 procedure TfrmCadDiasAdicionais.prc_Gravar_Adicionais;
 begin
-  if fDMCadFuncionario.cdsDiasAdicionais.Locate('ID_FUNCIONARIO;ID_FILIAL;MES;ANO;TIPO_ACRESCIMO', VarArrayOf([fDMCadFuncionario.qFuncionarioID.AsInteger,
-     ComboEmpresa.KeyValue, vMes, StrToInt(vAno),vTipoAcrescimo]),[]) then
+  if fDMCadFuncionario.cdsDiasAdicionais.Locate('ID_FUNCIONARIO;ID_FILIAL;MES;ANO;TIPO_ACRESCIMO', VarArrayOf([fDMCadFuncionario.qFuncionarioID.AsInteger, ComboEmpresa.KeyValue, vMes, StrToInt(vAno), vTipoAcrescimo]), []) then
     fDMCadFuncionario.cdsDiasAdicionais.Edit
   else
     fDMCadFuncionario.prc_Inserir_DiasAdicionais;
@@ -200,8 +213,7 @@ begin
   end;
 end;
 
-procedure TfrmCadDiasAdicionais.FormClose(Sender: TObject;
-  var Action: TCloseAction);
+procedure TfrmCadDiasAdicionais.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action := caFree;
 end;
@@ -214,15 +226,55 @@ end;
 procedure TfrmCadDiasAdicionais.prc_Tipo_Adicionais;
 begin
   case tEmunTipoAcrescimo(rdgTipoAcrescimo.ItemIndex) of
-    tpTodos : vTipoAcrescimo := 'T';
-    tpVT : vTipoAcrescimo := 'VT';
-    tpVA : vTipoAcrescimo := 'VA';
+    tpTodos:
+      vTipoAcrescimo := 'T';
+    tpVT:
+      vTipoAcrescimo := 'VT';
+    tpVA:
+      vTipoAcrescimo := 'VA';
   end;
 end;
 
 procedure TfrmCadDiasAdicionais.rdgTipoAcrescimoExit(Sender: TObject);
 begin
   prc_Tipo_Adicionais;
+end;
+
+procedure TfrmCadDiasAdicionais.btnConsultaFuncionarioClick(Sender: TObject);
+begin
+  ffrmSel_Funcionario := TfrmSel_Funcionario.Create(Self);
+  ffrmSel_Funcionario.ShowModal;
+  FreeAndNil(ffrmSel_Funcionario);
+  if vCod_Funcionario_Pos > 0 then
+    edtFuncionario.Text := IntToStr(vCod_Funcionario_Pos);
+  edtFuncionario.SetFocus;
+end;
+
+procedure TfrmCadDiasAdicionais.btnExcluirClick(Sender: TObject);
+begin
+  if (fDMCadFuncionario.cdsDiasAdicionais.IsEmpty) or (fDMCadFuncionario.cdsDiasAdicionaisID.AsInteger <= 0) then
+    exit;
+  if MessageDlg('Deseja excluir este registro ' + fDMCadFuncionario.cdsDiasAdicionaisID_FUNCIONARIO.AsString + '?', mtConfirmation, [mbYes, mbNo], 0) = mrNo then
+    exit;
+  fDMCadFuncionario.cdsDiasAdicionais.Delete;
+  fDMCadFuncionario.cdsDiasAdicionais.ApplyUpdates(0);
+  btnConsultarClick(Sender);
+end;
+
+procedure TfrmCadDiasAdicionais.edtFuncionarioKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  if Key = vk_f2 then
+    btnConsultaFuncionarioClick(Sender);
+end;
+
+procedure TfrmCadDiasAdicionais.btnFecharClick(Sender: TObject);
+begin
+  if fDMCadFuncionario.cdsDiasAdicionais.changecount > 0 then
+  begin
+    if MessageDlg('Existem registros que não foram gravados, deseja realmente sair? ' , mtConfirmation, [mbYes, mbNo], 0) = mrNo then
+      Exit;
+  end;
+  Close;
 end;
 
 end.

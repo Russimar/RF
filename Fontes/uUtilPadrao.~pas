@@ -13,6 +13,7 @@ procedure SalvaImagem(FieldImg : TField; nFile : TFileName; ComponentDBImg : TDB
 function ExtensoMes(n: Integer): String;
 function ObterNomeUsuario : String;
 function ObterVersaoWindows : String;
+procedure GravarImagemFormulario(const NomeArquivo : String);
 
 var
   vUsuario: string;
@@ -264,5 +265,19 @@ begin
   //Monta uma string de retorno com a versão
   Result := vNome + ' - ' + vVersao + ' - ' + vCurrentBuild;
 end;
+
+procedure GravarImagemFormulario(const NomeArquivo : String);
+var
+  JPEG : TJPEGImage;
+begin
+  JPEG := TJPEGImage.Create;
+  try
+  finally
+
+  end;
+
+
+end;
+
 end.
 

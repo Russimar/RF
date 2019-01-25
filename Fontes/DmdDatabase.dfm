@@ -28,7 +28,6 @@ object dmDatabase: TdmDatabase
       'Interbase TransIsolation=ReadCommited'
       'Trim Char=False')
     VendorLib = 'gds32.dll'
-    Connected = True
     Left = 39
     Top = 14
   end
@@ -60,7 +59,6 @@ object dmDatabase: TdmDatabase
       'MSSQL TransIsolation=ReadCommited'
       'OS Authentication=True')
     VendorLib = 'oledb'
-    Connected = True
     Left = 39
     Top = 94
   end

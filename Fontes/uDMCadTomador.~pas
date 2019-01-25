@@ -153,6 +153,7 @@ type
     qParametrosAUTENTICACAO: TStringField;
     qParametrosTELA_ENVIO: TStringField;
     qParametrosCONFIRMACAO_LEITURA: TStringField;
+    cdsVTVADias_Adicionais: TFloatField;
     procedure DataModuleCreate(Sender: TObject);
     procedure frxValeTransporteNext(Sender: TObject);
     procedure frxValeTransporteFirst(Sender: TObject);
@@ -313,10 +314,10 @@ end;
 procedure TDMCadTomador.cdsVTVACalcFields(DataSet: TDataSet);
 begin
   if (cdsVTVAValor_Passagem.AsFloat > 0) and (cdsVTVAValor_Passagem.AsFloat > 0) and (cdsVTVAQtde_Passagem.AsFloat > 0) and (cdsVTVADiasTrabalhados.AsFloat > 0) then
-    cdsVTVAValor_Total.AsFloat := (cdsVTVAValor_Passagem.AsFloat * cdsVTVAQtde_Passagem.AsFloat) * (cdsVTVADiasTrabalhados.AsFloat - cdsVTVADiasFalta.AsFloat - cdsVTVADiasAtestado.AsFloat);
+    cdsVTVAValor_Total.AsFloat := (cdsVTVAValor_Passagem.AsFloat * cdsVTVAQtde_Passagem.AsFloat) * (cdsVTVADiasTrabalhados.AsFloat + cdsVTVADias_Adicionais.AsFloat - cdsVTVADiasFalta.AsFloat - cdsVTVADiasAtestado.AsFloat);
 
   if (cdsVTVAValor_Refeicao.AsFloat > 0) and (cdsVTVADiasTrabalhados.AsFloat > 0) then
-    cdsVTVAValor_Total.AsFloat := (cdsVTVAValor_Refeicao.AsFloat * (cdsVTVADiasTrabalhados.AsFloat - cdsVTVADiasFalta.AsFloat - cdsVTVADiasAtestado.AsFloat));
+    cdsVTVAValor_Total.AsFloat := (cdsVTVAValor_Refeicao.AsFloat * (cdsVTVADiasTrabalhados.AsFloat + cdsVTVADias_Adicionais.AsFloat - cdsVTVADiasFalta.AsFloat - cdsVTVADiasAtestado.AsFloat));
 end;
 
 procedure TDMCadTomador.frxValeRefeicaoFirst(Sender: TObject);

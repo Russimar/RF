@@ -20,6 +20,7 @@ var
   vErro: Boolean = False;
   vFilial : Integer;
   vCod_Tomador_Pos : Integer;
+  vCod_Funcionario_Pos : Integer;
   vNomeEmpresa : String;
 
 implementation

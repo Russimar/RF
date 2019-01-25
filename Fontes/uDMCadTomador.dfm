@@ -960,6 +960,10 @@ object DMCadTomador: TDMCadTomador
       item
         Name = 'Perc_Refeicao'
         DataType = ftFloat
+      end
+      item
+        Name = 'Dias_Adicionais'
+        DataType = ftFloat
       end>
     IndexDefs = <>
     IndexFieldNames = 'Cod_Funcionario'
@@ -969,7 +973,7 @@ object DMCadTomador: TDMCadTomador
     Left = 264
     Top = 120
     Data = {
-      7C0100009619E0BD01000000180000000F0000000000030000007C010F436F64
+      940100009619E0BD01000000180000001000000000000300000094010F436F64
       5F46756E63696F6E6172696F0400010000000000104E6F6D655F46756E63696F
       6E6172696F0100490000000100055749445448020002003C000E56616C6F725F
       506173736167656D08000400000000000D517464655F506173736167656D0800
@@ -980,83 +984,95 @@ object DMCadTomador: TDMCadTomador
       000A4E6F6D655F4C696E68610100490000000100055749445448020002001E00
       06436F645F565204000100000000000D4E6F6D655F526566656963616F010049
       00000001000557494454480200020028000E56616C6F725F526566656963616F
-      08000400000000000D506572635F526566656963616F08000400000000000000}
+      08000400000000000D506572635F526566656963616F08000400000000000F44
+      6961735F41646963696F6E61697308000400000000000000}
     object cdsVTVACod_Funcionario: TIntegerField
       DisplayLabel = 'C'#243'digo Funcion'#225'rio'
-      DisplayWidth = 18
+      DisplayWidth = 22
       FieldName = 'Cod_Funcionario'
     end
     object cdsVTVANome_Funcionario: TStringField
       DisplayLabel = 'Nome Funcion'#225'rio'
-      DisplayWidth = 65
+      DisplayWidth = 78
       FieldName = 'Nome_Funcionario'
       Size = 60
     end
     object cdsVTVAValor_Passagem: TFloatField
       DisplayLabel = 'Valor Passagem'
-      DisplayWidth = 15
+      DisplayWidth = 18
       FieldName = 'Valor_Passagem'
       DisplayFormat = '##0.00'
     end
     object cdsVTVAQtde_Passagem: TFloatField
       DisplayLabel = 'Qtde Passagem'
-      DisplayWidth = 15
+      DisplayWidth = 18
       FieldName = 'Qtde_Passagem'
       DisplayFormat = '##0.00'
     end
     object cdsVTVADiasTrabalhados: TFloatField
-      DisplayWidth = 17
+      DisplayWidth = 21
       FieldName = 'Dias Trabalhados'
       DisplayFormat = '##0.00'
     end
     object cdsVTVADiasFalta: TFloatField
-      DisplayWidth = 12
+      DisplayWidth = 15
       FieldName = 'Dias Falta'
       DisplayFormat = '##0.00'
     end
     object cdsVTVADiasAtestado: TFloatField
-      DisplayWidth = 13
+      DisplayWidth = 16
       FieldName = 'Dias Atestado'
       DisplayFormat = '##0.00'
     end
+    object cdsVTVADias_Adicionais: TFloatField
+      DisplayLabel = 'Dias Adicionais'
+      DisplayWidth = 18
+      FieldName = 'Dias_Adicionais'
+      DisplayFormat = '##0.00'
+    end
     object cdsVTVAMes: TIntegerField
-      DisplayWidth = 12
+      DisplayWidth = 15
       FieldName = 'Mes'
     end
     object cdsVTVAAno: TStringField
-      DisplayWidth = 24
+      DisplayWidth = 29
       FieldName = 'Ano'
     end
     object cdsVTVACod_Passagem: TIntegerField
-      DisplayWidth = 15
+      DisplayWidth = 18
       FieldName = 'Cod_Passagem'
     end
     object cdsVTVAValor_Total: TFloatField
-      DisplayWidth = 12
+      DisplayWidth = 15
       FieldKind = fkCalculated
       FieldName = 'Valor_Total'
       DisplayFormat = '##0.00'
       Calculated = True
     end
     object cdsVTVANome_Linha: TStringField
-      DisplayWidth = 36
+      DisplayWidth = 43
       FieldName = 'Nome_Linha'
       Size = 30
     end
     object cdsVTVACod_VR: TIntegerField
+      DisplayWidth = 12
       FieldName = 'Cod_VR'
     end
     object cdsVTVANome_Refeicao: TStringField
+      DisplayWidth = 48
       FieldName = 'Nome_Refeicao'
       Size = 40
     end
     object cdsVTVAValor_Refeicao: TFloatField
+      DisplayWidth = 15
       FieldName = 'Valor_Refeicao'
     end
     object cdsVTVAPerc_Refeicao: TFloatField
+      DisplayWidth = 14
       FieldName = 'Perc_Refeicao'
     end
     object cdsVTVAValor_Desconto: TFloatField
+      DisplayWidth = 15
       FieldKind = fkCalculated
       FieldName = 'Valor_Desconto'
       Calculated = True

@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, NxCollection, Grids, DBGrids, SMDBGrid, StdCtrls, Buttons, ExtCtrls,
   Mask, ToolEdit, CurrEdit, RxLookup, uDMSage, rsDBUtils, uDMCadFuncionario,
-  RzPanel, RzRadGrp, NxEdit;
+  RzPanel, RzRadGrp, NxEdit, USel_Funcionario, ComCtrls;
 
 type
   tEmunTipo = (tpFalta, tpAtestado);
@@ -34,6 +34,8 @@ type
     edtDias: TCurrencyEdit;
     Label2: TLabel;
     rdgTipoDesconto: TRadioGroup;
+    StatusBar1: TStatusBar;
+    btnFechar: TNxButton;
     procedure FormShow(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
     procedure edtFuncionarioExit(Sender: TObject);
@@ -44,6 +46,11 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure rdgTipoExit(Sender: TObject);
+    procedure btnConsultaFuncionarioClick(Sender: TObject);
+    procedure btnExcluirClick(Sender: TObject);
+    procedure edtFuncionarioKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure btnFecharClick(Sender: TObject);
   private
     procedure prc_Tipo_Falta;
     { Private declarations }
@@ -58,11 +65,12 @@ type
 
 var
   frmFaltaAtestado: TfrmFaltaAtestado;
+  ffrmSel_Funcionario : TfrmSel_Funcionario;
 
 implementation
 
 uses
-  DB;
+  DB, uUtilPadrao;
 
 
 {$R *.dfm}
@@ -109,6 +117,14 @@ end;
 
 procedure TfrmFaltaAtestado.edtFuncionarioExit(Sender: TObject);
 begin
+  if (ComboEmpresa.KeyValue = '') or (ComboEmpresa.KeyValue = null) then
+  begin
+    ShowMessage('Infome a empresa!');
+    edtNomeFuncionario.Clear;
+    edtFuncionario.Clear;
+    ComboEmpresa.SetFocus;
+    Exit;
+  end;
   if edtFuncionario.Text <> '' then
   begin
     fDMCadFuncionario.prc_Posiciona_Funcionario(StrToInt(edtFuncionario.Text), ComboEmpresa.KeyValue);
@@ -231,6 +247,44 @@ end;
 procedure TfrmFaltaAtestado.rdgTipoExit(Sender: TObject);
 begin
   prc_Tipo_Falta;
+end;
+
+procedure TfrmFaltaAtestado.btnConsultaFuncionarioClick(Sender: TObject);
+begin
+  ffrmSel_Funcionario := TfrmSel_Funcionario.Create(Self);
+  ffrmSel_Funcionario.ShowModal;
+  FreeAndNil(ffrmSel_Funcionario);
+  if vCod_Funcionario_Pos > 0 then
+    edtFuncionario.Text := IntToStr(vCod_Funcionario_Pos);
+  edtFuncionario.SetFocus;
+end;
+
+procedure TfrmFaltaAtestado.btnExcluirClick(Sender: TObject);
+begin
+  if (fDMCadFuncionario.cdsFaltasAtestado.IsEmpty) or (fDMCadFuncionario.cdsFaltasAtestadoID.AsInteger <= 0) then
+    exit;
+  if MessageDlg('Deseja excluir este registro ' + fDMCadFuncionario.cdsFaltasAtestadoID_FUNCIONARIO.AsString + '?', mtConfirmation, [mbYes, mbNo], 0) = mrNo then
+    exit;
+  fDMCadFuncionario.cdsFaltasAtestado.Delete;
+  fDMCadFuncionario.cdsFaltasAtestado.ApplyUpdates(0);
+  btnConsultarClick(sender);
+end;
+
+procedure TfrmFaltaAtestado.edtFuncionarioKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  if Key = vk_f2 then
+    btnConsultaFuncionarioClick(Sender);
+end;
+
+procedure TfrmFaltaAtestado.btnFecharClick(Sender: TObject);
+begin
+  if fDMCadFuncionario.cdsFaltasAtestado.changecount > 0 then
+  begin
+    if MessageDlg('Existem registros que não foram gravados, deseja realmente sair? ' , mtConfirmation, [mbYes, mbNo], 0) = mrNo then
+      Exit;
+  end;
+  Close;
 end;
 
 end.

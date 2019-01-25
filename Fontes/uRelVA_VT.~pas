@@ -6,7 +6,8 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, Grids, DBGrids, SMDBGrid, ComCtrls, ToolEdit, uDMCadTomador,
   StdCtrls, Mask, CurrEdit, RxLookup, Buttons, USel_Tomador, rsDBUtils,
-  NxCollection, DB, DBClient, uDMSage, frxExportPDF, frxExportMail, uDMCadFuncionario;
+  NxCollection, DB, DBClient, uDMSage, frxExportPDF, frxExportMail,
+  uDMCadFuncionario;
 
 type
   TEnumTipoRel = (tpValeRefeicao, tpValeTransporte);
@@ -42,13 +43,16 @@ type
     procedure btnImprimirClick(Sender: TObject);
     procedure edtTomadorChange(Sender: TObject);
     procedure btnEnviaEmailClick(Sender: TObject);
+    procedure edtTomadorKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     fDMCadTomador: TDMCadTomador;
-    fDMCadFuncionario : TDMFuncionario;
+    fDMCadFuncionario: TDMFuncionario;
     fDMSage: TDMSage;
     procedure prc_Montar_VR;
     procedure prc_Montar_VT;
     procedure prc_Montar_Relatorio;
+    function fnc_Retorna_Dias_Adicionais(Tipo: String; ID_Funcionario,ID_Filial : Integer) : double;
+    function fnc_Retorna_Dias_Faltas(Tipo_Desconto,Tipo: String; ID_Funcionario,ID_Filial : Integer) : double;
     { Private declarations }
   public
     vMes: string;
@@ -132,7 +136,8 @@ begin
 
   vMes := IntToStr(ComboMes.ItemIndex + 1);
 
-  fDMCadFuncionario.prc_Consulta_Faltas(vMes,StrToInt(vAno),ComboEmpresa.KeyValue);
+  fDMCadFuncionario.prc_Consulta_DiasAdicionais(vMes, StrToInt(vAno), ComboEmpresa.KeyValue);
+  fDMCadFuncionario.prc_Consulta_Faltas(vMes, StrToInt(vAno), ComboEmpresa.KeyValue);
   fDMCadTomador.prc_Posiciona_Tomador_Dia(edtAno.AsInteger, vMes, StrToInt(edtTomador.Text));
   fDMSage.prc_Abrir_ProcEvento(ComboEmpresa.KeyValue, StrToInt(edtTomador.Text), ComboMes.ItemIndex + 1, edtAno.Text);
   fDMSage.prc_Abrir_Vale_Transporte(ComboEmpresa.KeyValue, StrToInt(edtTomador.Text));
@@ -141,8 +146,10 @@ begin
   fDMCadTomador.mVTAuxiliar.EmptyDataSet;
   fDMCadTomador.mVRAuxiliar.EmptyDataSet;
   case TEnumTipoRel(rdgTipoImpressa.ItemIndex) of
-    tpValeRefeicao   : prc_Montar_VR;
-    tpValeTransporte : prc_Montar_VT;
+    tpValeRefeicao:
+      prc_Montar_VR;
+    tpValeTransporte:
+      prc_Montar_VT;
   end;
 end;
 
@@ -185,10 +192,11 @@ begin
       fDMCadTomador.cdsVTVAQtde_Passagem.AsFloat := fDMSage.cdsValeRefeicaoqt_dia_util.AsFloat;
       fDMCadTomador.cdsVTVAValor_Refeicao.AsFloat := fDMCadTomador.qTomador_DiasVALOR_VA.AsFloat;
       fDMCadTomador.cdsVTVADiasTrabalhados.AsFloat := fDMCadTomador.qTomador_DiasDIAS.AsInteger;
-      if fDMCadFuncionario.cdsFaltasAtestado.Locate('ID_FUNCIONARIO;ID_FILIAL;TIPO;ANO;MES', VarArrayOf([fDMCadTomador.cdsVTVACod_Funcionario.AsInteger,ComboEmpresa.KeyValue,'2',vAno,vMes]), [loCaseInsensitive]) then
-        fDMCadTomador.cdsVTVADiasAtestado.AsFloat := fDMCadFuncionario.cdsFaltasAtestadoDIAS.AsFloat;
-      if fDMCadFuncionario.cdsFaltasAtestado.Locate('ID_FUNCIONARIO;ID_FILIAL;TIPO;ANO;MES', VarArrayOf([fDMCadTomador.cdsVTVACod_Funcionario.AsInteger,ComboEmpresa.KeyValue,'1',vAno,vMes]), [loCaseInsensitive]) then
-        fDMCadTomador.cdsVTVADiasFalta.AsFloat := fDMCadFuncionario.cdsFaltasAtestadoDIAS.AsFloat;
+
+      fDMCadTomador.cdsVTVADiasAtestado.AsFloat := fnc_Retorna_Dias_Faltas('VT','A',fDMCadTomador.cdsVTVACod_Funcionario.AsInteger,ComboEmpresa.KeyValue);
+      fDMCadTomador.cdsVTVADiasFalta.AsFloat := fnc_Retorna_Dias_Faltas('VT','F',fDMCadTomador.cdsVTVACod_Funcionario.AsInteger,ComboEmpresa.KeyValue);
+      fDMCadTomador.cdsVTVADias_Adicionais.AsFloat := fnc_Retorna_Dias_Adicionais('VT',fDMCadTomador.cdsVTVACod_Funcionario.AsInteger,ComboEmpresa.KeyValue);
+
       fDMCadTomador.cdsVTVACod_VR.AsInteger := fDMSage.cdsValeRefeicaocd_vale.AsInteger;
       fDMCadTomador.cdsVTVANome_Refeicao.AsString := fDMSage.cdsValeRefeicaodescricao.AsString;
       fDMCadTomador.cdsVTVAPerc_Refeicao.AsFloat := fDMCadTomador.qTomador_DiasPERC_VA.AsFloat;
@@ -229,10 +237,11 @@ begin
       fDMCadTomador.cdsVTVAValor_Passagem.AsFloat := fDMSage.cdsValeTransportevl_vale.AsFloat;
       fDMCadTomador.cdsVTVAQtde_Passagem.AsFloat := fDMSage.cdsValeTransporteqt_dia_util.AsFloat;
       fDMCadTomador.cdsVTVADiasTrabalhados.AsFloat := fDMCadTomador.qTomador_DiasDIAS.AsInteger;
-      if fDMCadFuncionario.cdsFaltasAtestado.Locate('ID_FUNCIONARIO;ID_FILIAL;TIPO;ANO;MES', VarArrayOf([fDMCadTomador.cdsVTVACod_Funcionario.AsInteger,ComboEmpresa.KeyValue,'A',vAno,vMes]), [loCaseInsensitive]) then
-        fDMCadTomador.cdsVTVADiasAtestado.AsFloat := fDMCadFuncionario.cdsFaltasAtestadoDIAS.AsFloat;
-      if fDMCadFuncionario.cdsFaltasAtestado.Locate('ID_FUNCIONARIO;ID_FILIAL;TIPO;ANO;MES', VarArrayOf([fDMCadTomador.cdsVTVACod_Funcionario.AsInteger,ComboEmpresa.KeyValue,'F',vAno,vMes]), [loCaseInsensitive]) then
-        fDMCadTomador.cdsVTVADiasFalta.AsFloat := fDMCadFuncionario.cdsFaltasAtestadoDIAS.AsFloat;
+
+      fDMCadTomador.cdsVTVADiasAtestado.AsFloat := fnc_Retorna_Dias_Faltas('VA','A',fDMCadTomador.cdsVTVACod_Funcionario.AsInteger,ComboEmpresa.KeyValue);
+      fDMCadTomador.cdsVTVADiasFalta.AsFloat := fnc_Retorna_Dias_Faltas('VA','F',fDMCadTomador.cdsVTVACod_Funcionario.AsInteger,ComboEmpresa.KeyValue);
+      fDMCadTomador.cdsVTVADias_Adicionais.AsFloat := fnc_Retorna_Dias_Adicionais('VA',fDMCadTomador.cdsVTVACod_Funcionario.AsInteger,ComboEmpresa.KeyValue);
+
       fDMCadTomador.cdsVTVACod_Passagem.AsInteger := fDMSage.cdsValeTransportecd_linha.AsInteger;
       fDMCadTomador.cdsVTVANome_Linha.AsString := fDMSage.cdsValeTransportedescricao.AsString;
       fDMCadTomador.cdsVTVAMes.AsInteger := StrToInt(vMes);
@@ -292,8 +301,10 @@ begin
   pdf := TfrxPDFExport.Create(nil);
   mail.Address := '';
   case TEnumTipoRel(rdgTipoImpressa.ItemIndex) of
-   tpValeRefeicao   : vTexto := 'Vale Refeição mês: ' + ComboMes.Text + '/' + edtAno.Text;
-   tpValeTransporte : vTexto := 'Vale Transporte mês: ' + ComboMes.Text + '/' + edtAno.Text;
+    tpValeRefeicao:
+      vTexto := 'Vale Refeição mês: ' + ComboMes.Text + '/' + edtAno.Text;
+    tpValeTransporte:
+      vTexto := 'Vale Transporte mês: ' + ComboMes.Text + '/' + edtAno.Text;
   end;
   mail.Subject := vTexto;
   mail.Login := fDMCadTomador.qParametrosUSUARIO.AsString;
@@ -330,18 +341,56 @@ begin
     exit;
   end;
 
-
   Imprimir := TImprimir.Create;
   try
-    case TEnumTipoRel(rdgTipoImpressa.ItemIndex ) of
-      tpValeRefeicao   : Imprimir.Caminho := 'Relatorios\Vale_Refeicao.fr3';
-      tpValeTransporte : Imprimir.Caminho := 'Relatorios\Vale_Transporte.fr3';
+    case TEnumTipoRel(rdgTipoImpressa.ItemIndex) of
+      tpValeRefeicao:
+        Imprimir.Caminho := 'Relatorios\Vale_Refeicao.fr3';
+      tpValeTransporte:
+        Imprimir.Caminho := 'Relatorios\Vale_Transporte.fr3';
     end;
     fDMCadTomador.frxReport1.Report.LoadFromFile(Imprimir.Caminho);
   finally
     Imprimir.Free;
   end;
 
+end;
+
+procedure TfrmRelVA_VT.edtTomadorKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  if Key = vk_f2 then
+    btnConsultaTomadorClick(Sender);
+end;
+
+
+function TfrmRelVA_VT.fnc_Retorna_Dias_Adicionais(Tipo: String; ID_Funcionario,ID_Filial : Integer): double;
+begin
+  Result := 0;
+  fDMCadFuncionario.cdsDiasAdicionais.Filtered := False;
+  fDMCadFuncionario.cdsDiasAdicionais.Filter := 'ID_FUNCIONARIO = ' + IntToStr(ID_Funcionario) + ' AND ID_FILIAL = '+ IntToStr(ID_Filial);
+  fDMCadFuncionario.cdsDiasAdicionais.Filtered := True;
+  fDMCadFuncionario.cdsDiasAdicionais.First;
+  while not fDMCadFuncionario.cdsDiasAdicionais.Eof do
+  begin
+    if fDMCadFuncionario.cdsDiasAdicionaisTIPO_ACRESCIMO.AsString <> Tipo then
+      Result := Result + fDMCadFuncionario.cdsDiasAdicionaisDIAS.AsFloat;
+    fDMCadFuncionario.cdsDiasAdicionais.Next;
+  end;
+end;
+
+function TfrmRelVA_VT.fnc_Retorna_Dias_Faltas(Tipo_Desconto,Tipo: String; ID_Funcionario,ID_Filial : Integer): double;
+begin
+  Result := 0;
+  fDMCadFuncionario.cdsFaltasAtestado.Filtered := False;
+  fDMCadFuncionario.cdsFaltasAtestado.Filter := 'ID_FUNCIONARIO = ' + QuotedStr(IntToStr(ID_Funcionario)) + ' AND ID_FILIAL = '+ QuotedStr(IntToStr(ID_Filial)) + ' AND TIPO = ' + QuotedStr(Tipo);
+  fDMCadFuncionario.cdsFaltasAtestado.Filtered := True;
+  fDMCadFuncionario.cdsFaltasAtestado.First;
+  while not fDMCadFuncionario.cdsFaltasAtestado.Eof do
+  begin
+    if fDMCadFuncionario.cdsFaltasAtestadoTIPO_DESCONTO.AsString <> Tipo_Desconto then
+      Result := Result + fDMCadFuncionario.cdsFaltasAtestadoDIAS.AsFloat;
+    fDMCadFuncionario.cdsFaltasAtestado.Next;
+  end;
 end;
 
 end.

@@ -1,6 +1,6 @@
 object frmRelVA_VT: TfrmRelVA_VT
-  Left = 69
-  Top = 70
+  Left = 191
+  Top = 75
   Width = 1128
   Height = 518
   Caption = 'Rela'#231#227'o de VA e VT'
@@ -124,6 +124,7 @@ object frmRelVA_VT: TfrmRelVA_VT
       TabOrder = 5
       OnChange = edtTomadorChange
       OnExit = edtTomadorExit
+      OnKeyDown = edtTomadorKeyDown
     end
     object edtNomeTomador: TEdit
       Left = 197
@@ -478,7 +479,7 @@ object frmRelVA_VT: TfrmRelVA_VT
       WidthOfIndicator = 11
       DefaultRowHeight = 17
       ScrollBars = ssHorizontal
-      ColCount = 18
+      ColCount = 19
       RowCount = 2
     end
   end
