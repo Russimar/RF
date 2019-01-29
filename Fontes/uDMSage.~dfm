@@ -564,14 +564,14 @@ object DMSage: TDMSage
   end
   object dspValeTransporte: TDataSetProvider
     DataSet = sdsValeTransporte
-    Left = 264
+    Left = 256
     Top = 88
   end
   object cdsValeTransporte: TClientDataSet
     Aggregates = <>
     Params = <>
     ProviderName = 'dspValeTransporte'
-    Left = 312
+    Left = 288
     Top = 88
     object cdsValeTransportecd_funcionario: TIntegerField
       FieldName = 'cd_funcionario'
@@ -669,14 +669,14 @@ object DMSage: TDMSage
   end
   object dspValeRefeicao: TDataSetProvider
     DataSet = sdsValeRefeicao
-    Left = 264
+    Left = 256
     Top = 24
   end
   object cdsValeRefeicao: TClientDataSet
     Aggregates = <>
     Params = <>
     ProviderName = 'dspValeRefeicao'
-    Left = 312
+    Left = 288
     Top = 24
     object cdsValeRefeicaocd_funcionario: TIntegerField
       DisplayLabel = 'C'#243'd.Funcion'#225'rio'
@@ -720,7 +720,7 @@ object DMSage: TDMSage
   end
   object dsProcEvento: TDataSource
     DataSet = cdsProcEvento
-    Left = 208
+    Left = 128
     Top = 192
   end
   object sdsFuncionario: TSQLDataSet
@@ -737,8 +737,8 @@ object DMSage: TDMSage
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.Conexao_SQLServer
-    Left = 344
-    Top = 176
+    Left = 224
+    Top = 136
     object sdsFuncionariocd_empresa: TSmallintField
       FieldName = 'cd_empresa'
       Required = True
@@ -796,15 +796,15 @@ object DMSage: TDMSage
   end
   object dspFuncionario: TDataSetProvider
     DataSet = sdsFuncionario
-    Left = 376
-    Top = 176
+    Left = 256
+    Top = 136
   end
   object cdsFuncionario: TClientDataSet
     Aggregates = <>
     Params = <>
     ProviderName = 'dspFuncionario'
-    Left = 408
-    Top = 176
+    Left = 288
+    Top = 136
     object cdsFuncionariocd_empresa: TSmallintField
       DisplayLabel = 'Cod.Empresa'
       FieldName = 'cd_empresa'
@@ -871,6 +871,76 @@ object DMSage: TDMSage
     object cdsFuncionariodt_admissao: TSQLTimeStampField
       DisplayLabel = 'Data Admiss'#227'o'
       FieldName = 'dt_admissao'
+    end
+  end
+  object sdsMovimentoFolha: TSQLDataSet
+    CommandText = 
+      'SELECT pro.cd_empresa'#13#10'      ,pro.cd_funcionario'#13#10'      ,pro.mes' +
+      #13#10'      ,pro.ano'#13#10'      ,SUM(case when eve.tp_evento = '#39'V'#39' then ' +
+      'pro.valor '#13#10'                else -pro.valor end) valor_total'#13#10'  ' +
+      'FROM ProcEvento pro'#13#10'  inner join Eventog eve on pro.cd_evento =' +
+      ' eve.cd_evento '#13#10'  where pro.cd_empresa = 2'#13#10'  group by pro.cd_e' +
+      'mpresa, pro.cd_funcionario, pro.mes,pro.ano'#13#10'  order by pro.cd_f' +
+      'uncionario, pro.mes'
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = dmDatabase.Conexao_SQLServer
+    Left = 224
+    Top = 192
+    object sdsMovimentoFolhacd_empresa: TSmallintField
+      FieldName = 'cd_empresa'
+      Required = True
+    end
+    object sdsMovimentoFolhacd_funcionario: TIntegerField
+      FieldName = 'cd_funcionario'
+      Required = True
+    end
+    object sdsMovimentoFolhames: TSmallintField
+      FieldName = 'mes'
+      Required = True
+    end
+    object sdsMovimentoFolhaano: TSmallintField
+      FieldName = 'ano'
+      Required = True
+    end
+    object sdsMovimentoFolhavalor_total: TFloatField
+      FieldName = 'valor_total'
+    end
+  end
+  object dspMovimentoFolha: TDataSetProvider
+    DataSet = sdsMovimentoFolha
+    Left = 256
+    Top = 192
+  end
+  object cdsMovimentoFolha: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspMovimentoFolha'
+    Left = 288
+    Top = 192
+    object cdsMovimentoFolhacd_empresa: TSmallintField
+      DisplayLabel = 'C'#243'd.Empresa'
+      FieldName = 'cd_empresa'
+      Required = True
+    end
+    object cdsMovimentoFolhacd_funcionario: TIntegerField
+      DisplayLabel = 'C'#243'd.Funcion'#225'rio'
+      FieldName = 'cd_funcionario'
+      Required = True
+    end
+    object cdsMovimentoFolhames: TSmallintField
+      DisplayLabel = 'M'#234's'
+      FieldName = 'mes'
+      Required = True
+    end
+    object cdsMovimentoFolhaano: TSmallintField
+      DisplayLabel = 'Ano'
+      FieldName = 'ano'
+      Required = True
+    end
+    object cdsMovimentoFolhavalor_total: TFloatField
+      DisplayLabel = 'Valor Total'
+      FieldName = 'valor_total'
     end
   end
 end

@@ -346,14 +346,15 @@ object frmRelVA_VT: TfrmRelVA_VT
     object rdgTipoImpressa: TRadioGroup
       Left = 696
       Top = 8
-      Width = 217
+      Width = 337
       Height = 41
       Caption = 'Impress'#227'o'
-      Columns = 2
+      Columns = 3
       ItemIndex = 0
       Items.Strings = (
         'Vale Refei'#231#227'o'
-        'Vale Transporte')
+        'Vale Transporte'
+        'L'#237'quidos')
       TabOrder = 10
       OnExit = rdgTipoImpressaExit
     end
@@ -479,12 +480,11 @@ object frmRelVA_VT: TfrmRelVA_VT
       WidthOfIndicator = 11
       DefaultRowHeight = 17
       ScrollBars = ssHorizontal
-      ColCount = 19
+      ColCount = 2
       RowCount = 2
     end
   end
   object dsLocal: TDataSource
-    DataSet = DMCadTomador.cdsVTVA
     Left = 1072
     Top = 64
   end

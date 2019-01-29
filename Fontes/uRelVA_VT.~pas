@@ -10,7 +10,7 @@ uses
   uDMCadFuncionario;
 
 type
-  TEnumTipoRel = (tpValeRefeicao, tpValeTransporte);
+  TEnumTipoRel = (tpValeRefeicao, tpValeTransporte, tpLiquidos);
 
 type
   TfrmRelVA_VT = class(TForm)
@@ -51,8 +51,9 @@ type
     procedure prc_Montar_VR;
     procedure prc_Montar_VT;
     procedure prc_Montar_Relatorio;
-    function fnc_Retorna_Dias_Adicionais(Tipo: String; ID_Funcionario,ID_Filial : Integer) : double;
-    function fnc_Retorna_Dias_Faltas(Tipo_Desconto,Tipo: String; ID_Funcionario,ID_Filial : Integer) : double;
+    procedure prc_Montar_Liquidos;
+    function fnc_Retorna_Dias_Adicionais(Tipo: string; ID_Funcionario, ID_Filial: Integer): double;
+    function fnc_Retorna_Dias_Faltas(Tipo_Desconto, Tipo: string; ID_Funcionario, ID_Filial: Integer): double;
     { Private declarations }
   public
     vMes: string;
@@ -145,11 +146,23 @@ begin
   fDMCadTomador.cdsVTVA.EmptyDataSet;
   fDMCadTomador.mVTAuxiliar.EmptyDataSet;
   fDMCadTomador.mVRAuxiliar.EmptyDataSet;
+  fDMCadTomador.cdsLiquidos.EmptyDataSet;
   case TEnumTipoRel(rdgTipoImpressa.ItemIndex) of
     tpValeRefeicao:
-      prc_Montar_VR;
+      begin
+        dsLocal.DataSet := fDMCadTomador.cdsVTVA;
+        prc_Montar_VR;
+      end;
     tpValeTransporte:
-      prc_Montar_VT;
+      begin
+        dsLocal.DataSet := fDMCadTomador.cdsVTVA;
+        prc_Montar_VT;
+      end;
+    tpLiquidos:
+    begin
+      dsLocal.DataSet := fDMCadTomador.cdsLiquidos;
+      prc_Montar_Liquidos;
+    end;
   end;
 end;
 
@@ -193,9 +206,9 @@ begin
       fDMCadTomador.cdsVTVAValor_Refeicao.AsFloat := fDMCadTomador.qTomador_DiasVALOR_VA.AsFloat;
       fDMCadTomador.cdsVTVADiasTrabalhados.AsFloat := fDMCadTomador.qTomador_DiasDIAS.AsInteger;
 
-      fDMCadTomador.cdsVTVADiasAtestado.AsFloat := fnc_Retorna_Dias_Faltas('VT','A',fDMCadTomador.cdsVTVACod_Funcionario.AsInteger,ComboEmpresa.KeyValue);
-      fDMCadTomador.cdsVTVADiasFalta.AsFloat := fnc_Retorna_Dias_Faltas('VT','F',fDMCadTomador.cdsVTVACod_Funcionario.AsInteger,ComboEmpresa.KeyValue);
-      fDMCadTomador.cdsVTVADias_Adicionais.AsFloat := fnc_Retorna_Dias_Adicionais('VT',fDMCadTomador.cdsVTVACod_Funcionario.AsInteger,ComboEmpresa.KeyValue);
+      fDMCadTomador.cdsVTVADiasAtestado.AsFloat := fnc_Retorna_Dias_Faltas('VT', 'A', fDMCadTomador.cdsVTVACod_Funcionario.AsInteger, ComboEmpresa.KeyValue);
+      fDMCadTomador.cdsVTVADiasFalta.AsFloat := fnc_Retorna_Dias_Faltas('VT', 'F', fDMCadTomador.cdsVTVACod_Funcionario.AsInteger, ComboEmpresa.KeyValue);
+      fDMCadTomador.cdsVTVADias_Adicionais.AsFloat := fnc_Retorna_Dias_Adicionais('VT', fDMCadTomador.cdsVTVACod_Funcionario.AsInteger, ComboEmpresa.KeyValue);
 
       fDMCadTomador.cdsVTVACod_VR.AsInteger := fDMSage.cdsValeRefeicaocd_vale.AsInteger;
       fDMCadTomador.cdsVTVANome_Refeicao.AsString := fDMSage.cdsValeRefeicaodescricao.AsString;
@@ -238,9 +251,9 @@ begin
       fDMCadTomador.cdsVTVAQtde_Passagem.AsFloat := fDMSage.cdsValeTransporteqt_dia_util.AsFloat;
       fDMCadTomador.cdsVTVADiasTrabalhados.AsFloat := fDMCadTomador.qTomador_DiasDIAS.AsInteger;
 
-      fDMCadTomador.cdsVTVADiasAtestado.AsFloat := fnc_Retorna_Dias_Faltas('VA','A',fDMCadTomador.cdsVTVACod_Funcionario.AsInteger,ComboEmpresa.KeyValue);
-      fDMCadTomador.cdsVTVADiasFalta.AsFloat := fnc_Retorna_Dias_Faltas('VA','F',fDMCadTomador.cdsVTVACod_Funcionario.AsInteger,ComboEmpresa.KeyValue);
-      fDMCadTomador.cdsVTVADias_Adicionais.AsFloat := fnc_Retorna_Dias_Adicionais('VA',fDMCadTomador.cdsVTVACod_Funcionario.AsInteger,ComboEmpresa.KeyValue);
+      fDMCadTomador.cdsVTVADiasAtestado.AsFloat := fnc_Retorna_Dias_Faltas('VA', 'A', fDMCadTomador.cdsVTVACod_Funcionario.AsInteger, ComboEmpresa.KeyValue);
+      fDMCadTomador.cdsVTVADiasFalta.AsFloat := fnc_Retorna_Dias_Faltas('VA', 'F', fDMCadTomador.cdsVTVACod_Funcionario.AsInteger, ComboEmpresa.KeyValue);
+      fDMCadTomador.cdsVTVADias_Adicionais.AsFloat := fnc_Retorna_Dias_Adicionais('VA', fDMCadTomador.cdsVTVACod_Funcionario.AsInteger, ComboEmpresa.KeyValue);
 
       fDMCadTomador.cdsVTVACod_Passagem.AsInteger := fDMSage.cdsValeTransportecd_linha.AsInteger;
       fDMCadTomador.cdsVTVANome_Linha.AsString := fDMSage.cdsValeTransportedescricao.AsString;
@@ -362,12 +375,11 @@ begin
     btnConsultaTomadorClick(Sender);
 end;
 
-
-function TfrmRelVA_VT.fnc_Retorna_Dias_Adicionais(Tipo: String; ID_Funcionario,ID_Filial : Integer): double;
+function TfrmRelVA_VT.fnc_Retorna_Dias_Adicionais(Tipo: string; ID_Funcionario, ID_Filial: Integer): double;
 begin
   Result := 0;
   fDMCadFuncionario.cdsDiasAdicionais.Filtered := False;
-  fDMCadFuncionario.cdsDiasAdicionais.Filter := 'ID_FUNCIONARIO = ' + IntToStr(ID_Funcionario) + ' AND ID_FILIAL = '+ IntToStr(ID_Filial);
+  fDMCadFuncionario.cdsDiasAdicionais.Filter := 'ID_FUNCIONARIO = ' + IntToStr(ID_Funcionario) + ' AND ID_FILIAL = ' + IntToStr(ID_Filial);
   fDMCadFuncionario.cdsDiasAdicionais.Filtered := True;
   fDMCadFuncionario.cdsDiasAdicionais.First;
   while not fDMCadFuncionario.cdsDiasAdicionais.Eof do
@@ -378,11 +390,11 @@ begin
   end;
 end;
 
-function TfrmRelVA_VT.fnc_Retorna_Dias_Faltas(Tipo_Desconto,Tipo: String; ID_Funcionario,ID_Filial : Integer): double;
+function TfrmRelVA_VT.fnc_Retorna_Dias_Faltas(Tipo_Desconto, Tipo: string; ID_Funcionario, ID_Filial: Integer): double;
 begin
   Result := 0;
   fDMCadFuncionario.cdsFaltasAtestado.Filtered := False;
-  fDMCadFuncionario.cdsFaltasAtestado.Filter := 'ID_FUNCIONARIO = ' + QuotedStr(IntToStr(ID_Funcionario)) + ' AND ID_FILIAL = '+ QuotedStr(IntToStr(ID_Filial)) + ' AND TIPO = ' + QuotedStr(Tipo);
+  fDMCadFuncionario.cdsFaltasAtestado.Filter := 'ID_FUNCIONARIO = ' + QuotedStr(IntToStr(ID_Funcionario)) + ' AND ID_FILIAL = ' + QuotedStr(IntToStr(ID_Filial)) + ' AND TIPO = ' + QuotedStr(Tipo);
   fDMCadFuncionario.cdsFaltasAtestado.Filtered := True;
   fDMCadFuncionario.cdsFaltasAtestado.First;
   while not fDMCadFuncionario.cdsFaltasAtestado.Eof do
@@ -391,6 +403,27 @@ begin
       Result := Result + fDMCadFuncionario.cdsFaltasAtestadoDIAS.AsFloat;
     fDMCadFuncionario.cdsFaltasAtestado.Next;
   end;
+end;
+
+procedure TfrmRelVA_VT.prc_Montar_Liquidos;
+begin
+  fDMCadTomador.cdsVTVA.EmptyDataSet;
+  fDMCadTomador.mVTAuxiliar.EmptyDataSet;
+  fDMCadTomador.mVRAuxiliar.EmptyDataSet;
+  fDMSage.cdsValeRefeicao.First;
+  fDMSage.prc_Abrir_Movimento_Folha(ComboEmpresa.KeyValue,StrToInt(vAno),vMes);
+  fDMSage.cdsMovimentoFolha.First;
+  while not fDMSage.cdsMovimentoFolha.Eof do
+  begin
+    fDMCadTomador.cdsLiquidos.Insert;
+    fDMCadTomador.cdsLiquidoscod_filial.AsInteger := fDMSage.cdsMovimentoFolhacd_empresa.AsInteger;
+    fDMCadTomador.cdsLiquidoscod_funcionario.AsInteger := fDMSage.cdsMovimentoFolhacd_funcionario.AsInteger;
+    fDMCadTomador.cdsLiquidosvalor_salario.AsFloat := fDMSage.cdsMovimentoFolhavalor_total.AsFloat;
+    fDMCadTomador.cdsLiquidos.Post;
+    fDMSage.cdsMovimentoFolha.Next;
+  end;
+
+
 end;
 
 end.

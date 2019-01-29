@@ -154,6 +154,28 @@ type
     qParametrosTELA_ENVIO: TStringField;
     qParametrosCONFIRMACAO_LEITURA: TStringField;
     cdsVTVADias_Adicionais: TFloatField;
+    cdsLiquidos: TClientDataSet;
+    cdsLiquidoscod_filial: TIntegerField;
+    cdsLiquidoscod_funcionario: TIntegerField;
+    cdsLiquidosvalor_salario: TFloatField;
+    cdsLiquidosvalor_VT: TFloatField;
+    cdsLiquidosvalor_VR: TFloatField;
+    cdsLiquidosvalor_total: TFloatField;
+    cdsLiquidosnome_funcionario: TStringField;
+    qFuncionario: TSQLQuery;
+    qFuncionarioID: TIntegerField;
+    qFuncionarioID_FILIAL: TIntegerField;
+    qFuncionarioNOME: TStringField;
+    qFuncionarioENDERECO: TStringField;
+    qFuncionarioNUMERO: TStringField;
+    qFuncionarioCOMPLEMENTO: TStringField;
+    qFuncionarioBAIRRO: TStringField;
+    qFuncionarioCIDADE: TStringField;
+    qFuncionarioESTADO: TStringField;
+    qFuncionarioCEP: TStringField;
+    qFuncionarioSEXO: TStringField;
+    qFuncionarioESTADO_CIVIL: TIntegerField;
+    qFuncionarioDATA_ADMISSAO: TDateField;
     procedure DataModuleCreate(Sender: TObject);
     procedure frxValeTransporteNext(Sender: TObject);
     procedure frxValeTransporteFirst(Sender: TObject);
@@ -161,6 +183,7 @@ type
     procedure frxValeRefeicaoFirst(Sender: TObject);
     procedure frxValeTransporteDetalheFirst(Sender: TObject);
     procedure frxValeRefeicaoNext(Sender: TObject);
+    procedure cdsLiquidosCalcFields(DataSet: TDataSet);
   private
     { Private declarations }
   public
@@ -174,6 +197,7 @@ type
     procedure prc_Gravar;
     procedure prc_Posiciona_Tomador(ID_Tomador: Integer);
     procedure prc_Posiciona_Tomador_Dia(Ano: Integer; Mes: string; ID_TOMADOR: Integer);
+    procedure prc_Posiciona_Funcionario(ID_Funcionario, ID_Filial: Integer);
     function fnc_Monta_Impressao_VT: string;
     function fnc_Monta_Impressao_VR: string;
     { Public declarations }
@@ -356,6 +380,26 @@ begin
   begin
     TfrxMemoView(frxReport1.FindComponent('Memo5')).Text := fnc_Monta_Impressao_VR;
   end;
+end;
+
+procedure TDMCadTomador.cdsLiquidosCalcFields(DataSet: TDataSet);
+begin
+  cdsLiquidosvalor_total.AsFloat := cdsLiquidosvalor_salario.AsFloat + cdsLiquidosvalor_VT.AsFloat + cdsLiquidosvalor_VR.AsFloat;
+  if (cdsLiquidoscod_filial.AsInteger > 0) and (cdsLiquidoscod_funcionario.AsInteger > 0) then
+  begin
+    prc_Posiciona_Funcionario(cdsLiquidoscod_filial.AsInteger,cdsLiquidoscod_funcionario.AsInteger);
+    cdsLiquidosnome_funcionario.AsString := qFuncionarioNOME.AsString;
+  end;
+end;
+
+
+procedure TDMCadTomador.prc_Posiciona_Funcionario(ID_Funcionario,
+  ID_Filial: Integer);
+begin
+  qFuncionario.Close;
+  qFuncionario.ParamByName('ID_Funcionario').AsInteger := ID_Funcionario;
+  qFuncionario.ParamByName('ID_Filial').AsInteger := ID_Filial;
+  qFuncionario.Open;
 end;
 
 end.

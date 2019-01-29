@@ -31,23 +31,29 @@ type
     Tomador: TToolButton;
     Janelas1: TMenuItem;
     Ativas1: TMenuItem;
-    ToolButton2: TToolButton;
+    btnRelatorioVTVA: TToolButton;
     Parmetros1: TMenuItem;
     ApplicationEvents1: TApplicationEvents;
     Funcionrio1: TMenuItem;
     FaltaseAtestados1: TMenuItem;
     DiasAdicionais1: TMenuItem;
+    btnFuncionario: TToolButton;
+    btnFaltasAtestados: TToolButton;
+    ToolButton1: TToolButton;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure UserControl1AfterLogin(Sender: TObject);
     procedure EfetuarLogoff1Click(Sender: TObject);
-    procedure ToolButton2Click(Sender: TObject);
+    procedure btnRelatorioVTVAClick(Sender: TObject);
     procedure ApplicationEvents1Exception(Sender: TObject; E: Exception);
     procedure TomadorClick(Sender: TObject);
     procedure Tomador1Click(Sender: TObject);
     procedure Funcionrio1Click(Sender: TObject);
     procedure FaltaseAtestados1Click(Sender: TObject);
     procedure DiasAdicionais1Click(Sender: TObject);
+    procedure btnFuncionarioClick(Sender: TObject);
+    procedure btnFaltasAtestadosClick(Sender: TObject);
+    procedure ToolButton1Click(Sender: TObject);
   private
     procedure prc_Habilita_Menu;
     function GetBuildInfoAsString: string;
@@ -215,7 +221,7 @@ begin
   existe.WindowState := vEstado;
 end;
 
-procedure TfMenu.ToolButton2Click(Sender: TObject);
+procedure TfMenu.btnRelatorioVTVAClick(Sender: TObject);
 begin
   OpenForm(TfrmRelVA_VT, wsMaximized);
 end;
@@ -273,6 +279,21 @@ end;
 procedure TfMenu.DiasAdicionais1Click(Sender: TObject);
 begin
   OpenForm(TfrmCadDiasAdicionais, wsMaximized);
+end;
+
+procedure TfMenu.btnFuncionarioClick(Sender: TObject);
+begin
+  OpenForm(TfrmCadFuncionario, wsMaximized);
+end;
+
+procedure TfMenu.btnFaltasAtestadosClick(Sender: TObject);
+begin
+  OpenForm(TfrmFaltaAtestado,wsMaximized);
+end;
+
+procedure TfMenu.ToolButton1Click(Sender: TObject);
+begin
+  OpenForm(TfrmCadDiasAdicionais,wsMaximized);
 end;
 
 end.

@@ -261,8 +261,8 @@ object DMCadTomador: TDMCadTomador
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoPrincipal
-    Left = 248
-    Top = 40
+    Left = 200
+    Top = 48
     object IntegerField1: TIntegerField
       FieldName = 'ID_TOMADOR'
       Required = True
@@ -320,8 +320,8 @@ object DMCadTomador: TDMCadTomador
     Aggregates = <>
     Params = <>
     ProviderName = 'dspConsulta'
-    Left = 312
-    Top = 40
+    Left = 264
+    Top = 48
     object cdsConsultaID_FILIAL: TIntegerField
       DisplayLabel = 'Cod.Filial'
       FieldName = 'ID_FILIAL'
@@ -388,13 +388,13 @@ object DMCadTomador: TDMCadTomador
   end
   object dspConsulta: TDataSetProvider
     DataSet = sdsConsulta
-    Left = 280
-    Top = 40
+    Left = 232
+    Top = 48
   end
   object dsConsulta: TDataSource
     DataSet = cdsConsulta
-    Left = 344
-    Top = 40
+    Left = 296
+    Top = 48
   end
   object qTomador: TSQLQuery
     MaxBlobSize = -1
@@ -449,7 +449,7 @@ object DMCadTomador: TDMCadTomador
       '      TT.MES = :MES and'
       '      TT.ID_TOMADOR = :ID_TOMADOR')
     SQLConnection = dmDatabase.scoPrincipal
-    Left = 440
+    Left = 448
     Top = 192
     object qTomador_DiasID_TOMADOR: TIntegerField
       FieldName = 'ID_TOMADOR'
@@ -890,8 +890,8 @@ object DMCadTomador: TDMCadTomador
     StrMoedas = 'Reais'
     StrCentavo = 'Centavo'
     StrCentavos = 'Centavos'
-    Left = 96
-    Top = 232
+    Left = 712
+    Top = 160
   end
   object cdsVTVA: TClientDataSet
     Active = True
@@ -970,8 +970,8 @@ object DMCadTomador: TDMCadTomador
     Params = <>
     StoreDefs = True
     OnCalcFields = cdsVTVACalcFields
-    Left = 264
-    Top = 120
+    Left = 208
+    Top = 264
     Data = {
       940100009619E0BD01000000180000001000000000000300000094010F436F64
       5F46756E63696F6E6172696F0400010000000000104E6F6D655F46756E63696F
@@ -988,18 +988,18 @@ object DMCadTomador: TDMCadTomador
       6961735F41646963696F6E61697308000400000000000000}
     object cdsVTVACod_Funcionario: TIntegerField
       DisplayLabel = 'C'#243'digo Funcion'#225'rio'
-      DisplayWidth = 22
+      DisplayWidth = 15
       FieldName = 'Cod_Funcionario'
     end
     object cdsVTVANome_Funcionario: TStringField
       DisplayLabel = 'Nome Funcion'#225'rio'
-      DisplayWidth = 78
+      DisplayWidth = 50
       FieldName = 'Nome_Funcionario'
       Size = 60
     end
     object cdsVTVAValor_Passagem: TFloatField
       DisplayLabel = 'Valor Passagem'
-      DisplayWidth = 18
+      DisplayWidth = 15
       FieldName = 'Valor_Passagem'
       DisplayFormat = '##0.00'
     end
@@ -1010,7 +1010,7 @@ object DMCadTomador: TDMCadTomador
       DisplayFormat = '##0.00'
     end
     object cdsVTVADiasTrabalhados: TFloatField
-      DisplayWidth = 21
+      DisplayWidth = 15
       FieldName = 'Dias Trabalhados'
       DisplayFormat = '##0.00'
     end
@@ -1020,29 +1020,31 @@ object DMCadTomador: TDMCadTomador
       DisplayFormat = '##0.00'
     end
     object cdsVTVADiasAtestado: TFloatField
-      DisplayWidth = 16
+      DisplayWidth = 14
       FieldName = 'Dias Atestado'
       DisplayFormat = '##0.00'
     end
     object cdsVTVADias_Adicionais: TFloatField
       DisplayLabel = 'Dias Adicionais'
-      DisplayWidth = 18
+      DisplayWidth = 14
       FieldName = 'Dias_Adicionais'
       DisplayFormat = '##0.00'
     end
     object cdsVTVAMes: TIntegerField
-      DisplayWidth = 15
+      DisplayWidth = 5
       FieldName = 'Mes'
     end
     object cdsVTVAAno: TStringField
-      DisplayWidth = 29
+      DisplayWidth = 5
       FieldName = 'Ano'
     end
     object cdsVTVACod_Passagem: TIntegerField
+      DisplayLabel = 'C'#243'd.Passagem'
       DisplayWidth = 18
       FieldName = 'Cod_Passagem'
     end
     object cdsVTVAValor_Total: TFloatField
+      DisplayLabel = 'Valor Total'
       DisplayWidth = 15
       FieldKind = fkCalculated
       FieldName = 'Valor_Total'
@@ -1050,6 +1052,7 @@ object DMCadTomador: TDMCadTomador
       Calculated = True
     end
     object cdsVTVANome_Linha: TStringField
+      DisplayLabel = 'Nome Linha'
       DisplayWidth = 43
       FieldName = 'Nome_Linha'
       Size = 30
@@ -1080,8 +1083,8 @@ object DMCadTomador: TDMCadTomador
   end
   object dsVTVA: TDataSource
     DataSet = cdsVTVA
-    Left = 336
-    Top = 120
+    Left = 240
+    Top = 264
   end
   object mVTAuxiliar: TClientDataSet
     Active = True
@@ -1163,7 +1166,7 @@ object DMCadTomador: TDMCadTomador
   end
   object dsmVTAuxiliar: TDataSource
     DataSet = mVTAuxiliar
-    Left = 296
+    Left = 240
     Top = 344
   end
   object frxValeTransporte: TfrxDBDataset
@@ -1200,8 +1203,8 @@ object DMCadTomador: TDMCadTomador
       'valor_desconto=valor_desconto')
     DataSource = dsmVRAuxiliar
     BCDToCurrency = False
-    Left = 720
-    Top = 320
+    Left = 808
+    Top = 264
   end
   object mVRAuxiliar: TClientDataSet
     Active = True
@@ -1284,7 +1287,7 @@ object DMCadTomador: TDMCadTomador
   end
   object dsmVRAuxiliar: TDataSource
     DataSet = mVRAuxiliar
-    Left = 296
+    Left = 240
     Top = 296
   end
   object ACBrExtensoPorCento: TACBrExtenso
@@ -1292,8 +1295,8 @@ object DMCadTomador: TDMCadTomador
     StrMoedas = 'por Cento'
     StrCentavo = 'Centavo'
     StrCentavos = 'Centavos'
-    Left = 104
-    Top = 312
+    Left = 744
+    Top = 160
   end
   object frxMailExport1: TfrxMailExport
     UseFileCache = True
@@ -1340,7 +1343,7 @@ object DMCadTomador: TDMCadTomador
     SQL.Strings = (
       'SELECT * FROM PARAMETROS')
     SQLConnection = dmDatabase.scoPrincipal
-    Left = 520
+    Left = 528
     Top = 192
     object qParametrosID: TIntegerField
       FieldName = 'ID'
@@ -1379,6 +1382,158 @@ object DMCadTomador: TDMCadTomador
       FieldName = 'CONFIRMACAO_LEITURA'
       FixedChar = True
       Size = 1
+    end
+  end
+  object cdsLiquidos: TClientDataSet
+    Active = True
+    Aggregates = <>
+    FieldDefs = <
+      item
+        Name = 'cod_filial'
+        DataType = ftInteger
+      end
+      item
+        Name = 'cod_funcionario'
+        DataType = ftInteger
+      end
+      item
+        Name = 'valor_salario'
+        DataType = ftFloat
+      end
+      item
+        Name = 'valor_VT'
+        DataType = ftFloat
+      end
+      item
+        Name = 'valor_VR'
+        DataType = ftFloat
+      end>
+    IndexDefs = <>
+    Params = <>
+    StoreDefs = True
+    OnCalcFields = cdsLiquidosCalcFields
+    Left = 208
+    Top = 224
+    Data = {
+      7D0000009619E0BD0100000018000000050000000000030000007D000A636F64
+      5F66696C69616C04000100000000000F636F645F66756E63696F6E6172696F04
+      000100000000000D76616C6F725F73616C6172696F0800040000000000087661
+      6C6F725F565408000400000000000876616C6F725F5652080004000000000000
+      00}
+    object cdsLiquidoscod_filial: TIntegerField
+      DisplayLabel = 'Cod.Empresa'
+      DisplayWidth = 12
+      FieldName = 'cod_filial'
+    end
+    object cdsLiquidoscod_funcionario: TIntegerField
+      DisplayLabel = 'Cod.Funcion'#225'rio'
+      DisplayWidth = 14
+      FieldName = 'cod_funcionario'
+    end
+    object cdsLiquidosnome_funcionario: TStringField
+      DisplayLabel = 'Nome Funcionario'
+      DisplayWidth = 50
+      FieldKind = fkCalculated
+      FieldName = 'nome_funcionario'
+      Size = 70
+      Calculated = True
+    end
+    object cdsLiquidosvalor_salario: TFloatField
+      DisplayLabel = 'Valor Sal'#225'rio'
+      DisplayWidth = 12
+      FieldName = 'valor_salario'
+      DisplayFormat = '##0.00'
+    end
+    object cdsLiquidosvalor_VT: TFloatField
+      DisplayLabel = 'Valor VT'
+      DisplayWidth = 12
+      FieldName = 'valor_VT'
+      DisplayFormat = '##0.00'
+    end
+    object cdsLiquidosvalor_VR: TFloatField
+      DisplayLabel = 'Valor VR/VA'
+      DisplayWidth = 12
+      FieldName = 'valor_VR'
+      DisplayFormat = '##0.00'
+    end
+    object cdsLiquidosvalor_total: TFloatField
+      DisplayLabel = 'Valor Total'
+      DisplayWidth = 14
+      FieldKind = fkCalculated
+      FieldName = 'valor_total'
+      DisplayFormat = '##0.00'
+      Calculated = True
+    end
+  end
+  object qFuncionario: TSQLQuery
+    MaxBlobSize = -1
+    Params = <
+      item
+        DataType = ftInteger
+        Name = 'ID_FUNCIONARIO'
+        ParamType = ptInput
+      end
+      item
+        DataType = ftInteger
+        Name = 'ID_FILIAL'
+        ParamType = ptInput
+      end>
+    SQL.Strings = (
+      'SELECT * FROM FUNCIONARIO'
+      'WHERE ID = :ID_FUNCIONARIO AND ID_FILIAL = :ID_FILIAL')
+    SQLConnection = dmDatabase.scoPrincipal
+    Left = 600
+    Top = 192
+    object qFuncionarioID: TIntegerField
+      FieldName = 'ID'
+      Required = True
+    end
+    object qFuncionarioID_FILIAL: TIntegerField
+      FieldName = 'ID_FILIAL'
+      Required = True
+    end
+    object qFuncionarioNOME: TStringField
+      FieldName = 'NOME'
+      Required = True
+      Size = 100
+    end
+    object qFuncionarioENDERECO: TStringField
+      FieldName = 'ENDERECO'
+      Size = 100
+    end
+    object qFuncionarioNUMERO: TStringField
+      FieldName = 'NUMERO'
+    end
+    object qFuncionarioCOMPLEMENTO: TStringField
+      FieldName = 'COMPLEMENTO'
+      Size = 50
+    end
+    object qFuncionarioBAIRRO: TStringField
+      FieldName = 'BAIRRO'
+      Size = 50
+    end
+    object qFuncionarioCIDADE: TStringField
+      FieldName = 'CIDADE'
+      Size = 50
+    end
+    object qFuncionarioESTADO: TStringField
+      FieldName = 'ESTADO'
+      Size = 2
+    end
+    object qFuncionarioCEP: TStringField
+      FieldName = 'CEP'
+      Size = 8
+    end
+    object qFuncionarioSEXO: TStringField
+      FieldName = 'SEXO'
+      FixedChar = True
+      Size = 1
+    end
+    object qFuncionarioESTADO_CIVIL: TIntegerField
+      FieldName = 'ESTADO_CIVIL'
+    end
+    object qFuncionarioDATA_ADMISSAO: TDateField
+      FieldName = 'DATA_ADMISSAO'
     end
   end
 end

@@ -195,6 +195,19 @@ type
     cdsFuncionariosexo: TStringField;
     cdsFuncionarioestado_civil: TSmallintField;
     cdsFuncionariodt_admissao: TSQLTimeStampField;
+    sdsMovimentoFolha: TSQLDataSet;
+    sdsMovimentoFolhacd_empresa: TSmallintField;
+    sdsMovimentoFolhacd_funcionario: TIntegerField;
+    sdsMovimentoFolhames: TSmallintField;
+    sdsMovimentoFolhaano: TSmallintField;
+    sdsMovimentoFolhavalor_total: TFloatField;
+    dspMovimentoFolha: TDataSetProvider;
+    cdsMovimentoFolha: TClientDataSet;
+    cdsMovimentoFolhacd_empresa: TSmallintField;
+    cdsMovimentoFolhacd_funcionario: TIntegerField;
+    cdsMovimentoFolhames: TSmallintField;
+    cdsMovimentoFolhaano: TSmallintField;
+    cdsMovimentoFolhavalor_total: TFloatField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -208,6 +221,7 @@ type
     procedure prc_Abrir_Vale_Refeicao(ID_Empresa, ID_Tomador : Integer);
     procedure prc_Abrir_ProcEvento(ID_Empresa, ID_Tomador, Mes: Integer; Ano : String);
     procedure prc_Abrir_Funcionario_Sage;
+    procedure prc_Abrir_Movimento_Folha(ID_Filial, Ano : Integer; Mes : String);
     { Public declarations }
   end;
 
@@ -234,6 +248,24 @@ begin
   cdsFuncionario.Close;
 //  sdsTomadorSage.CommandText := ctTomadorSage + ' where cd_empresa = ' + IntToStr(vFilial);
   cdsFuncionario.Open;
+end;
+
+procedure TDMSage.prc_Abrir_Movimento_Folha(ID_Filial, Ano: Integer;
+  Mes: String);
+var
+  vSql : String;
+begin
+  cdsMovimentoFolha.Close;
+  vSql := 'SELECT pro.cd_empresa, pro.cd_funcionario, pro.mes,';
+  vSql := vSql + ' pro.ano,SUM(case when eve.tp_evento = ' + QuotedStr('V')+ ' then pro.valor else -pro.valor end) valor_total';
+  vSql := vSql + ' FROM ProcEvento pro inner join Eventog eve on pro.cd_evento = eve.cd_evento ';
+  vSql := vSql + ' where pro.cd_empresa = ' + IntToStr(ID_Filial);
+  vSql := vSql + ' and pro.mes = ' + Mes;
+  vSql := vSql + ' and pro.ano = ' + IntToStr(Ano);
+  vSql := vSql + ' group by pro.cd_empresa, pro.cd_funcionario, pro.mes,pro.ano';
+  vSql := vSql + ' order by pro.cd_funcionario, pro.mes';
+  sdsMovimentoFolha.CommandText := vSql;
+  cdsMovimentoFolha.Open;
 end;
 
 procedure TDMSage.prc_Abrir_ProcEvento(ID_Empresa, ID_Tomador, Mes: Integer; Ano : String);
