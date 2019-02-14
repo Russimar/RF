@@ -39,7 +39,7 @@ type
   private
     { Private declarations }
     ctFuncionarioLocal : String;
-    procedure prc_Consultar;
+    procedure prc_Consultar(ID_Filial : Integer);
 
   public
     { Public declarations }
@@ -57,16 +57,18 @@ uses DmdDatabase, uUtilPadrao;
 
 procedure TfrmSel_Funcionario.BitBtn1Click(Sender: TObject);
 begin
-  prc_Consultar;
+  prc_Consultar(vFilial);
   cdsConsultaFuncionario.RecordCount;
 end;
 
-procedure TfrmSel_Funcionario.prc_Consultar;
+procedure TfrmSel_Funcionario.prc_Consultar(ID_Filial : Integer);
 begin
   cdsConsultaFuncionario.Close;
   sdsConsultaFuncionario.CommandText := ctFuncionarioLocal;
   if trim(Edit1.Text) <> '' then
     sdsConsultaFuncionario.CommandText := sdsConsultaFuncionario.CommandText + ' AND ((NOME LIKE ' + QuotedStr('%'+Edit1.Text+'%') + '))';
+  if ID_Filial > 0 then
+    sdsConsultaFuncionario.CommandText := sdsConsultaFuncionario.CommandText + ' AND (ID_FILIAL = ' + IntToStr(ID_Filial)+')';
   cdsConsultaFuncionario.Open;
 end;
 

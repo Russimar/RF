@@ -95,9 +95,8 @@ procedure TfrmCadTomador.AtualizaDeptoSage1Click(Sender: TObject);
 begin
   inherited;
   fDlgTomadoresSage := TDlgTomadoresSage.Create(Self);
-  fDMSage.prc_Abrir_Tomador_Sage;
-  fDlgTomadoresSage.fDMSage := fDMSage;
   fDlgTomadoresSage.dsTomadorSage.DataSet := fDMSage.cdsTomadorSage;
+  fDlgTomadoresSage.fDMSage := fDMSage;
   fDlgTomadoresSage.ShowModal;
   FreeAndNil(fDlgTomadoresSage);
   NxButton1.Click;
@@ -106,7 +105,7 @@ end;
 procedure TfrmCadTomador.RzPageControl1Change(Sender: TObject);
 begin
   inherited;
-  fDMCadTomador.prc_Localizar(fDMCadTomador.cdsConsultaID_TOMADOR.AsInteger);
+  fDMCadTomador.prc_Localizar(fDMCadTomador.cdsConsultaID_TOMADOR.AsInteger,fDMCadTomador.cdsConsultaID_FILIAL.AsInteger);
 end;
 
 procedure TfrmCadTomador.btnCancelarClick(Sender: TObject);
@@ -220,7 +219,7 @@ procedure TfrmCadTomador.btnInserirDiasClick(Sender: TObject);
 begin
   inherited;
   prc_Habilita_Dias(sender);
-  fDMCadTomador.prc_Abrir_Tomador_Dias(fDMCadTomador.cdsTomadorID_TOMADOR.AsInteger);
+  fDMCadTomador.prc_Abrir_Tomador_Dias(fDMCadTomador.cdsTomadorID_TOMADOR.AsInteger, fDMCadTomador.cdsTomadorID_FILIAL.AsInteger);
   fDMCadTomador.prc_Inserir_Tomador_Dias;
 end;
 

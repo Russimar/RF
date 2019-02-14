@@ -251,6 +251,13 @@ end;
 
 procedure TfrmFaltaAtestado.btnConsultaFuncionarioClick(Sender: TObject);
 begin
+  if (ComboEmpresa.KeyValue = '') or (ComboEmpresa.KeyValue = null) then
+  begin
+    ShowMessage('Preencha o campo Empresa');
+    ComboEmpresa.SetFocus;
+    Exit;
+  end;
+  vFilial := ComboEmpresa.KeyValue;
   ffrmSel_Funcionario := TfrmSel_Funcionario.Create(Self);
   ffrmSel_Funcionario.ShowModal;
   FreeAndNil(ffrmSel_Funcionario);

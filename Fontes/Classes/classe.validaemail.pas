@@ -2,7 +2,7 @@ unit classe.validaemail;
 
 interface
 
-uses SysUtils, Forms;
+uses SysUtils, Forms, SqlExpr;
 
 type
   TValidaEmail = class

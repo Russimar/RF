@@ -411,101 +411,6 @@ object DMSage: TDMSage
       Size = 18
     end
   end
-  object sdsProcEvento: TSQLDataSet
-    CommandText = 
-      'SELECT p.cd_empresa'#13#10'      ,p.cd_funcionario'#13#10'      ,p.mes'#13#10'    ' +
-      '  ,p.tipo'#13#10'      ,p.cd_evento'#13#10'      ,p.ano'#13#10'      ,p.referencia' +
-      #13#10'      ,p.referencia_editada'#13#10'      ,p.valor'#13#10'  FROM ProcEvento' +
-      ' P'#13#10'  inner join funtomador FT ON FT.CD_FUNCIONARIO = P.CD_FUNCI' +
-      'ONARIO and p.cd_empresa = ft.cd_empresa'
-    MaxBlobSize = -1
-    Params = <>
-    SQLConnection = dmDatabase.Conexao_SQLServer
-    Left = 32
-    Top = 192
-    object sdsProcEventocd_empresa: TSmallintField
-      FieldName = 'cd_empresa'
-      Required = True
-    end
-    object sdsProcEventocd_funcionario: TIntegerField
-      FieldName = 'cd_funcionario'
-      Required = True
-    end
-    object sdsProcEventomes: TSmallintField
-      FieldName = 'mes'
-      Required = True
-    end
-    object sdsProcEventotipo: TSmallintField
-      FieldName = 'tipo'
-      Required = True
-    end
-    object sdsProcEventocd_evento: TIntegerField
-      FieldName = 'cd_evento'
-      Required = True
-    end
-    object sdsProcEventoano: TSmallintField
-      FieldName = 'ano'
-      Required = True
-    end
-    object sdsProcEventoreferencia: TFloatField
-      FieldName = 'referencia'
-    end
-    object sdsProcEventoreferencia_editada: TStringField
-      FieldName = 'referencia_editada'
-      FixedChar = True
-      Size = 10
-    end
-    object sdsProcEventovalor: TFloatField
-      FieldName = 'valor'
-    end
-  end
-  object dspProcEvento: TDataSetProvider
-    DataSet = sdsProcEvento
-    Left = 64
-    Top = 192
-  end
-  object cdsProcEvento: TClientDataSet
-    Aggregates = <>
-    Params = <>
-    ProviderName = 'dspProcEvento'
-    Left = 96
-    Top = 192
-    object cdsProcEventocd_empresa: TSmallintField
-      FieldName = 'cd_empresa'
-      Required = True
-    end
-    object cdsProcEventocd_funcionario: TIntegerField
-      FieldName = 'cd_funcionario'
-      Required = True
-    end
-    object cdsProcEventomes: TSmallintField
-      FieldName = 'mes'
-      Required = True
-    end
-    object cdsProcEventotipo: TSmallintField
-      FieldName = 'tipo'
-      Required = True
-    end
-    object cdsProcEventocd_evento: TIntegerField
-      FieldName = 'cd_evento'
-      Required = True
-    end
-    object cdsProcEventoano: TSmallintField
-      FieldName = 'ano'
-      Required = True
-    end
-    object cdsProcEventoreferencia: TFloatField
-      FieldName = 'referencia'
-    end
-    object cdsProcEventoreferencia_editada: TStringField
-      FieldName = 'referencia_editada'
-      FixedChar = True
-      Size = 10
-    end
-    object cdsProcEventovalor: TFloatField
-      FieldName = 'valor'
-    end
-  end
   object sdsValeTransporte: TSQLDataSet
     CommandText = 
       'SELECT fc.cd_empresa'#13#10'      ,fc.cd_funcionario'#13#10'      ,fun.cd_li' +
@@ -717,11 +622,6 @@ object DMSage: TDMSage
       DisplayLabel = 'C'#243'd.Tomador'
       FieldName = 'cd_tomador'
     end
-  end
-  object dsProcEvento: TDataSource
-    DataSet = cdsProcEvento
-    Left = 128
-    Top = 192
   end
   object sdsFuncionario: TSQLDataSet
     CommandText = 

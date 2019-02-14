@@ -37,7 +37,7 @@ type
   private
     { Private declarations }
     ctTomadorLocal : String;
-    procedure prc_Consultar;
+    procedure prc_Consultar(ID_Filial : Integer);
 
   public
     { Public declarations }
@@ -55,16 +55,18 @@ uses DmdDatabase, uUtilPadrao;
 
 procedure TfrmSel_Tomador.BitBtn1Click(Sender: TObject);
 begin
-  prc_Consultar;
+  prc_Consultar(vFilial);
   cdsConsultaTomador.RecordCount;
 end;
 
-procedure TfrmSel_Tomador.prc_Consultar;
+procedure TfrmSel_Tomador.prc_Consultar(ID_Filial : Integer);
 begin
   cdsConsultaTomador.Close;
   sdsConsultaTomador.CommandText := ctTomadorLocal;
   if trim(Edit1.Text) <> '' then
     sdsConsultaTomador.CommandText := sdsConsultaTomador.CommandText + ' AND ((NOME LIKE ' + QuotedStr('%'+Edit1.Text+'%') + '))';
+  if ID_Filial > 0 then
+    sdsConsultaTomador.CommandText := sdsConsultaTomador.CommandText + ' AND (ID_Filial = ' + IntToStr(ID_Filial) + ')';
   cdsConsultaTomador.Open;
 end;
 

@@ -1,6 +1,6 @@
 inherited frmCadTomador: TfrmCadTomador
-  Left = 207
-  Top = 24
+  Left = 308
+  Top = 20
   Width = 1010
   Height = 652
   Caption = 'Cadastro de Tomadores'

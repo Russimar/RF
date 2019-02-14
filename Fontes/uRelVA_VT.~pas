@@ -75,6 +75,13 @@ uses
 
 procedure TfrmRelVA_VT.btnConsultaTomadorClick(Sender: TObject);
 begin
+  if (ComboEmpresa.KeyValue = '') or (ComboEmpresa.KeyValue = null) then
+  begin
+    ShowMessage('Preencha o campo Empresa');
+    ComboEmpresa.SetFocus;
+    Exit;
+  end;
+  vFilial := ComboEmpresa.KeyValue;
   ffrmSel_Tomador := TfrmSel_Tomador.Create(Self);
   ffrmSel_Tomador.ShowModal;
   FreeAndNil(ffrmSel_Tomador);
@@ -139,8 +146,7 @@ begin
 
   fDMCadFuncionario.prc_Consulta_DiasAdicionais(vMes, StrToInt(vAno), ComboEmpresa.KeyValue);
   fDMCadFuncionario.prc_Consulta_Faltas(vMes, StrToInt(vAno), ComboEmpresa.KeyValue);
-  fDMCadTomador.prc_Posiciona_Tomador_Dia(edtAno.AsInteger, vMes, StrToInt(edtTomador.Text));
-  fDMSage.prc_Abrir_ProcEvento(ComboEmpresa.KeyValue, StrToInt(edtTomador.Text), ComboMes.ItemIndex + 1, edtAno.Text);
+  fDMCadTomador.prc_Posiciona_Tomador_Dia(edtAno.AsInteger, vMes, StrToInt(edtTomador.Text),ComboEmpresa.KeyValue);
   fDMSage.prc_Abrir_Vale_Transporte(ComboEmpresa.KeyValue, StrToInt(edtTomador.Text));
   fDMSage.prc_Abrir_Vale_Refeicao(ComboEmpresa.KeyValue, StrToInt(edtTomador.Text));
   fDMCadTomador.cdsVTVA.EmptyDataSet;
@@ -177,7 +183,7 @@ procedure TfrmRelVA_VT.edtTomadorExit(Sender: TObject);
 begin
   if edtTomador.Text <> '' then
   begin
-    fDMCadTomador.prc_Posiciona_Tomador(StrToInt(edtTomador.Text));
+    fDMCadTomador.prc_Posiciona_Tomador(StrToInt(edtTomador.Text),ComboEmpresa.KeyValue);
     edtNomeTomador.Text := fDMCadTomador.qTomadorNOME.AsString;
     if fDMCadTomador.qTomador.IsEmpty then
     begin
@@ -189,6 +195,8 @@ begin
 end;
 
 procedure TfrmRelVA_VT.prc_Montar_VR;
+var
+  i : Integer;
 begin
   fDMCadTomador.cdsVTVA.EmptyDataSet;
   fDMCadTomador.mVTAuxiliar.EmptyDataSet;
@@ -203,7 +211,8 @@ begin
       fDMCadTomador.cdsVTVANome_Funcionario.AsString := fDMSage.cdsValeRefeicaonome.AsString;
       fDMCadTomador.cdsVTVAValor_Passagem.AsFloat := fDMSage.cdsValeRefeicaovl_vale.AsFloat;
       fDMCadTomador.cdsVTVAQtde_Passagem.AsFloat := fDMSage.cdsValeRefeicaoqt_dia_util.AsFloat;
-      fDMCadTomador.cdsVTVAValor_Refeicao.AsFloat := fDMCadTomador.qTomador_DiasVALOR_VA.AsFloat;
+//      fDMCadTomador.cdsVTVAValor_Refeicao.AsFloat := fDMCadTomador.qTomador_DiasVALOR_VA.AsFloat;
+      fDMCadTomador.cdsVTVAValor_Refeicao.AsFloat := fDMSage.cdsValeRefeicaovl_vale.AsFloat;
       fDMCadTomador.cdsVTVADiasTrabalhados.AsFloat := fDMCadTomador.qTomador_DiasDIAS.AsInteger;
 
       fDMCadTomador.cdsVTVADiasAtestado.AsFloat := fnc_Retorna_Dias_Faltas('VT', 'A', fDMCadTomador.cdsVTVACod_Funcionario.AsInteger, ComboEmpresa.KeyValue);
@@ -232,6 +241,17 @@ begin
     end;
     fDMSage.cdsValeRefeicao.Next;
   end;
+
+  for i := 1 to SMDBGrid2.ColCount - 2 do
+  begin
+    if (SMDBGrid2.Columns[i].FieldName = 'Valor_Passagem') or
+       (SMDBGrid2.Columns[i].FieldName = 'Qtde_Passagem') or
+       (SMDBGrid2.Columns[i].FieldName = 'Mes') or
+       (SMDBGrid2.Columns[i].FieldName = 'Ano') or
+       (SMDBGrid2.Columns[i].FieldName = 'Nome_Linha') then
+      SMDBGrid2.Columns[i].Visible := False;
+  end;
+
 end;
 
 procedure TfrmRelVA_VT.prc_Montar_VT;
@@ -272,6 +292,15 @@ begin
       fDMCadTomador.mVTAuxiliar.Post;
     end;
     fDMSage.cdsValeTransporte.Next;
+  end;
+  for i := 1 to SMDBGrid2.ColCount - 2 do
+  begin
+    if (SMDBGrid2.Columns[i].FieldName = 'Nome_Refeicao') or
+       (SMDBGrid2.Columns[i].FieldName = 'Valor_Refeicao') or
+       (SMDBGrid2.Columns[i].FieldName = 'Mes') or
+       (SMDBGrid2.Columns[i].FieldName = 'Ano') or
+       (SMDBGrid2.Columns[i].FieldName = 'Perc_Refeicao') then
+      SMDBGrid2.Columns[i].Visible := False;
   end;
 end;
 
@@ -422,8 +451,6 @@ begin
     fDMCadTomador.cdsLiquidos.Post;
     fDMSage.cdsMovimentoFolha.Next;
   end;
-
-
 end;
 
 end.

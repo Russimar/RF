@@ -14,7 +14,7 @@ object dmDatabase: TdmDatabase
     LoginPrompt = False
     Params.Strings = (
       'DriverName=Interbase'
-      'Database=E:\projetos\Dados\DADOS.FDB'
+      'Database=E:\projetos\Dados\DADOS.fdb'
       'RoleName=RoleName'
       'User_Name=sysdba'
       'Password=masterkey'

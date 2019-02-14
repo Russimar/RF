@@ -87,6 +87,11 @@ inherited frmCadFuncionario: TfrmCadFuncionario
         Columns = <
           item
             Expanded = False
+            FieldName = 'ID_FILIAL'
+            Visible = True
+          end
+          item
+            Expanded = False
             FieldName = 'ID'
             Width = 56
             Visible = True
@@ -136,6 +141,7 @@ inherited frmCadFuncionario: TfrmCadFuncionario
           item
             Expanded = False
             FieldName = 'CEP'
+            Width = 64
             Visible = True
           end
           item
@@ -147,16 +153,13 @@ inherited frmCadFuncionario: TfrmCadFuncionario
           item
             Expanded = False
             FieldName = 'ESTADO_CIVIL'
+            Width = 64
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'DATA_ADMISSAO'
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'ID_FILIAL'
+            Width = 64
             Visible = True
           end>
       end

@@ -15,7 +15,7 @@ uses
   uDMSage in 'uDMSage.pas' {DMSage: TDataModule},
   uDlgFuncionariosSage in 'uDlgFuncionariosSage.pas' {DlgFuncionariosSage},
   uDlgDiasTrabalhados in 'uDlgDiasTrabalhados.pas' {DlgDiasTrabalhados},
-  USel_Tomador in 'USel_Tomador.pas' {frmSel_Tomador},
+  USel_Funcionario in 'USel_Funcionario.pas' {frmSel_Funcionario},
   uRelVA_VT in 'uRelVA_VT.pas' {frmRelVA_VT},
   uCadParametros in 'uCadParametros.pas' {frmCadParametros},
   uDMCADParametros in 'uDMCADParametros.pas' {DMCadParametros: TDataModule},
@@ -25,7 +25,8 @@ uses
   uDMCadFuncionario in 'uDMCadFuncionario.pas' {DMFuncionario: TDataModule},
   uDlgTomadoresSage in 'uDlgTomadoresSage.pas' {DlgTomadoresSage},
   uCadDiasAdicionais in 'uCadDiasAdicionais.pas' {frmCadDiasAdicionais},
-  uCadFaltaAtestados in 'uCadFaltaAtestados.pas' {frmFaltaAtestado};
+  uCadFaltaAtestados in 'uCadFaltaAtestados.pas' {frmFaltaAtestado},
+  USel_Tomador in 'USel_Tomador.pas' {frmSel_Tomador};
 
 {$R *.res}
 

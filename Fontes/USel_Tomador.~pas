@@ -119,7 +119,7 @@ var
   ColunaOrdenada : String;
 begin
   ColunaOrdenada := Column.FieldName;
-  cdsConsultaTomadorPessoa.IndexFieldNames := Column.FieldName;
+  cdsConsultaTomador.IndexFieldNames := Column.FieldName;
   Column.Title.Color := clBtnShadow;
   for i := 0 to SMDBGrid1.Columns.Count - 1 do
     if not (SMDBGrid1.Columns.Items[I] = Column) then

@@ -1,6 +1,6 @@
 object frmSel_Funcionario: TfrmSel_Funcionario
-  Left = 231
-  Top = 167
+  Left = 157
+  Top = 143
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Selecionar Funcion'#225'rio'

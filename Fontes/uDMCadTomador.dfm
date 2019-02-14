@@ -1,8 +1,8 @@
 object DMCadTomador: TDMCadTomador
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Left = 254
-  Top = 136
+  Left = 429
+  Top = 149
   Height = 458
   Width = 894
   object sdsTomador: TSQLDataSet
@@ -20,6 +20,7 @@ object DMCadTomador: TDMCadTomador
     end
     object sdsTomadorID_FILIAL: TIntegerField
       FieldName = 'ID_FILIAL'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
     end
     object sdsTomadorNOME: TStringField
       FieldName = 'NOME'
@@ -81,6 +82,7 @@ object DMCadTomador: TDMCadTomador
     object cdsTomadorID_FILIAL: TIntegerField
       DisplayLabel = 'Cod.Filial'
       FieldName = 'ID_FILIAL'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
     end
     object cdsTomadorNOME: TStringField
       DisplayLabel = 'Nome'
@@ -132,13 +134,13 @@ object DMCadTomador: TDMCadTomador
       DisplayLabel = 'Fpas'
       FieldName = 'FPAS'
     end
-    object cdsTomadorsdsTomadorDiasTrabalhados: TDataSetField
-      FieldName = 'sdsTomadorDiasTrabalhados'
-    end
     object cdsTomadorSTATUS: TStringField
       FieldName = 'STATUS'
       FixedChar = True
       Size = 1
+    end
+    object cdsTomadorsdsTomadorDiasTrabalhados: TDataSetField
+      FieldName = 'sdsTomadorDiasTrabalhados'
     end
   end
   object dspTomador: TDataSetProvider
@@ -161,7 +163,7 @@ object DMCadTomador: TDMCadTomador
     GetMetadata = False
     CommandText = 
       'SELECT * FROM TOMADOR_DIAS_TRABALHADOS'#13#10'WHERE ID_TOMADOR = :ID_T' +
-      'OMADOR'#13#10'ORDER BY ANO, MES DESC'
+      'OMADOR AND ID_FILIAL = :ID_FILIAL'#13#10'ORDER BY ANO, MES DESC'
     DataSource = dsMestre
     MaxBlobSize = -1
     Params = <
@@ -169,20 +171,30 @@ object DMCadTomador: TDMCadTomador
         DataType = ftInteger
         Name = 'ID_TOMADOR'
         ParamType = ptInput
+        Size = 4
+      end
+      item
+        DataType = ftInteger
+        Name = 'ID_FILIAL'
+        ParamType = ptInput
+        Size = 4
       end>
     SQLConnection = dmDatabase.scoPrincipal
     Left = 48
     Top = 152
     object sdsTomadorDiasTrabalhadosMES: TStringField
       FieldName = 'MES'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       FixedChar = True
       Size = 10
     end
     object sdsTomadorDiasTrabalhadosANO: TSmallintField
       FieldName = 'ANO'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
     end
     object sdsTomadorDiasTrabalhadosID_TOMADOR: TIntegerField
       FieldName = 'ID_TOMADOR'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
     end
     object sdsTomadorDiasTrabalhadosDIAS: TIntegerField
       FieldName = 'DIAS'
@@ -202,6 +214,11 @@ object DMCadTomador: TDMCadTomador
       Precision = 15
       Size = 2
     end
+    object sdsTomadorDiasTrabalhadosID_FILIAL: TIntegerField
+      FieldName = 'ID_FILIAL'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
   end
   object cdsTomadorDiasTrabalhados: TClientDataSet
     Aggregates = <>
@@ -212,20 +229,24 @@ object DMCadTomador: TDMCadTomador
     object cdsTomadorDiasTrabalhadosMES: TStringField
       DisplayLabel = 'M'#234's'
       FieldName = 'MES'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       FixedChar = True
       Size = 10
     end
     object cdsTomadorDiasTrabalhadosANO: TSmallintField
       DisplayLabel = 'Ano'
       FieldName = 'ANO'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
     end
     object cdsTomadorDiasTrabalhadosID_TOMADOR: TIntegerField
       DisplayLabel = 'Cod.Tomador'
       FieldName = 'ID_TOMADOR'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
     end
     object cdsTomadorDiasTrabalhadosDIAS: TIntegerField
       DisplayLabel = 'Dias'
       FieldName = 'DIAS'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
     end
     object cdsTomadorDiasTrabalhadosVALOR_VA: TFMTBCDField
       DisplayLabel = 'Valor VA'
@@ -248,6 +269,11 @@ object DMCadTomador: TDMCadTomador
       Precision = 15
       Size = 2
     end
+    object cdsTomadorDiasTrabalhadosID_FILIAL: TIntegerField
+      FieldName = 'ID_FILIAL'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
   end
   object dsTomadorDiasTrabalhados: TDataSource
     DataSet = cdsTomadorDiasTrabalhados
@@ -261,8 +287,8 @@ object DMCadTomador: TDMCadTomador
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoPrincipal
-    Left = 200
-    Top = 48
+    Left = 216
+    Top = 40
     object IntegerField1: TIntegerField
       FieldName = 'ID_TOMADOR'
       Required = True
@@ -320,8 +346,8 @@ object DMCadTomador: TDMCadTomador
     Aggregates = <>
     Params = <>
     ProviderName = 'dspConsulta'
-    Left = 264
-    Top = 48
+    Left = 280
+    Top = 40
     object cdsConsultaID_FILIAL: TIntegerField
       DisplayLabel = 'Cod.Filial'
       FieldName = 'ID_FILIAL'
@@ -388,13 +414,13 @@ object DMCadTomador: TDMCadTomador
   end
   object dspConsulta: TDataSetProvider
     DataSet = sdsConsulta
-    Left = 232
-    Top = 48
+    Left = 248
+    Top = 40
   end
   object dsConsulta: TDataSource
     DataSet = cdsConsulta
-    Left = 296
-    Top = 48
+    Left = 312
+    Top = 40
   end
   object qTomador: TSQLQuery
     MaxBlobSize = -1
@@ -403,10 +429,15 @@ object DMCadTomador: TDMCadTomador
         DataType = ftInteger
         Name = 'ID_TOMADOR'
         ParamType = ptInput
+      end
+      item
+        DataType = ftInteger
+        Name = 'ID_FILIAL'
+        ParamType = ptInput
       end>
     SQL.Strings = (
       'SELECT ID_TOMADOR, NOME FROM TOMADOR'
-      'WHERE ID_TOMADOR = :ID_TOMADOR')
+      'WHERE ID_TOMADOR = :ID_TOMADOR AND ID_FILIAL = :ID_FILIAL')
     SQLConnection = dmDatabase.scoPrincipal
     Left = 376
     Top = 192
@@ -436,18 +467,23 @@ object DMCadTomador: TDMCadTomador
         DataType = ftInteger
         Name = 'ID_TOMADOR'
         ParamType = ptInput
+      end
+      item
+        DataType = ftInteger
+        Name = 'ID_FILIAL'
+        ParamType = ptInput
       end>
     SQL.Strings = (
       
-        'select T.ID_TOMADOR, T.NOME, TT.DIAS, TT.VALOR_VA, TT.PERC_VA, T' +
-        'T.VALOR_LANCHE'
+        'select T.ID_FILIAL, T.ID_TOMADOR, T.NOME, TT.DIAS, TT.VALOR_VA, ' +
+        'TT.PERC_VA, TT.VALOR_LANCHE'
       'from TOMADOR T'
       
         'inner join TOMADOR_DIAS_TRABALHADOS TT on T.ID_TOMADOR = TT.ID_T' +
-        'OMADOR'
-      'where TT.ANO = :ANO and'
-      '      TT.MES = :MES and'
-      '      TT.ID_TOMADOR = :ID_TOMADOR')
+        'OMADOR and T.ID_FILIAL = TT.ID_FILIAL'
+      
+        'where TT.ANO = :ANO and TT.MES = :MES and T.ID_TOMADOR = :ID_TOM' +
+        'ADOR and T.ID_FILIAL = :ID_FILIAL')
     SQLConnection = dmDatabase.scoPrincipal
     Left = 448
     Top = 192
@@ -476,6 +512,10 @@ object DMCadTomador: TDMCadTomador
       FieldName = 'VALOR_LANCHE'
       Precision = 15
       Size = 2
+    end
+    object qTomador_DiasID_FILIAL: TIntegerField
+      FieldName = 'ID_FILIAL'
+      Required = True
     end
   end
   object frxReport1: TfrxReport
@@ -997,6 +1037,12 @@ object DMCadTomador: TDMCadTomador
       FieldName = 'Nome_Funcionario'
       Size = 60
     end
+    object cdsVTVANome_Linha: TStringField
+      DisplayLabel = 'Nome Linha'
+      DisplayWidth = 43
+      FieldName = 'Nome_Linha'
+      Size = 30
+    end
     object cdsVTVAValor_Passagem: TFloatField
       DisplayLabel = 'Valor Passagem'
       DisplayWidth = 15
@@ -1008,6 +1054,32 @@ object DMCadTomador: TDMCadTomador
       DisplayWidth = 18
       FieldName = 'Qtde_Passagem'
       DisplayFormat = '##0.00'
+    end
+    object cdsVTVANome_Refeicao: TStringField
+      DisplayLabel = 'Nome Refei'#231#227'o'
+      DisplayWidth = 48
+      FieldName = 'Nome_Refeicao'
+      Size = 40
+    end
+    object cdsVTVAValor_Refeicao: TFloatField
+      DisplayLabel = 'Valor Refei'#231#227'o'
+      DisplayWidth = 15
+      FieldName = 'Valor_Refeicao'
+      DisplayFormat = '##0.00'
+    end
+    object cdsVTVAPerc_Refeicao: TFloatField
+      DisplayLabel = '% Refei'#231#227'o'
+      DisplayWidth = 14
+      FieldName = 'Perc_Refeicao'
+      DisplayFormat = '0.00'
+    end
+    object cdsVTVAValor_Desconto: TFloatField
+      DisplayLabel = 'Valor Desconto'
+      DisplayWidth = 15
+      FieldKind = fkCalculated
+      FieldName = 'Valor_Desconto'
+      DisplayFormat = '##0.00'
+      Calculated = True
     end
     object cdsVTVADiasTrabalhados: TFloatField
       DisplayWidth = 15
@@ -1030,6 +1102,14 @@ object DMCadTomador: TDMCadTomador
       FieldName = 'Dias_Adicionais'
       DisplayFormat = '##0.00'
     end
+    object cdsVTVAValor_Total: TFloatField
+      DisplayLabel = 'Valor Total'
+      DisplayWidth = 15
+      FieldKind = fkCalculated
+      FieldName = 'Valor_Total'
+      DisplayFormat = '##0.00'
+      Calculated = True
+    end
     object cdsVTVAMes: TIntegerField
       DisplayWidth = 5
       FieldName = 'Mes'
@@ -1043,42 +1123,9 @@ object DMCadTomador: TDMCadTomador
       DisplayWidth = 18
       FieldName = 'Cod_Passagem'
     end
-    object cdsVTVAValor_Total: TFloatField
-      DisplayLabel = 'Valor Total'
-      DisplayWidth = 15
-      FieldKind = fkCalculated
-      FieldName = 'Valor_Total'
-      DisplayFormat = '##0.00'
-      Calculated = True
-    end
-    object cdsVTVANome_Linha: TStringField
-      DisplayLabel = 'Nome Linha'
-      DisplayWidth = 43
-      FieldName = 'Nome_Linha'
-      Size = 30
-    end
     object cdsVTVACod_VR: TIntegerField
       DisplayWidth = 12
       FieldName = 'Cod_VR'
-    end
-    object cdsVTVANome_Refeicao: TStringField
-      DisplayWidth = 48
-      FieldName = 'Nome_Refeicao'
-      Size = 40
-    end
-    object cdsVTVAValor_Refeicao: TFloatField
-      DisplayWidth = 15
-      FieldName = 'Valor_Refeicao'
-    end
-    object cdsVTVAPerc_Refeicao: TFloatField
-      DisplayWidth = 14
-      FieldName = 'Perc_Refeicao'
-    end
-    object cdsVTVAValor_Desconto: TFloatField
-      DisplayWidth = 15
-      FieldKind = fkCalculated
-      FieldName = 'Valor_Desconto'
-      Calculated = True
     end
   end
   object dsVTVA: TDataSource

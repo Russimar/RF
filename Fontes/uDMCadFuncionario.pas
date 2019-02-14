@@ -132,7 +132,7 @@ type
     ctCommand : String;
     ctCommand_FaltaAtestado : String;
     ctCommand_DiasAdicionais : String;
-    procedure prc_Localizar(ID: Integer);
+    procedure prc_Localizar(ID: Integer; ID_Filial: Integer);
     procedure prc_Consultar(x : String);
     procedure prc_Posiciona_Funcionario(ID_Funcionario, ID_Filial: Integer);
     procedure prc_Consulta_Faltas(Mes : String; Ano : Smallint; ID_Filial : Integer);
@@ -154,12 +154,14 @@ uses
 
 { TDMFuncionario }
 
-procedure TDMFuncionario.prc_Localizar(ID: Integer);
+procedure TDMFuncionario.prc_Localizar(ID: Integer; ID_Filial : Integer);
 begin
   cdsFuncionario.Close;
   sdsFuncionario.CommandText := ctCommand;
   if ID <> 0 then
     sdsFuncionario.CommandText := sdsFuncionario.CommandText + ' AND ID = ' + IntToStr(ID);
+  if ID_Filial <> 0 then
+    sdsFuncionario.CommandText := sdsFuncionario.CommandText + ' AND ID_Filial = ' + IntToStr(ID_Filial);
   cdsFuncionario.Open;
 end;
 
@@ -176,7 +178,7 @@ begin
   sdsConsulta.CommandText := ctCommand;
   if Trim(x) <> '' then
     sdsConsulta.CommandText := sdsConsulta.CommandText + ' AND NOME LIKE ' + QuotedStr('%' + x + '%');
-  sdsConsulta.CommandText := sdsConsulta.CommandText + ' AND ID_FILIAL = ' + IntToStr(vFilial);
+//  sdsConsulta.CommandText := sdsConsulta.CommandText + ' AND ID_FILIAL = ' + IntToStr(vFilial);
   sdsConsulta.CommandText := sdsConsulta.CommandText + ' ORDER BY NOME';
   cdsConsulta.Open;
 end;

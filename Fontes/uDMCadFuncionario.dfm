@@ -8,7 +8,7 @@ object DMFuncionario: TDMFuncionario
   object sdsConsulta: TSQLDataSet
     NoMetadata = True
     GetMetadata = False
-    CommandText = 'SELECT * FROM FUNCIONARIO'
+    CommandText = 'SELECT * FROM FUNCIONARIO WHERE 0=0'
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoPrincipal
@@ -16,10 +16,12 @@ object DMFuncionario: TDMFuncionario
     Top = 24
     object sdsConsultaID: TIntegerField
       FieldName = 'ID'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
     end
     object sdsConsultaID_FILIAL: TIntegerField
       FieldName = 'ID_FILIAL'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
     end
     object sdsConsultaNOME: TStringField
@@ -80,11 +82,13 @@ object DMFuncionario: TDMFuncionario
     object cdsConsultaID: TIntegerField
       DisplayLabel = 'C'#243'digo'
       FieldName = 'ID'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
     end
     object cdsConsultaID_FILIAL: TIntegerField
       DisplayLabel = 'Cod.Filial'
       FieldName = 'ID_FILIAL'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
     end
     object cdsConsultaNOME: TStringField

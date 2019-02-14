@@ -25,7 +25,7 @@ object DlgFuncionariosSage: TDlgFuncionariosSage
       Left = 1
       Top = 57
       Width = 910
-      Height = 383
+      Height = 366
       Align = alClient
       DataSource = dsFuncionarioSage
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
@@ -205,6 +205,14 @@ object DlgFuncionariosSage: TDlgFuncionariosSage
         TabOrder = 1
         OnClick = NxButton2Click
       end
+    end
+    object ProgressBar1: TProgressBar
+      Left = 1
+      Top = 423
+      Width = 910
+      Height = 17
+      Align = alBottom
+      TabOrder = 2
     end
   end
   object dsFuncionarioSage: TDataSource

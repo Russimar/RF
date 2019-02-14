@@ -44,7 +44,6 @@ type
     sdsTomadorDiasTrabalhadosANO: TSmallintField;
     sdsTomadorDiasTrabalhadosID_TOMADOR: TIntegerField;
     sdsTomadorDiasTrabalhadosDIAS: TIntegerField;
-    cdsTomadorsdsTomadorDiasTrabalhados: TDataSetField;
     cdsTomadorDiasTrabalhadosMES: TStringField;
     cdsTomadorDiasTrabalhadosANO: TSmallintField;
     cdsTomadorDiasTrabalhadosID_TOMADOR: TIntegerField;
@@ -176,6 +175,10 @@ type
     qFuncionarioSEXO: TStringField;
     qFuncionarioESTADO_CIVIL: TIntegerField;
     qFuncionarioDATA_ADMISSAO: TDateField;
+    sdsTomadorDiasTrabalhadosID_FILIAL: TIntegerField;
+    cdsTomadorDiasTrabalhadosID_FILIAL: TIntegerField;
+    cdsTomadorsdsTomadorDiasTrabalhados: TDataSetField;
+    qTomador_DiasID_FILIAL: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure frxValeTransporteNext(Sender: TObject);
     procedure frxValeTransporteFirst(Sender: TObject);
@@ -190,13 +193,13 @@ type
     vMsgTomador: string;
     ctCommand: string;
     procedure prc_Consultar(x: string);
-    procedure prc_Localizar(ID: Integer);
-    procedure prc_Abrir_Tomador_Dias(ID_Tomador: Integer);
+    procedure prc_Localizar(ID: Integer; ID_Filial : Integer);
+    procedure prc_Abrir_Tomador_Dias(ID_Tomador: Integer; ID_Filial : Integer);
     procedure prc_Inserir_Tomador_Dias;
     procedure prc_Alterar;
     procedure prc_Gravar;
-    procedure prc_Posiciona_Tomador(ID_Tomador: Integer);
-    procedure prc_Posiciona_Tomador_Dia(Ano: Integer; Mes: string; ID_TOMADOR: Integer);
+    procedure prc_Posiciona_Tomador(ID_Tomador: Integer; ID_Filial : Integer);
+    procedure prc_Posiciona_Tomador_Dia(Ano: Integer; Mes: string; ID_TOMADOR: Integer; ID_Filial : Integer);
     procedure prc_Posiciona_Funcionario(ID_Funcionario, ID_Filial: Integer);
     function fnc_Monta_Impressao_VT: string;
     function fnc_Monta_Impressao_VR: string;
@@ -221,23 +224,25 @@ begin
   sdsConsulta.CommandText := ctCommand;
   if Trim(x) <> '' then
     sdsConsulta.CommandText := sdsConsulta.CommandText + ' AND NOME LIKE ' + QuotedStr('%' + x + '%');
-  sdsConsulta.CommandText := sdsConsulta.CommandText + ' AND ID_FILIAL = ' + IntToStr(vFilial);
+//  sdsConsulta.CommandText := sdsConsulta.CommandText + ' AND ID_FILIAL = ' + IntToStr(vFilial);
   sdsConsulta.CommandText := sdsConsulta.CommandText + ' ORDER BY NOME';
   cdsConsulta.Open;
 end;
 
 procedure TDMCadTomador.DataModuleCreate(Sender: TObject);
 begin
-  ctCommand := sdsConsulta.CommandText;
+  ctCommand := sdsTomador.CommandText;
   qParametros.Open;
 end;
 
-procedure TDMCadTomador.prc_Localizar(ID: Integer);
+procedure TDMCadTomador.prc_Localizar(ID: Integer; ID_Filial : Integer);
 begin
   cdsTomador.Close;
   sdsTomador.CommandText := ctCommand;
   if ID <> 0 then
     sdsTomador.CommandText := sdsTomador.CommandText + ' AND ID_TOMADOR = ' + IntToStr(ID);
+  if ID_Filial <> 0 then
+    sdsTomador.CommandText := sdsTomador.CommandText + ' AND ID_FILIAL = ' + IntToStr(ID_Filial);
   cdsTomador.Open;
   cdsTomadorDiasTrabalhados.Close;
   cdsTomadorDiasTrabalhados.Open;
@@ -261,10 +266,11 @@ begin
   cdsTomador.ApplyUpdates(0);
 end;
 
-procedure TDMCadTomador.prc_Abrir_Tomador_Dias(ID_Tomador: Integer);
+procedure TDMCadTomador.prc_Abrir_Tomador_Dias(ID_Tomador: Integer; ID_Filial : Integer);
 begin
   cdsTomadorDiasTrabalhados.Close;
   sdsTomadorDiasTrabalhados.ParamByName('ID_TOMADOR').AsInteger := ID_Tomador;
+  sdsTomadorDiasTrabalhados.ParamByName('ID_FILIAL').AsInteger := ID_Filial;
   cdsTomadorDiasTrabalhados.Open;
 end;
 
@@ -272,21 +278,24 @@ procedure TDMCadTomador.prc_Inserir_Tomador_Dias;
 begin
   cdsTomadorDiasTrabalhados.Insert;
   cdsTomadorDiasTrabalhadosID_TOMADOR.AsInteger := cdsTomadorID_TOMADOR.AsInteger;
+  cdsTomadorDiasTrabalhadosID_FILIAL.AsInteger  := cdsTomadorID_FILIAL.AsInteger;
 end;
 
-procedure TDMCadTomador.prc_Posiciona_Tomador(ID_Tomador: Integer);
+procedure TDMCadTomador.prc_Posiciona_Tomador(ID_Tomador: Integer; ID_Filial : Integer);
 begin
   qTomador.Close;
   qTomador.ParamByName('ID_Tomador').AsInteger := ID_Tomador;
+  qTomador.ParamByName('ID_FILIAL').AsInteger := ID_Filial;
   qTomador.Open;
 end;
 
-procedure TDMCadTomador.prc_Posiciona_Tomador_Dia(Ano: Integer; Mes: string; ID_TOMADOR: Integer);
+procedure TDMCadTomador.prc_Posiciona_Tomador_Dia(Ano: Integer; Mes: string; ID_TOMADOR: Integer; ID_Filial : Integer);
 begin
   qTomador_Dias.Close;
   qTomador_Dias.ParamByName('Ano').AsSmallInt := Ano;
   qTomador_Dias.ParamByName('Mes').AsString := Mes;
   qTomador_Dias.ParamByName('ID_TOMADOR').AsInteger := ID_TOMADOR;
+  qTomador_Dias.ParamByName('ID_FILIAL').AsInteger := ID_Filial;
   qTomador_Dias.Open;
 end;
 
@@ -337,7 +346,7 @@ end;
 
 procedure TDMCadTomador.cdsVTVACalcFields(DataSet: TDataSet);
 begin
-  if (cdsVTVAValor_Passagem.AsFloat > 0) and (cdsVTVAValor_Passagem.AsFloat > 0) and (cdsVTVAQtde_Passagem.AsFloat > 0) and (cdsVTVADiasTrabalhados.AsFloat > 0) then
+  if (cdsVTVAValor_Passagem.AsFloat > 0) and (cdsVTVAQtde_Passagem.AsFloat > 0) and (cdsVTVADiasTrabalhados.AsFloat > 0) then
     cdsVTVAValor_Total.AsFloat := (cdsVTVAValor_Passagem.AsFloat * cdsVTVAQtde_Passagem.AsFloat) * (cdsVTVADiasTrabalhados.AsFloat + cdsVTVADias_Adicionais.AsFloat - cdsVTVADiasFalta.AsFloat - cdsVTVADiasAtestado.AsFloat);
 
   if (cdsVTVAValor_Refeicao.AsFloat > 0) and (cdsVTVADiasTrabalhados.AsFloat > 0) then

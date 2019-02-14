@@ -100,9 +100,6 @@ type
     cdsEmpresacd_empresa: TIntegerField;
     cdsEmpresarazao: TStringField;
     cdsEmpresacnpj_cpf: TStringField;
-    sdsProcEvento: TSQLDataSet;
-    dspProcEvento: TDataSetProvider;
-    cdsProcEvento: TClientDataSet;
     sdsValeTransporte: TSQLDataSet;
     dspValeTransporte: TDataSetProvider;
     cdsValeTransporte: TClientDataSet;
@@ -125,27 +122,8 @@ type
     cdsValeTransporteqt_feriado: TSmallintField;
     cdsValeTransportevl_vale: TFloatField;
     cdsValeTransportedescricao: TStringField;
-    sdsProcEventocd_empresa: TSmallintField;
-    sdsProcEventocd_funcionario: TIntegerField;
-    sdsProcEventomes: TSmallintField;
-    sdsProcEventotipo: TSmallintField;
-    sdsProcEventocd_evento: TIntegerField;
-    sdsProcEventoano: TSmallintField;
-    sdsProcEventoreferencia: TFloatField;
-    sdsProcEventoreferencia_editada: TStringField;
-    sdsProcEventovalor: TFloatField;
-    cdsProcEventocd_empresa: TSmallintField;
-    cdsProcEventocd_funcionario: TIntegerField;
-    cdsProcEventomes: TSmallintField;
-    cdsProcEventotipo: TSmallintField;
-    cdsProcEventocd_evento: TIntegerField;
-    cdsProcEventoano: TSmallintField;
-    cdsProcEventoreferencia: TFloatField;
-    cdsProcEventoreferencia_editada: TStringField;
-    cdsProcEventovalor: TFloatField;
     sdsValeTransportenome: TStringField;
     cdsValeTransportenome: TStringField;
-    dsProcEvento: TDataSource;
     sdsValeTransportecd_empresa: TSmallintField;
     sdsValeTransportecd_tomador: TIntegerField;
     cdsValeTransportecd_empresa: TSmallintField;
@@ -216,10 +194,9 @@ type
     ctProcEvento  : string;
     ctValeTransporte : String;
     ctValeRefeicao : string;
-    procedure prc_Abrir_Tomador_Sage;
+    procedure prc_Abrir_Tomador_Sage(ID_Filial : Integer);
     procedure prc_Abrir_Vale_Transporte(ID_Empresa, ID_Tomador : Integer); overload;
     procedure prc_Abrir_Vale_Refeicao(ID_Empresa, ID_Tomador : Integer);
-    procedure prc_Abrir_ProcEvento(ID_Empresa, ID_Tomador, Mes: Integer; Ano : String);
     procedure prc_Abrir_Funcionario_Sage;
     procedure prc_Abrir_Movimento_Folha(ID_Filial, Ano : Integer; Mes : String);
     { Public declarations }
@@ -238,7 +215,6 @@ uses
 procedure TDMSage.DataModuleCreate(Sender: TObject);
 begin
   ctTomadorSage := sdsTomadorSage.CommandText;
-  ctProcEvento  := sdsProcEvento.CommandText;
   ctValeTransporte := sdsValeTransporte.CommandText;
   ctValeRefeicao := sdsValeRefeicao.CommandText;
 end;
@@ -263,32 +239,16 @@ begin
   vSql := vSql + ' and pro.mes = ' + Mes;
   vSql := vSql + ' and pro.ano = ' + IntToStr(Ano);
   vSql := vSql + ' group by pro.cd_empresa, pro.cd_funcionario, pro.mes,pro.ano';
-  vSql := vSql + ' order by pro.cd_funcionario, pro.mes;
+  vSql := vSql + ' order by pro.cd_funcionario, pro.mes';
   sdsMovimentoFolha.CommandText := vSql;
   cdsMovimentoFolha.Open;
 end;
 
-procedure TDMSage.prc_Abrir_ProcEvento(ID_Empresa, ID_Tomador, Mes: Integer; Ano : String);
-var
-  vSql : string;
-begin
-  cdsProcEvento.Close;
-  vSql := ' and  p.cd_empresa = ft.cd_empresa and';
-  vSql := vSql + ' year(ft.dt_lotacao) = ' + Ano;
-  vSql := vSql + ' and month(ft.dt_lotacao) = ' + IntToStr(Mes);
-  vSql := vSql + ' where p.cd_empresa = ' + IntToStr(vFilial);
-  vSql := vSql + ' and ft.cd_tomador = ' + IntToStr(ID_Tomador);
-//  vSql := vSql + ' and p.cd_evento in (225, 938)';
-  vSql := vSql + ' and p.mes = ' + IntToStr(Mes);
-  vSql := vSql + ' and p.ano = ' + Ano;
-  sdsProcEvento.CommandText := ctProcEvento + vSql;
-  cdsProcEvento.Open;
-end;
-
-procedure TDMSage.prc_Abrir_Tomador_Sage;
+procedure TDMSage.prc_Abrir_Tomador_Sage(ID_Filial : Integer);
 begin
   cdsTomadorSage.Close;
-  sdsTomadorSage.CommandText := ctTomadorSage + ' where cd_empresa = ' + IntToStr(vFilial);
+  if ID_Filial <> 0 then
+    sdsTomadorSage.CommandText := ctTomadorSage + ' where cd_empresa = ' + IntToStr(vFilial);
   cdsTomadorSage.Open;
 end;
 
