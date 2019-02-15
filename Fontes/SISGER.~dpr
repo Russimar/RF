@@ -41,12 +41,12 @@ begin
     Application.CreateForm(TdmDataBase, dmDataBase);
     frmAbertura.Hide;
     frmAbertura.Free;
-    if (Date > 43660) then
-    begin
-      ShowMessage('Sistema Expirou, entre em contato com o desenvolvedor!');
-      Exit;
-    end
-    else
+//    if (Date > 43660) then
+//    begin
+//      ShowMessage('Sistema Expirou, entre em contato com o desenvolvedor!');
+//      Exit;
+//    end
+//    else
     begin
       Application.CreateForm(TfMenu, fMenu);
       Application.Run;
