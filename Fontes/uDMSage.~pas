@@ -248,7 +248,7 @@ procedure TDMSage.prc_Abrir_Tomador_Sage(ID_Filial : Integer);
 begin
   cdsTomadorSage.Close;
   if ID_Filial <> 0 then
-    sdsTomadorSage.CommandText := ctTomadorSage + ' where cd_empresa = ' + IntToStr(vFilial);
+    sdsTomadorSage.CommandText := ctTomadorSage + ' where cd_empresa = ' + IntToStr(ID_Filial);
   cdsTomadorSage.Open;
 end;
 

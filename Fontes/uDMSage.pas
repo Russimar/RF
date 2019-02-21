@@ -261,7 +261,8 @@ begin
   vSql :=  ' WHERE FT.CD_EMPRESA = ' + IntToStr(ID_Empresa) + ' AND FC.CD_EMPRESA = ' + IntToStr(ID_Empresa);
   vSql := vSql + ' AND FT.DT_LOTACAO = (SELECT MAX(DT_LOTACAO) FROM FUNTOMADOR FT1 WHERE FT.CD_FUNCIONARIO = FT1.CD_FUNCIONARIO) ';
   vSql := vSql + ' AND FT.CD_TOMADOR = ' + IntToStr(ID_Tomador) + ' AND FT.CD_EMPRESA = ' + IntToStr(ID_Empresa);
-  vSql := vSql + ' AND VR.CD_EMPRESA = ' + IntToStr(ID_Empresa);;
+  vSql := vSql + ' AND VR.CD_EMPRESA = ' + IntToStr(ID_Empresa);
+  vSql := vSql + ' AND VLVR.ENTERPRISE_ID = ' + IntToStr(ID_Empresa);
   vSql := vSql + ' ORDER BY VR.CD_FUNCIONARIO';
   sdsValeRefeicao.CommandText := ctValeRefeicao + vSql;
   cdsValeRefeicao.Open;
