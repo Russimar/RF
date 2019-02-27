@@ -236,7 +236,7 @@ begin
       fDMCadTomador.mVRAuxiliarmes.AsInteger := StrToInt(vMes);
       fDMCadTomador.mVRAuxiliarano.AsString := vAno;
       fDMCadTomador.mVRAuxiliarperc_refeicao.AsFloat := fDMCadTomador.qTomador_DiasPERC_VA.AsFloat;
-      fDMCadTomador.mVRAuxiliardias_trabalhados.AsFloat := fDMCadTomador.cdsVTVADiasTrabalhados.AsFloat;
+      fDMCadTomador.mVRAuxiliardias_trabalhados.AsFloat := fDMCadTomador.cdsVTVADiasTrabalhados.AsFloat + fDMCadTomador.cdsVTVADias_Adicionais.AsFloat - fDMCadTomador.cdsVTVADiasFalta.AsFloat - fDMCadTomador.cdsVTVADiasAtestado.AsFloat;
       fDMCadTomador.mVRAuxiliar.Post;
     end;
     fDMSage.cdsValeRefeicao.Next;

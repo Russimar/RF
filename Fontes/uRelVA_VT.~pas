@@ -255,6 +255,8 @@ begin
 end;
 
 procedure TfrmRelVA_VT.prc_Montar_VT;
+var
+  i : Integer;
 begin
   fDMCadTomador.cdsVTVA.EmptyDataSet;
   fDMCadTomador.mVTAuxiliar.EmptyDataSet;

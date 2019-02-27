@@ -389,6 +389,12 @@ begin
   begin
     TfrxMemoView(frxReport1.FindComponent('Memo5')).Text := fnc_Monta_Impressao_VR;
   end;
+  TfrxMemoView(frxReport1.FindComponent('Memo2')).Text := '';
+  if mVRAuxiliarvalor_desconto.AsFloat > 0 then
+  begin
+    TfrxMemoView(frxReport1.FindComponent('Memo2')).Text := 'Valor Vale Alimentação ' + Formatfloat('0.00',mVRAuxiliarvalor_total.AsFloat) +
+                                                            ' - referente a ' + FormatFloat('00',mVRAuxiliardias_trabalhados.AsFloat) + ' dias';
+  end;
 end;
 
 procedure TDMCadTomador.cdsLiquidosCalcFields(DataSet: TDataSet);
