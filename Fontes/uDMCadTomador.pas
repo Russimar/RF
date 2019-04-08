@@ -321,7 +321,7 @@ begin
          + UpperCase(ACBrExtensoReais.ValorToTexto(mVRAuxiliarvalor_total.AsFloat))
          + ' em vales refeição/alimentação conforme quantidade abaixo discriminada, para utilização no período de '
          + vMes + ' de ' + mVRAuxiliarano.AsString + ' autorizando o desconto de '
-         + FloatToStr(qTomador_DiasPERC_VA.AsFloat) + '% ' + ACBrExtensoPorCento.ValorToTexto(qTomador_DiasPERC_VA.AsFloat);
+         + FloatToStr(mVRAuxiliarperc_refeicao.AsFloat) + '% ' + ACBrExtensoPorCento.ValorToTexto(qTomador_DiasPERC_VA.AsFloat);
 
   Result := vTexto;
 end;
@@ -363,7 +363,7 @@ begin
   TfrxMemoView(frxReport1.FindComponent('Memo6')).Text := '';
   if mVRAuxiliarvalor_desconto.AsFloat > 0 then
   begin
-    TfrxMemoView(frxReport1.FindComponent('Memo6')).Text := 'Valor total do desconto de ' + Formatfloat('0.00',qTomador_DiasPERC_VA.AsFloat) +
+    TfrxMemoView(frxReport1.FindComponent('Memo6')).Text := 'Valor total do desconto de ' + Formatfloat('0.00',mVRAuxiliarperc_refeicao.AsFloat) +
                                                             '%  -  R$ ' + FormatFloat('0.00',mVRAuxiliarvalor_desconto.AsFloat);
   end;
   TfrxMemoView(frxReport1.FindComponent('Memo2')).Text := '';
@@ -390,6 +390,11 @@ begin
     TfrxMemoView(frxReport1.FindComponent('Memo5')).Text := fnc_Monta_Impressao_VR;
   end;
   TfrxMemoView(frxReport1.FindComponent('Memo2')).Text := '';
+    if mVRAuxiliarvalor_desconto.AsFloat > 0 then
+  begin
+    TfrxMemoView(frxReport1.FindComponent('Memo6')).Text := 'Valor total do desconto de ' + Formatfloat('0.00',mVRAuxiliarperc_refeicao.AsFloat) +
+                                                            '%  -  R$ ' + FormatFloat('0.00',mVRAuxiliarvalor_desconto.AsFloat);
+  end;
   if mVRAuxiliarvalor_desconto.AsFloat > 0 then
   begin
     TfrxMemoView(frxReport1.FindComponent('Memo2')).Text := 'Valor Vale Alimentação ' + Formatfloat('0.00',mVRAuxiliarvalor_total.AsFloat) +

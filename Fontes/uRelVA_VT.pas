@@ -221,7 +221,8 @@ begin
 
       fDMCadTomador.cdsVTVACod_VR.AsInteger := fDMSage.cdsValeRefeicaocd_vale.AsInteger;
       fDMCadTomador.cdsVTVANome_Refeicao.AsString := fDMSage.cdsValeRefeicaodescricao.AsString;
-      fDMCadTomador.cdsVTVAPerc_Refeicao.AsFloat := fDMCadTomador.qTomador_DiasPERC_VA.AsFloat;
+//    fDMCadTomador.cdsVTVAPerc_Refeicao.AsFloat := fDMCadTomador.qTomador_DiasPERC_VA.AsFloat;
+      fDMCadTomador.cdsVTVAPerc_Refeicao.AsFloat := fDMSage.cdsValeRefeicaoperc_desconto_vales.AsFloat;
       fDMCadTomador.cdsVTVAMes.AsInteger := StrToInt(vMes);
       fDMCadTomador.cdsVTVAAno.AsString := vAno;
       fDMCadTomador.cdsVTVA.Post;
@@ -231,11 +232,11 @@ begin
         fDMCadTomador.mVRAuxiliar.Insert;
       fDMCadTomador.mVRAuxiliarcod_funcionario.AsInteger := fDMSage.cdsValeRefeicaocd_funcionario.AsInteger;
       fDMCadTomador.mVRAuxiliarnome_funcionario.AsString := fDMSage.cdsValeRefeicaonome.AsString;
-      fDMCadTomador.mVRAuxiliarvalor_desconto.AsFloat := fDMCadTomador.cdsVTVAValor_Total.AsFloat * (fDMCadTomador.qTomador_DiasPERC_VA.AsFloat / 100);
+      fDMCadTomador.mVRAuxiliarvalor_desconto.AsFloat := (fDMCadTomador.cdsVTVAValor_Total.AsFloat - fDMCadTomador.cdsVTVAValor_Desconto.AsFloat) * (fDMCadTomador.qTomador_DiasPERC_VA.AsFloat / 100);
       fDMCadTomador.mVRAuxiliarvalor_total.AsFloat := fDMCadTomador.mVRAuxiliarvalor_total.AsFloat + fDMCadTomador.cdsVTVAValor_Total.AsFloat;
       fDMCadTomador.mVRAuxiliarmes.AsInteger := StrToInt(vMes);
       fDMCadTomador.mVRAuxiliarano.AsString := vAno;
-      fDMCadTomador.mVRAuxiliarperc_refeicao.AsFloat := fDMCadTomador.qTomador_DiasPERC_VA.AsFloat;
+      fDMCadTomador.mVRAuxiliarperc_refeicao.AsFloat := fDMCadTomador.cdsVTVAPerc_Refeicao.AsFloat;
       fDMCadTomador.mVRAuxiliardias_trabalhados.AsFloat := fDMCadTomador.cdsVTVADiasTrabalhados.AsFloat + fDMCadTomador.cdsVTVADias_Adicionais.AsFloat - fDMCadTomador.cdsVTVADiasFalta.AsFloat - fDMCadTomador.cdsVTVADiasAtestado.AsFloat;
       fDMCadTomador.mVRAuxiliar.Post;
     end;

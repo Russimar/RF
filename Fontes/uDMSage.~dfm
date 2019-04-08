@@ -523,11 +523,12 @@ object DMSage: TDMSage
     CommandText = 
       'SELECT vr.cd_funcionario'#13#10'      ,vr.cd_vale'#13#10'      ,vr.qt_dia_ut' +
       'il'#13#10'      ,vlvr.descricao'#13#10'      ,vlvr.vl_vale'#13#10'      ,fc.nome'#13#10 +
-      '      ,fc.cd_empresa'#13#10'      ,ft.cd_tomador'#13#10'  FROM FunVR vr'#13#10'  i' +
-      'nner join ValeVR vlvr on vr.cd_vale = vlvr.cd_vale'#13#10'  inner join' +
-      ' FUNCIONARIO FC ON VR.CD_FUNCIONARIO = FC.CD_FUNCIONARIO   '#13#10'  L' +
-      'EFT join FUNTOMADOR  FT ON FT.CD_FUNCIONARIO = FC.CD_FUNCIONARIO' +
-      ' '#13#10
+      '      ,fc.cd_empresa'#13#10'      ,ft.cd_tomador'#13#10'      ,ov.perc_desco' +
+      'nto_vales'#13#10'  FROM FunVR vr'#13#10'  inner join ValeVR vlvr on vr.cd_va' +
+      'le = vlvr.cd_vale'#13#10'  inner join FUNCIONARIO FC ON VR.CD_FUNCIONA' +
+      'RIO = FC.CD_FUNCIONARIO   '#13#10'  LEFT join FUNTOMADOR  FT ON FT.CD_' +
+      'FUNCIONARIO = FC.CD_FUNCIONARIO '#13#10'left join OpcaoVR OV on FC.CD_' +
+      'FUNCIONARIO = OV.CD_FUNCIONARIO'#13#10
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.Conexao_SQLServer

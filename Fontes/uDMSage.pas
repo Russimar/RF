@@ -186,6 +186,8 @@ type
     cdsMovimentoFolhames: TSmallintField;
     cdsMovimentoFolhaano: TSmallintField;
     cdsMovimentoFolhavalor_total: TFloatField;
+    sdsValeRefeicaoperc_desconto_vales: TFloatField;
+    cdsValeRefeicaoperc_desconto_vales: TFloatField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -263,6 +265,7 @@ begin
   vSql := vSql + ' AND FT.CD_TOMADOR = ' + IntToStr(ID_Tomador) + ' AND FT.CD_EMPRESA = ' + IntToStr(ID_Empresa);
   vSql := vSql + ' AND VR.CD_EMPRESA = ' + IntToStr(ID_Empresa);
   vSql := vSql + ' AND VLVR.ENTERPRISE_ID = ' + IntToStr(ID_Empresa);
+  vSql := vSql + ' AND OV.CD_EMPRESA = ' + IntToStr(ID_Empresa);
   vSql := vSql + ' ORDER BY VR.CD_FUNCIONARIO';
   sdsValeRefeicao.CommandText := ctValeRefeicao + vSql;
   cdsValeRefeicao.Open;
