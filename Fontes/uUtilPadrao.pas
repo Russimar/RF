@@ -14,6 +14,8 @@ function ExtensoMes(n: Integer): String;
 function ObterNomeUsuario : String;
 function ObterVersaoWindows : String;
 procedure GravarImagemFormulario(const NomeArquivo : String);
+function RetornaPrimeiroDiaMes(Data:TDateTime):TDateTime;
+function RetornaUltimoDiaMes(Data:TDateTime):TDateTime;
 
 var
   vUsuario: string;
@@ -26,7 +28,7 @@ var
 implementation
 
 uses
-  DmdDatabase;
+  DmdDatabase, DateUtils;
 
 function Monta_Numero(Campo: string; Tamanho: Integer): string;
 var
@@ -279,6 +281,21 @@ begin
 
 
 end;
+function RetornaPrimeiroDiaMes(Data:TDateTime):TDateTime;
+var
+  vDia,vMes,vAno : Word;
+begin
+  DecodeDate(Data,vAno,vMes,vDia);
+  Result := EncodeDate(vAno,vMes,1);
+end;
 
+function RetornaUltimoDiaMes(Data:TDateTime):TDateTime;
+var
+  vDia,vMes,vAno : Word;
+begin
+  DecodeDate(Data,vAno,vMes,vDia);
+  vDia := DaysInMonth(Data);
+  Result := EncodeDate(vAno,vMes,vDia);
+end;
 end.
 

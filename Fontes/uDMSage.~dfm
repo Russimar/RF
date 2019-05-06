@@ -572,6 +572,9 @@ object DMSage: TDMSage
       DisplayLabel = 'C'#243'd.Tomador'
       FieldName = 'cd_tomador'
     end
+    object sdsValeRefeicaoperc_desconto_vales: TFloatField
+      FieldName = 'perc_desconto_vales'
+    end
   end
   object dspValeRefeicao: TDataSetProvider
     DataSet = sdsValeRefeicao
@@ -622,6 +625,9 @@ object DMSage: TDMSage
     object cdsValeRefeicaocd_tomador: TIntegerField
       DisplayLabel = 'C'#243'd.Tomador'
       FieldName = 'cd_tomador'
+    end
+    object cdsValeRefeicaoperc_desconto_vales: TFloatField
+      FieldName = 'perc_desconto_vales'
     end
   end
   object sdsFuncionario: TSQLDataSet

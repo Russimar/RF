@@ -186,6 +186,8 @@ type
     cdsMovimentoFolhames: TSmallintField;
     cdsMovimentoFolhaano: TSmallintField;
     cdsMovimentoFolhavalor_total: TFloatField;
+    sdsValeRefeicaoperc_desconto_vales: TFloatField;
+    cdsValeRefeicaoperc_desconto_vales: TFloatField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -259,7 +261,7 @@ var
 begin
   cdsValeRefeicao.Close;
   vSql :=  ' WHERE FT.CD_EMPRESA = ' + IntToStr(ID_Empresa) + ' AND FC.CD_EMPRESA = ' + IntToStr(ID_Empresa);
-  vSql := vSql + ' AND FT.DT_LOTACAO = (SELECT MAX(DT_LOTACAO) FROM FUNTOMADOR FT1 WHERE FT.CD_FUNCIONARIO = FT1.CD_FUNCIONARIO) ';
+  vSql := vSql + ' AND FT.DT_LOTACAO = (SELECT MAX(DT_LOTACAO) FROM FUNTOMADOR FT1 WHERE FT.CD_FUNCIONARIO = FT1.CD_FUNCIONARIO AND FT.CD_EMPRESA = FT1.CD_EMPRESA) ';
   vSql := vSql + ' AND FT.CD_TOMADOR = ' + IntToStr(ID_Tomador) + ' AND FT.CD_EMPRESA = ' + IntToStr(ID_Empresa);
   vSql := vSql + ' AND VR.CD_EMPRESA = ' + IntToStr(ID_Empresa);
   vSql := vSql + ' AND VLVR.ENTERPRISE_ID = ' + IntToStr(ID_Empresa);

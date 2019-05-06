@@ -261,7 +261,7 @@ var
 begin
   cdsValeRefeicao.Close;
   vSql :=  ' WHERE FT.CD_EMPRESA = ' + IntToStr(ID_Empresa) + ' AND FC.CD_EMPRESA = ' + IntToStr(ID_Empresa);
-  vSql := vSql + ' AND FT.DT_LOTACAO = (SELECT MAX(DT_LOTACAO) FROM FUNTOMADOR FT1 WHERE FT.CD_FUNCIONARIO = FT1.CD_FUNCIONARIO) ';
+  vSql := vSql + ' AND FT.DT_LOTACAO = (SELECT MAX(DT_LOTACAO) FROM FUNTOMADOR FT1 WHERE FT.CD_FUNCIONARIO = FT1.CD_FUNCIONARIO AND FT.CD_EMPRESA = FT1.CD_EMPRESA) ';
   vSql := vSql + ' AND FT.CD_TOMADOR = ' + IntToStr(ID_Tomador) + ' AND FT.CD_EMPRESA = ' + IntToStr(ID_Empresa);
   vSql := vSql + ' AND VR.CD_EMPRESA = ' + IntToStr(ID_Empresa);
   vSql := vSql + ' AND VLVR.ENTERPRISE_ID = ' + IntToStr(ID_Empresa);
@@ -277,7 +277,7 @@ var
 begin
   cdsValeTransporte.Close;
   vSql :=  ' WHERE FT.CD_EMPRESA = ' + IntToStr(ID_Empresa) + ' AND fc.CD_EMPRESA = ' + IntToStr(ID_Empresa);
-  vSql := vSql + ' AND ft.dt_lotacao = (select max(dt_lotacao) from funtomador ft1 where ft.cd_funcionario = ft1.cd_funcionario) ';
+  vSql := vSql + ' AND ft.dt_lotacao = (select max(dt_lotacao) from funtomador ft1 where ft.cd_funcionario = ft1.cd_funcionario and ft.cd_empresa = ft1.cd_empresa) ';
   vSql := vSql + ' AND ft.cd_tomador = ' + IntToStr(ID_Tomador) + ' AND ft.cd_empresa = ' + IntToStr(ID_Empresa);
   vSql := vSql + ' and fun.cd_empresa = ' + IntToStr(ID_Empresa);;
   vSql := vSql + ' order by fun.cd_funcionario';

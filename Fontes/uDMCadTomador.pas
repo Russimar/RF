@@ -192,6 +192,8 @@ type
   public
     vMsgTomador: string;
     ctCommand: string;
+    DataInicial : TDateTime;
+    DataFinal : TDateTime;
     procedure prc_Consultar(x: string);
     procedure prc_Localizar(ID: Integer; ID_Filial : Integer);
     procedure prc_Abrir_Tomador_Dias(ID_Tomador: Integer; ID_Filial : Integer);
@@ -208,7 +210,6 @@ type
 
 var
   DMCadTomador: TDMCadTomador;
-
 implementation
 
 uses
@@ -301,28 +302,38 @@ end;
 
 function TDMCadTomador.fnc_Monta_Impressao_VT: string;
 var
-  vTexto, vMes: string;
+  vTexto, vMesExtensoIni, vMesExtensoFin: string;
+  vDiaIni,vMesIni,vAnoIni,vDiaFin,vMesFin,vAnoFin : Word;
 begin
-  vMes := ExtensoMes(StrToInt(cdsVTVAMes.AsString));
+  DecodeDate(DataInicial,vAnoIni,vMesIni,vDiaIni);
+  vMesExtensoIni := ExtensoMes(vMesIni);
+  DecodeDate(DataFinal,vAnoFin,vMesFin,vDiaFin);
+  vMesExtensoFin := ExtensoMes(vMesFin);
   vTexto := '   Recebi de ' + vNomeEmpresa + ' a importância de '
           + UpperCase(ACBrExtensoReais.ValorToTexto(mVTAuxiliarvalor_total.AsFloat))
           + ' em vales transporte conforme quantidade abaixo discriminada, para utilização no período de '
-          + vMes + ' de ' + mVTAuxiliarano.AsString + ' autorizando o desconto em meu salário até o máximo de 6%(seis por cento).';
-
+          + FormatFloat('00',vDiaIni) + ' de ' + vMesExtensoIni + ' de ' + IntToStr(vAnoIni) + ' a '
+          + FormatFloat('00',vDiaFin) + ' de ' + vMesExtensoFin + ' de ' + IntToStr(vAnoFin)
+          + ' autorizando o desconto em meu salário até o máximo de 6%(seis por cento).';
   Result := vTexto;
 end;
 
 function TDMCadTomador.fnc_Monta_Impressao_VR: string;
 var
-  vTexto, vMes: string;
+  vTexto, vMesExtensoIni, vMesExtensoFin: string;
+  vDiaIni,vMesIni,vAnoIni,vDiaFin,vMesFin,vAnoFin : Word;
 begin
-  vMes := ExtensoMes(StrToInt(cdsVTVAMes.AsString));
+  DecodeDate(DataInicial,vAnoIni,vMesIni,vDiaIni);
+  vMesExtensoIni := ExtensoMes(vMesIni);
+  DecodeDate(DataFinal,vAnoFin,vMesFin,vDiaFin);
+  vMesExtensoFin := ExtensoMes(vMesFin);
   vTexto := '   Recebi de ' + vNomeEmpresa + ' a importância de '
          + UpperCase(ACBrExtensoReais.ValorToTexto(mVRAuxiliarvalor_total.AsFloat))
          + ' em vales refeição/alimentação conforme quantidade abaixo discriminada, para utilização no período de '
-         + vMes + ' de ' + mVRAuxiliarano.AsString + ' autorizando o desconto de '
+         + FormatFloat('00',vDiaIni) + ' de ' + vMesExtensoIni + ' de ' + IntToStr(vAnoIni) + ' a '
+         + FormatFloat('00',vDiaFin) + ' de ' + vMesExtensoFin + ' de ' + IntToStr(vAnoFin)
+         + ' autorizando o desconto de '
          + FloatToStr(mVRAuxiliarperc_refeicao.AsFloat) + '% ' + ACBrExtensoPorCento.ValorToTexto(qTomador_DiasPERC_VA.AsFloat);
-
   Result := vTexto;
 end;
 

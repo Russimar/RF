@@ -1,8 +1,8 @@
 object DMCadTomador: TDMCadTomador
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Left = 429
-  Top = 149
+  Left = 225
+  Top = 124
   Height = 458
   Width = 894
   object sdsTomador: TSQLDataSet
@@ -439,8 +439,8 @@ object DMCadTomador: TDMCadTomador
       'SELECT ID_TOMADOR, NOME FROM TOMADOR'
       'WHERE ID_TOMADOR = :ID_TOMADOR AND ID_FILIAL = :ID_FILIAL')
     SQLConnection = dmDatabase.scoPrincipal
-    Left = 376
-    Top = 192
+    Left = 632
+    Top = 40
     object qTomadorID_TOMADOR: TIntegerField
       FieldName = 'ID_TOMADOR'
       Required = True
@@ -485,8 +485,8 @@ object DMCadTomador: TDMCadTomador
         'where TT.ANO = :ANO and TT.MES = :MES and T.ID_TOMADOR = :ID_TOM' +
         'ADOR and T.ID_FILIAL = :ID_FILIAL')
     SQLConnection = dmDatabase.scoPrincipal
-    Left = 448
-    Top = 192
+    Left = 664
+    Top = 40
     object qTomador_DiasID_TOMADOR: TIntegerField
       FieldName = 'ID_TOMADOR'
       Required = True
@@ -784,7 +784,7 @@ object DMCadTomador: TDMCadTomador
       'Perc_Refeicao=Perc_Refeicao')
     DataSource = dsVTVA
     BCDToCurrency = False
-    Left = 760
+    Left = 752
     Top = 264
   end
   object ACBrExtensoReais: TACBrExtenso
@@ -1112,7 +1112,7 @@ object DMCadTomador: TDMCadTomador
       'valor_desconto=valor_desconto')
     DataSource = dsmVRAuxiliar
     BCDToCurrency = False
-    Left = 808
+    Left = 784
     Top = 264
   end
   object mVRAuxiliar: TClientDataSet
@@ -1219,7 +1219,7 @@ object DMCadTomador: TDMCadTomador
     ConfurmReading = False
     UseMAPI = SMTP
     MAPISendFlag = 0
-    Left = 768
+    Left = 752
     Top = 208
   end
   object frxPDFExport1: TfrxPDFExport
@@ -1243,7 +1243,7 @@ object DMCadTomador: TDMCadTomador
     CenterWindow = False
     PrintScaling = False
     PdfA = False
-    Left = 808
+    Left = 784
     Top = 208
   end
   object qParametros: TSQLQuery
@@ -1252,8 +1252,8 @@ object DMCadTomador: TDMCadTomador
     SQL.Strings = (
       'SELECT * FROM PARAMETROS')
     SQLConnection = dmDatabase.scoPrincipal
-    Left = 528
-    Top = 192
+    Left = 696
+    Top = 40
     object qParametrosID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -1391,8 +1391,8 @@ object DMCadTomador: TDMCadTomador
       'SELECT * FROM FUNCIONARIO'
       'WHERE ID = :ID_FUNCIONARIO AND ID_FILIAL = :ID_FILIAL')
     SQLConnection = dmDatabase.scoPrincipal
-    Left = 600
-    Top = 192
+    Left = 728
+    Top = 40
     object qFuncionarioID: TIntegerField
       FieldName = 'ID'
       Required = True

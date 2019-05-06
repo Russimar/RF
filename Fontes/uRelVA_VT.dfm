@@ -40,12 +40,12 @@ object frmRelVA_VT: TfrmRelVA_VT
       Caption = 'M'#234's/Ano Inicial:'
     end
     object Label2: TLabel
-      Left = 15
+      Left = 11
       Top = 54
-      Width = 81
+      Width = 85
       Height = 13
       Alignment = taRightJustify
-      Caption = 'Data Refer'#234'ncia:'
+      Caption = 'Refer'#234'ncia Inicial:'
     end
     object Label3: TLabel
       Left = 51
@@ -54,6 +54,14 @@ object frmRelVA_VT: TfrmRelVA_VT
       Height = 13
       Alignment = taRightJustify
       Caption = 'Tomador:'
+    end
+    object Label4: TLabel
+      Left = 232
+      Top = 54
+      Width = 80
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Refer'#234'ncia Final:'
     end
     object ComboEmpresa: TRxDBLookupCombo
       Left = 100
@@ -99,7 +107,7 @@ object frmRelVA_VT: TfrmRelVA_VT
       MaxLength = 4
       TabOrder = 2
     end
-    object DateEditReferencia: TDateEdit
+    object DateEditReferenciaIni: TDateEdit
       Left = 100
       Top = 48
       Width = 121
@@ -439,6 +447,14 @@ object frmRelVA_VT: TfrmRelVA_VT
       Transparent = True
       Visible = False
       OnClick = btnEnviaEmailClick
+    end
+    object DateEditReferenciaFin: TDateEdit
+      Left = 316
+      Top = 48
+      Width = 121
+      Height = 21
+      NumGlyphs = 2
+      TabOrder = 12
     end
   end
   object pnlPrincipal: TPanel

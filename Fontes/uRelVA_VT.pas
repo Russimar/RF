@@ -22,7 +22,7 @@ type
     ComboMes: TComboBox;
     edtAno: TCurrencyEdit;
     Label2: TLabel;
-    DateEditReferencia: TDateEdit;
+    DateEditReferenciaIni: TDateEdit;
     ProgressBar1: TProgressBar;
     Label3: TLabel;
     edtTomador: TEdit;
@@ -34,6 +34,8 @@ type
     SMDBGrid2: TSMDBGrid;
     dsLocal: TDataSource;
     btnEnviaEmail: TNxButton;
+    Label4: TLabel;
+    DateEditReferenciaFin: TDateEdit;
     procedure btnConsultaTomadorClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
@@ -101,7 +103,8 @@ begin
   fDMSage.cdsEmpresa.Open;
   vMes := FormatDateTime('MM', Date);
   vAno := FormatDateTime('YYYY', Date);
-  DateEditReferencia.Date := Date;
+  DateEditReferenciaIni.Date := RetornaPrimeiroDiaMes(Date);
+  DateEditReferenciaFin.Date := RetornaUltimoDiaMes(Date);
   ComboMes.ItemIndex := StrToInt(vMes) - 1;
   edtAno.Text := vAno;
 end;
@@ -132,11 +135,18 @@ begin
     edtAno.SetFocus;
     Exit;
   end;
-  if DateEditReferencia.Date < 10 then
+  if DateEditReferenciaIni.Date < 10 then
   begin
-    ShowMessage('Infome a data de referência!');
-    DateEditReferencia.SelectAll;
-    DateEditReferencia.SetFocus;
+    ShowMessage('Infome a data de referência inicial!');
+    DateEditReferenciaIni.SelectAll;
+    DateEditReferenciaIni.SetFocus;
+    Exit;
+  end;
+  if DateEditReferenciaFin.Date < 10 then
+  begin
+    ShowMessage('Infome a data de referência final!');
+    DateEditReferenciaFin.SelectAll;
+    DateEditReferenciaFin.SetFocus;
     Exit;
   end;
   fDMSage.cdsEmpresa.Locate('cd_empresa', ComboEmpresa.KeyValue, [loCaseInsensitive]);
@@ -315,6 +325,8 @@ end;
 procedure TfrmRelVA_VT.btnImprimirClick(Sender: TObject);
 begin
   prc_Montar_Relatorio;
+  fDMCadTomador.DataInicial := DateEditReferenciaIni.Date;
+  fDMCadTomador.DataFinal := DateEditReferenciaFin.Date;
   fDMCadTomador.frxReport1.variables['Nome_Departamento'] := QuotedStr(fDMCadTomador.qTomadorNOME.AsString);
   fDMCadTomador.frxReport1.ShowReport;
   fDMCadTomador.cdsVTVA.Filtered := False;
