@@ -106,6 +106,7 @@ object frmRelVA_VT: TfrmRelVA_VT
       DisplayFormat = '0'
       MaxLength = 4
       TabOrder = 2
+      OnExit = edtAnoExit
     end
     object DateEditReferenciaIni: TDateEdit
       Left = 100

@@ -46,6 +46,7 @@ type
     procedure edtTomadorChange(Sender: TObject);
     procedure btnEnviaEmailClick(Sender: TObject);
     procedure edtTomadorKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure edtAnoExit(Sender: TObject);
   private
     fDMCadTomador: TDMCadTomador;
     fDMCadFuncionario: TDMFuncionario;
@@ -466,6 +467,11 @@ begin
     fDMCadTomador.cdsLiquidos.Post;
     fDMSage.cdsMovimentoFolha.Next;
   end;
+end;
+
+procedure TfrmRelVA_VT.edtAnoExit(Sender: TObject);
+begin
+  vAno := edtAno.Text; 
 end;
 
 end.
