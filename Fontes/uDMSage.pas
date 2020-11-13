@@ -188,6 +188,8 @@ type
     cdsMovimentoFolhavalor_total: TFloatField;
     sdsValeRefeicaoperc_desconto_vales: TFloatField;
     cdsValeRefeicaoperc_desconto_vales: TFloatField;
+    sdsFuncionariodt_rescisao: TSQLTimeStampField;
+    cdsFuncionariodt_rescisao: TSQLTimeStampField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -279,7 +281,7 @@ begin
   vSql :=  ' WHERE FT.CD_EMPRESA = ' + IntToStr(ID_Empresa) + ' AND fc.CD_EMPRESA = ' + IntToStr(ID_Empresa);
   vSql := vSql + ' AND ft.dt_lotacao = (select max(dt_lotacao) from funtomador ft1 where ft.cd_funcionario = ft1.cd_funcionario and ft.cd_empresa = ft1.cd_empresa) ';
   vSql := vSql + ' AND ft.cd_tomador = ' + IntToStr(ID_Tomador) + ' AND ft.cd_empresa = ' + IntToStr(ID_Empresa);
-  vSql := vSql + ' and fun.cd_empresa = ' + IntToStr(ID_Empresa);;
+  vSql := vSql + ' and fun.cd_empresa = ' + IntToStr(ID_Empresa);
   vSql := vSql + ' order by fun.cd_funcionario';
   sdsValeTransporte.CommandText := ctValeTransporte + vSql;
   cdsValeTransporte.Open;

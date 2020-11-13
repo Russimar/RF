@@ -179,6 +179,7 @@ type
     cdsTomadorDiasTrabalhadosID_FILIAL: TIntegerField;
     cdsTomadorsdsTomadorDiasTrabalhados: TDataSetField;
     qTomador_DiasID_FILIAL: TIntegerField;
+    qFuncionarioDATA_RESCISAO: TDateField;
     procedure DataModuleCreate(Sender: TObject);
     procedure frxValeTransporteNext(Sender: TObject);
     procedure frxValeTransporteFirst(Sender: TObject);

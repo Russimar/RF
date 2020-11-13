@@ -83,11 +83,12 @@ inherited frmCadFuncionario: TfrmCadFuncionario
         Width = 1362
         Height = 600
         DataSource = DMFuncionario.dsConsulta
-        ColCount = 14
+        ColCount = 15
         Columns = <
           item
             Expanded = False
             FieldName = 'ID_FILIAL'
+            Width = 64
             Visible = True
           end
           item
@@ -147,18 +148,23 @@ inherited frmCadFuncionario: TfrmCadFuncionario
           item
             Expanded = False
             FieldName = 'SEXO'
-            Width = 33
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'ESTADO_CIVIL'
             Width = 64
             Visible = True
           end
           item
             Expanded = False
+            FieldName = 'ESTADO_CIVIL'
+            Visible = True
+          end
+          item
+            Expanded = False
             FieldName = 'DATA_ADMISSAO'
+            Width = 64
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'DATA_RESCISAO'
             Width = 64
             Visible = True
           end>

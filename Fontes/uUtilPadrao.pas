@@ -16,6 +16,7 @@ function ObterVersaoWindows : String;
 procedure GravarImagemFormulario(const NomeArquivo : String);
 function RetornaPrimeiroDiaMes(Data:TDateTime):TDateTime;
 function RetornaUltimoDiaMes(Data:TDateTime):TDateTime;
+function  SQLLocate(Tabela, CampoProcura, CampoRetorno, ValorFind: string): string ;
 
 var
   vUsuario: string;
@@ -297,5 +298,30 @@ begin
   vDia := DaysInMonth(Data);
   Result := EncodeDate(vAno,vMes,vDia);
 end;
+
+function SQLLocate(Tabela, CampoProcura, CampoRetorno, ValorFind: string): string ;
+var
+  MyQuery: TSQLQuery;
+begin
+  if ValorFind <> '' then
+  begin
+    MyQuery := TSQLQuery.Create(dmDatabase);
+    MyQuery.SQLConnection :=  dmDatabase.scoPrincipal;
+    MyQuery.Close;
+    MyQuery.SQL.Clear ;
+    MyQuery.SQL.Add('select ' + CampoRetorno + ' from ' + Tabela) ;
+    MyQuery.SQL.Add('where  ' + CampoProcura + ' = ' + QuotedStr(ValorFind));
+    MyQuery.Open ;
+    if not MyQuery.EOF then
+      SQLLocate := MyQuery.FieldByName(CampoRetorno).AsString
+    else
+      SQLLocate := '' ;
+    MyQuery.Destroy ;
+  end
+  else
+    ValorFind := '' ;
+end ;
+
+
 end.
 

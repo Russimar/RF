@@ -41,6 +41,7 @@ begin
     exit;
   ProgressBar1.Min := 0;
   ProgressBar1.Max := fDMSage.cdsFuncionario.RecordCount;
+  fDMSage.cdsFuncionario.DisableControls;
   fDMSage.cdsFuncionario.First;
   try
     while not fDMSage.cdsFuncionario.Eof do
@@ -68,6 +69,10 @@ begin
           fDMCadFuncionario.cdsFuncionarioSEXO.AsString := fDMSage.cdsFuncionariosexo.AsString;
           fDMCadFuncionario.cdsFuncionarioESTADO_CIVIL.AsInteger := fDMSage.cdsFuncionarioestado_civil.AsInteger;
           fDMCadFuncionario.cdsFuncionarioDATA_ADMISSAO.AsDateTime := fDMSage.cdsFuncionariodt_admissao.AsDateTime;
+          if fDMSage.cdsFuncionariodt_rescisao.AsDateTime > 0 then
+            fDMCadFuncionario.cdsFuncionarioDATA_RESCISAO.AsDateTime := fDMSage.cdsFuncionariodt_rescisao.AsDateTime
+          else
+            fDMCadFuncionario.cdsFuncionarioDATA_RESCISAO.Clear;
           fDMCadFuncionario.cdsFuncionario.Post;
           fDMCadFuncionario.cdsFuncionario.ApplyUpdates(0);
         end;
@@ -78,6 +83,8 @@ begin
   except
 
   end;
+  fDMSage.cdsFuncionario.EnableControls;
+
   ShowMessage('Importação efetuada com sucesso');
   Close;
 end;

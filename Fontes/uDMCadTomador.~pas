@@ -179,6 +179,7 @@ type
     cdsTomadorDiasTrabalhadosID_FILIAL: TIntegerField;
     cdsTomadorsdsTomadorDiasTrabalhados: TDataSetField;
     qTomador_DiasID_FILIAL: TIntegerField;
+    qFuncionarioDATA_RESCISAO: TDateField;
     procedure DataModuleCreate(Sender: TObject);
     procedure frxValeTransporteNext(Sender: TObject);
     procedure frxValeTransporteFirst(Sender: TObject);
@@ -320,15 +321,20 @@ end;
 
 function TDMCadTomador.fnc_Monta_Impressao_VR: string;
 var
-  vTexto, vMes: string;
+  vTexto, vMesExtensoIni, vMesExtensoFin: string;
+  vDiaIni,vMesIni,vAnoIni,vDiaFin,vMesFin,vAnoFin : Word;
 begin
-  vMes := ExtensoMes(StrToInt(cdsVTVAMes.AsString));
+  DecodeDate(DataInicial,vAnoIni,vMesIni,vDiaIni);
+  vMesExtensoIni := ExtensoMes(vMesIni);
+  DecodeDate(DataFinal,vAnoFin,vMesFin,vDiaFin);
+  vMesExtensoFin := ExtensoMes(vMesFin);
   vTexto := '   Recebi de ' + vNomeEmpresa + ' a importância de '
          + UpperCase(ACBrExtensoReais.ValorToTexto(mVRAuxiliarvalor_total.AsFloat))
          + ' em vales refeição/alimentação conforme quantidade abaixo discriminada, para utilização no período de '
-         + vMes + ' de ' + mVRAuxiliarano.AsString + ' autorizando o desconto de '
+         + FormatFloat('00',vDiaIni) + ' de ' + vMesExtensoIni + ' de ' + IntToStr(vAnoIni) + ' a '
+         + FormatFloat('00',vDiaFin) + ' de ' + vMesExtensoFin + ' de ' + IntToStr(vAnoFin)
+         + ' autorizando o desconto de '
          + FloatToStr(mVRAuxiliarperc_refeicao.AsFloat) + '% ' + ACBrExtensoPorCento.ValorToTexto(qTomador_DiasPERC_VA.AsFloat);
-
   Result := vTexto;
 end;
 

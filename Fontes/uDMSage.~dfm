@@ -636,11 +636,14 @@ object DMSage: TDMSage
       'e'#13#10'      ,fun.endereco'#13#10'      ,fun.nr_endereco'#13#10'      ,fun.compl' +
       '_endereco'#13#10'      ,fun.bairro'#13#10'      ,fun.cidade'#13#10'      ,fun.esta' +
       'do'#13#10'      ,fun.cep'#13#10'      ,fun.sexo'#13#10'      ,fun.estado_civil'#13#10'  ' +
-      '    ,ffunc.dt_admissao'#13#10'  FROM Funcionario fun'#13#10'  INNER JOIN CRD' +
-      'EMPRESA emp ON emp.cd_empresa = fun.cd_empresa'#13#10'  INNER JOIN FUN' +
-      'FUNCIONAL ffunc on ffunc.cd_empresa = fun.cd_empresa and ffunc.c' +
-      'd_funcionario = fun.cd_funcionario'#13#10'WHERE emp.cnpj_cpf is not nu' +
-      'll '#13#10'order by fun.nome'#13#10
+      '    ,ffunc.dt_admissao'#13#10'      ,fmov.dt_movimentacao dt_rescisao'#13 +
+      #10'  FROM Funcionario fun'#13#10'  INNER JOIN CRDEMPRESA emp ON emp.cd_e' +
+      'mpresa = fun.cd_empresa'#13#10'  INNER JOIN FUNFUNCIONAL ffunc on ffun' +
+      'c.cd_empresa = fun.cd_empresa and ffunc.cd_funcionario = fun.cd_' +
+      'funcionario'#13#10'  LEFT JOIN FUNMOVIMENTACAO fmov on fmov.cd_empresa' +
+      ' = fun.cd_empresa and fmov.cd_funcionario = fun.cd_funcionario a' +
+      'nd fmov.tipo_movimentacao = 2'#13#10'WHERE emp.cnpj_cpf is not null '#13#10 +
+      'order by fun.nome'#13#10
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.Conexao_SQLServer
@@ -699,6 +702,9 @@ object DMSage: TDMSage
     end
     object sdsFuncionariodt_admissao: TSQLTimeStampField
       FieldName = 'dt_admissao'
+    end
+    object sdsFuncionariodt_rescisao: TSQLTimeStampField
+      FieldName = 'dt_rescisao'
     end
   end
   object dspFuncionario: TDataSetProvider
@@ -778,6 +784,10 @@ object DMSage: TDMSage
     object cdsFuncionariodt_admissao: TSQLTimeStampField
       DisplayLabel = 'Data Admiss'#227'o'
       FieldName = 'dt_admissao'
+    end
+    object cdsFuncionariodt_rescisao: TSQLTimeStampField
+      DisplayLabel = 'Data Rescis'#227'o'
+      FieldName = 'dt_rescisao'
     end
   end
   object sdsMovimentoFolha: TSQLDataSet

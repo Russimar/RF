@@ -36,6 +36,9 @@ type
     btnEnviaEmail: TNxButton;
     Label4: TLabel;
     DateEditReferenciaFin: TDateEdit;
+    Label5: TLabel;
+    DateEditRecibo: TDateEdit;
+    rdgSituacao: TRadioGroup;
     procedure btnConsultaTomadorClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
@@ -57,6 +60,7 @@ type
     procedure prc_Montar_Liquidos;
     function fnc_Retorna_Dias_Adicionais(Tipo: string; ID_Funcionario, ID_Filial: Integer): double;
     function fnc_Retorna_Dias_Faltas(Tipo_Desconto, Tipo: string; ID_Funcionario, ID_Filial: Integer): double;
+    function fnc_VerificaSituacao(ID_Funcionario, ID_Filial: Integer) : Boolean;
     { Private declarations }
   public
     vMes: string;
@@ -106,6 +110,7 @@ begin
   vAno := FormatDateTime('YYYY', Date);
   DateEditReferenciaIni.Date := RetornaPrimeiroDiaMes(Date);
   DateEditReferenciaFin.Date := RetornaUltimoDiaMes(Date);
+  DateEditRecibo.Date := Now;
   ComboMes.ItemIndex := StrToInt(vMes) - 1;
   edtAno.Text := vAno;
 end;
@@ -215,14 +220,20 @@ begin
   fDMSage.cdsValeRefeicao.First;
   while not fDMSage.cdsValeRefeicao.Eof do
   begin
+    if not fnc_VerificaSituacao(fDMSage.cdsValeRefeicaocd_funcionario.AsInteger,vFilial) then
+    begin
+      fDMSage.cdsValeRefeicao.Next;
+      Continue;
+    end;
+
     if fDMSage.cdsValeRefeicaoqt_dia_util.AsInteger > 0 then
     begin
       fDMCadTomador.cdsVTVA.Insert;
+
       fDMCadTomador.cdsVTVACod_Funcionario.AsInteger := fDMSage.cdsValeRefeicaocd_funcionario.AsInteger;
       fDMCadTomador.cdsVTVANome_Funcionario.AsString := fDMSage.cdsValeRefeicaonome.AsString;
       fDMCadTomador.cdsVTVAValor_Passagem.AsFloat := fDMSage.cdsValeRefeicaovl_vale.AsFloat;
       fDMCadTomador.cdsVTVAQtde_Passagem.AsFloat := fDMSage.cdsValeRefeicaoqt_dia_util.AsFloat;
-//      fDMCadTomador.cdsVTVAValor_Refeicao.AsFloat := fDMCadTomador.qTomador_DiasVALOR_VA.AsFloat;
       fDMCadTomador.cdsVTVAValor_Refeicao.AsFloat := fDMSage.cdsValeRefeicaovl_vale.AsFloat;
       fDMCadTomador.cdsVTVADiasTrabalhados.AsFloat := fDMCadTomador.qTomador_DiasDIAS.AsInteger;
 
@@ -232,7 +243,6 @@ begin
 
       fDMCadTomador.cdsVTVACod_VR.AsInteger := fDMSage.cdsValeRefeicaocd_vale.AsInteger;
       fDMCadTomador.cdsVTVANome_Refeicao.AsString := fDMSage.cdsValeRefeicaodescricao.AsString;
-//    fDMCadTomador.cdsVTVAPerc_Refeicao.AsFloat := fDMCadTomador.qTomador_DiasPERC_VA.AsFloat;
       fDMCadTomador.cdsVTVAPerc_Refeicao.AsFloat := fDMSage.cdsValeRefeicaoperc_desconto_vales.AsFloat;
       fDMCadTomador.cdsVTVAMes.AsInteger := StrToInt(vMes);
       fDMCadTomador.cdsVTVAAno.AsString := vAno;
@@ -276,6 +286,12 @@ begin
   fDMSage.cdsValeTransporte.First;
   while not fDMSage.cdsValeTransporte.Eof do
   begin
+    if not fnc_VerificaSituacao(fDMSage.cdsValeTransportecd_funcionario.AsInteger,vFilial) then
+    begin
+      fDMSage.cdsValeTransporte.Next;
+      Continue;
+    end;
+
     if fDMSage.cdsValeTransporteqt_dia_util.AsInteger > 0 then
     begin
       fDMCadTomador.cdsVTVA.Insert;
@@ -329,6 +345,7 @@ begin
   fDMCadTomador.DataInicial := DateEditReferenciaIni.Date;
   fDMCadTomador.DataFinal := DateEditReferenciaFin.Date;
   fDMCadTomador.frxReport1.variables['Nome_Departamento'] := QuotedStr(fDMCadTomador.qTomadorNOME.AsString);
+  fDMCadTomador.frxReport1.variables['Data_Recibo'] := QuotedStr(FormatDateTime('dddddd',DateEditRecibo.Date));
   fDMCadTomador.frxReport1.ShowReport;
   fDMCadTomador.cdsVTVA.Filtered := False;
 end;
@@ -460,6 +477,11 @@ begin
   fDMSage.cdsMovimentoFolha.First;
   while not fDMSage.cdsMovimentoFolha.Eof do
   begin
+    if not fnc_VerificaSituacao(fDMSage.cdsMovimentoFolhacd_funcionario.AsInteger,vFilial) then
+    begin
+      fDMSage.cdsMovimentoFolha.Next;
+      Continue;
+    end;
     fDMCadTomador.cdsLiquidos.Insert;
     fDMCadTomador.cdsLiquidoscod_filial.AsInteger := fDMSage.cdsMovimentoFolhacd_empresa.AsInteger;
     fDMCadTomador.cdsLiquidoscod_funcionario.AsInteger := fDMSage.cdsMovimentoFolhacd_funcionario.AsInteger;
@@ -471,7 +493,18 @@ end;
 
 procedure TfrmRelVA_VT.edtAnoExit(Sender: TObject);
 begin
-  vAno := edtAno.Text; 
+  vAno := edtAno.Text;
+end;
+
+function TfrmRelVA_VT.fnc_VerificaSituacao(ID_Funcionario,
+  ID_Filial: Integer): Boolean;
+begin
+  Result := True;
+  fDMCadFuncionario.prc_Posiciona_Funcionario(ID_Funcionario, ID_Filial);
+  if (fDMCadFuncionario.qFuncionarioDATA_RESCISAO.AsDateTime > 0) and (rdgSituacao.ItemIndex = 0) then
+    Result := False;
+  if (fDMCadFuncionario.qFuncionarioDATA_RESCISAO.AsDateTime = 0) and (rdgSituacao.ItemIndex = 1) then
+    Result := False;
 end;
 
 end.

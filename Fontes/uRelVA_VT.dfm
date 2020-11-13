@@ -63,6 +63,14 @@ object frmRelVA_VT: TfrmRelVA_VT
       Alignment = taRightJustify
       Caption = 'Refer'#234'ncia Final:'
     end
+    object Label5: TLabel
+      Left = 249
+      Top = 30
+      Width = 63
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Data Recibo:'
+    end
     object ComboEmpresa: TRxDBLookupCombo
       Left = 100
       Top = 3
@@ -456,6 +464,29 @@ object frmRelVA_VT: TfrmRelVA_VT
       Height = 21
       NumGlyphs = 2
       TabOrder = 12
+    end
+    object DateEditRecibo: TDateEdit
+      Left = 316
+      Top = 24
+      Width = 121
+      Height = 21
+      NumGlyphs = 2
+      TabOrder = 13
+    end
+    object rdgSituacao: TRadioGroup
+      Left = 696
+      Top = 54
+      Width = 337
+      Height = 41
+      Caption = 'Situa'#231#227'o Funcion'#225'rio'
+      Columns = 3
+      ItemIndex = 0
+      Items.Strings = (
+        'Ativo'
+        'Inativo'
+        'Todos')
+      TabOrder = 14
+      OnExit = rdgTipoImpressaExit
     end
   end
   object pnlPrincipal: TPanel

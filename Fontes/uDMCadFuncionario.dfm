@@ -67,6 +67,9 @@ object DMFuncionario: TDMFuncionario
     object sdsConsultaDATA_ADMISSAO: TDateField
       FieldName = 'DATA_ADMISSAO'
     end
+    object sdsConsultaDATA_RESCISAO: TDateField
+      FieldName = 'DATA_RESCISAO'
+    end
   end
   object dspConsulta: TDataSetProvider
     DataSet = sdsConsulta
@@ -145,6 +148,10 @@ object DMFuncionario: TDMFuncionario
       DisplayLabel = 'Dt Admiss'#227'o'
       FieldName = 'DATA_ADMISSAO'
     end
+    object cdsConsultaDATA_RESCISAO: TDateField
+      DisplayLabel = 'Data Rescis'#227'o'
+      FieldName = 'DATA_RESCISAO'
+    end
   end
   object dsConsulta: TDataSource
     DataSet = cdsConsulta
@@ -211,6 +218,9 @@ object DMFuncionario: TDMFuncionario
     object sdsFuncionarioDATA_ADMISSAO: TDateField
       FieldName = 'DATA_ADMISSAO'
     end
+    object sdsFuncionarioDATA_RESCISAO: TDateField
+      FieldName = 'DATA_RESCISAO'
+    end
   end
   object dspFuncionario: TDataSetProvider
     DataSet = sdsFuncionario
@@ -272,7 +282,13 @@ object DMFuncionario: TDMFuncionario
       FieldName = 'ESTADO_CIVIL'
     end
     object cdsFuncionarioDATA_ADMISSAO: TDateField
+      DisplayWidth = 15
       FieldName = 'DATA_ADMISSAO'
+    end
+    object cdsFuncionarioDATA_RESCISAO: TDateField
+      DisplayLabel = 'Data Rescis'#227'o'
+      DisplayWidth = 15
+      FieldName = 'DATA_RESCISAO'
     end
   end
   object dsFuncionario: TDataSource
@@ -349,6 +365,9 @@ object DMFuncionario: TDMFuncionario
     end
     object qFuncionarioDATA_ADMISSAO: TDateField
       FieldName = 'DATA_ADMISSAO'
+    end
+    object qFuncionarioDATA_RESCISAO: TDateField
+      FieldName = 'DATA_RESCISAO'
     end
   end
   object sdsFaltasAtestado: TSQLDataSet

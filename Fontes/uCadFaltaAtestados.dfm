@@ -1,6 +1,6 @@
 object frmFaltaAtestado: TfrmFaltaAtestado
-  Left = 110
-  Top = 95
+  Left = 109
+  Top = 98
   Width = 1076
   Height = 523
   Caption = 'Cadastro Falta e Atestados'

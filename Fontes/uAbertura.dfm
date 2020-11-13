@@ -1,6 +1,6 @@
 object frmAbertura: TfrmAbertura
-  Left = 582
-  Top = 235
+  Left = 557
+  Top = 218
   BorderStyle = bsSingle
   Caption = 'Abertura'
   ClientHeight = 276

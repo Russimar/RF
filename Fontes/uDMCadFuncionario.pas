@@ -122,6 +122,11 @@ type
     cdsDiasAdicionaisTIPO_ACRESCIMO: TStringField;
     sdsFaltasAtestadoTIPO_DESCONTO: TStringField;
     cdsFaltasAtestadoTIPO_DESCONTO: TStringField;
+    sdsConsultaDATA_RESCISAO: TDateField;
+    cdsConsultaDATA_RESCISAO: TDateField;
+    sdsFuncionarioDATA_RESCISAO: TDateField;
+    cdsFuncionarioDATA_RESCISAO: TDateField;
+    qFuncionarioDATA_RESCISAO: TDateField;
     procedure DataModuleCreate(Sender: TObject);
     procedure cdsFaltasAtestadoCalcFields(DataSet: TDataSet);
     procedure cdsDiasAdicionaisCalcFields(DataSet: TDataSet);
@@ -178,7 +183,6 @@ begin
   sdsConsulta.CommandText := ctCommand;
   if Trim(x) <> '' then
     sdsConsulta.CommandText := sdsConsulta.CommandText + ' AND NOME LIKE ' + QuotedStr('%' + x + '%');
-//  sdsConsulta.CommandText := sdsConsulta.CommandText + ' AND ID_FILIAL = ' + IntToStr(vFilial);
   sdsConsulta.CommandText := sdsConsulta.CommandText + ' ORDER BY NOME';
   cdsConsulta.Open;
 end;
