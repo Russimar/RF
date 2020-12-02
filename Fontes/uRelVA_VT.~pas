@@ -50,6 +50,7 @@ type
     procedure btnEnviaEmailClick(Sender: TObject);
     procedure edtTomadorKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure edtAnoExit(Sender: TObject);
+    procedure ComboEmpresaChange(Sender: TObject);
   private
     fDMCadTomador: TDMCadTomador;
     fDMCadFuncionario: TDMFuncionario;
@@ -88,7 +89,6 @@ begin
     ComboEmpresa.SetFocus;
     Exit;
   end;
-  vFilial := ComboEmpresa.KeyValue;
   ffrmSel_Tomador := TfrmSel_Tomador.Create(Self);
   ffrmSel_Tomador.ShowModal;
   FreeAndNil(ffrmSel_Tomador);
@@ -345,7 +345,7 @@ begin
   fDMCadTomador.DataInicial := DateEditReferenciaIni.Date;
   fDMCadTomador.DataFinal := DateEditReferenciaFin.Date;
   fDMCadTomador.frxReport1.variables['Nome_Departamento'] := QuotedStr(fDMCadTomador.qTomadorNOME.AsString);
-  fDMCadTomador.frxReport1.variables['Data_Recibo'] := QuotedStr(DateToStr(DateEditRecibo.Date));
+  fDMCadTomador.frxReport1.variables['Data_Recibo'] := QuotedStr(FormatDateTime('dddddd',DateEditRecibo.Date));
   fDMCadTomador.frxReport1.ShowReport;
   fDMCadTomador.cdsVTVA.Filtered := False;
 end;
@@ -501,10 +501,17 @@ function TfrmRelVA_VT.fnc_VerificaSituacao(ID_Funcionario,
 begin
   Result := True;
   fDMCadFuncionario.prc_Posiciona_Funcionario(ID_Funcionario, ID_Filial);
+  ShowMessage(IntToStr(ID_Funcionario));
+  ShowMessage(IntToStr(ID_Filial));
   if (fDMCadFuncionario.qFuncionarioDATA_RESCISAO.AsDateTime > 0) and (rdgSituacao.ItemIndex = 0) then
     Result := False;
   if (fDMCadFuncionario.qFuncionarioDATA_RESCISAO.AsDateTime = 0) and (rdgSituacao.ItemIndex = 1) then
     Result := False;
+end;
+
+procedure TfrmRelVA_VT.ComboEmpresaChange(Sender: TObject);
+begin
+  vFilial := fDMSage.cdsEmpresacd_empresa.AsInteger;
 end;
 
 end.

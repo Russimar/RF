@@ -81,6 +81,7 @@ object frmRelVA_VT: TfrmRelVA_VT
       LookupDisplay = 'razao'
       LookupSource = DMSage.dsEmpresa
       TabOrder = 0
+      OnChange = ComboEmpresaChange
     end
     object ComboMes: TComboBox
       Left = 100
