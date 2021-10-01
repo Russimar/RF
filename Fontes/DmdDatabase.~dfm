@@ -49,9 +49,9 @@ object dmDatabase: TdmDatabase
     LoginPrompt = False
     Params.Strings = (
       'DriverName=MSSQL'
-      'HostName=.\SQLExpress'
-      'DataBase=Sage_Gestao_Contabil_RF_New'
-      'User_Name=sa'
+      'HostName=RUSSIMAR-DELL'
+      'DataBase=Sage_Gestao_Contabil_RF'
+      'User_Name=RUSSIMAR-DELL\Russimar'
       'Password=GUI180400'
       'BlobSize=-1'
       'ErrorResourceFile='
@@ -59,6 +59,7 @@ object dmDatabase: TdmDatabase
       'MSSQL TransIsolation=ReadCommited'
       'OS Authentication=True')
     VendorLib = 'oledb'
+    Connected = True
     Left = 39
     Top = 94
   end

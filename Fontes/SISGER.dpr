@@ -35,8 +35,8 @@ begin
     Application.Initialize;
     Application.Title := 'SIGDUC (Sistema Gerenciador de Dados dos Usuários do CMPD)';
     Application.CreateForm(TfrmAbertura, frmAbertura);
-  Application.CreateForm(TdmDatabase, dmDatabase);
-  frmAbertura.Show;
+    Application.CreateForm(TdmDatabase, dmDatabase);
+    frmAbertura.Show;
     frmAbertura.Refresh;
     Application.CreateForm(TdmDataBase, dmDataBase);
     frmAbertura.Hide;

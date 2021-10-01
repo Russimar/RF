@@ -6,9 +6,6 @@ uses
   SysUtils, Classes, FMTBcd, DBClient, Provider, DB, SqlExpr;
 
 type
-  TEnumSituacao = (tpAtivo, tpInativo);
-
-type
   TDMSage = class(TDataModule)
     sdsTomadorSage: TSQLDataSet;
     dspTomadorSage: TDataSetProvider;
@@ -270,7 +267,7 @@ begin
   vSql := vSql + ' AND FT.CD_TOMADOR = ' + IntToStr(ID_Tomador) + ' AND FT.CD_EMPRESA = ' + IntToStr(ID_Empresa);
   vSql := vSql + ' AND VR.CD_EMPRESA = ' + IntToStr(ID_Empresa);
   vSql := vSql + ' AND VLVR.ENTERPRISE_ID = ' + IntToStr(ID_Empresa);
-  vSql := vSql + ' AND OV.CD_EMPRESA = ' + IntToStr(ID_Empresa);
+//  vSql := vSql + ' AND OV.CD_EMPRESA = ' + IntToStr(ID_Empresa);
   vSql := vSql + ' ORDER BY VR.CD_FUNCIONARIO';
   sdsValeRefeicao.CommandText := ctValeRefeicao + vSql;
   cdsValeRefeicao.Open;
@@ -285,8 +282,6 @@ begin
   vSql := vSql + ' AND ft.dt_lotacao = (select max(dt_lotacao) from funtomador ft1 where ft.cd_funcionario = ft1.cd_funcionario and ft.cd_empresa = ft1.cd_empresa) ';
   vSql := vSql + ' AND ft.cd_tomador = ' + IntToStr(ID_Tomador) + ' AND ft.cd_empresa = ' + IntToStr(ID_Empresa);
   vSql := vSql + ' and fun.cd_empresa = ' + IntToStr(ID_Empresa);
-  if Situacao = tpAtivo then
-    ' and FC
   vSql := vSql + ' order by fun.cd_funcionario';
   sdsValeTransporte.CommandText := ctValeTransporte + vSql;
   cdsValeTransporte.Open;

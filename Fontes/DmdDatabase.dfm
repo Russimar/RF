@@ -49,9 +49,9 @@ object dmDatabase: TdmDatabase
     LoginPrompt = False
     Params.Strings = (
       'DriverName=MSSQL'
-      'HostName=.\SQLExpress'
-      'DataBase=Sage_Gestao_Contabil_RF_New'
-      'User_Name=sa'
+      'HostName=RUSSIMAR-DELL'
+      'DataBase=Sage_Gestao_Contabil_RF'
+      'User_Name=RUSSIMAR-DELL\Russimar'
       'Password=GUI180400'
       'BlobSize=-1'
       'ErrorResourceFile='
