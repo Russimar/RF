@@ -267,7 +267,8 @@ begin
   vSql := vSql + ' AND FT.CD_TOMADOR = ' + IntToStr(ID_Tomador) + ' AND FT.CD_EMPRESA = ' + IntToStr(ID_Empresa);
   vSql := vSql + ' AND VR.CD_EMPRESA = ' + IntToStr(ID_Empresa);
   vSql := vSql + ' AND VLVR.ENTERPRISE_ID = ' + IntToStr(ID_Empresa);
-//  vSql := vSql + ' AND OV.CD_EMPRESA = ' + IntToStr(ID_Empresa);
+  vSql := vSql + ' AND (OV.CD_EMPRESA = ' + IntToStr(ID_Empresa);
+  vSql := vSql + ' OR OV.CD_EMPRESA is null)';
   vSql := vSql + ' ORDER BY VR.CD_FUNCIONARIO';
   sdsValeRefeicao.CommandText := ctValeRefeicao + vSql;
   cdsValeRefeicao.Open;
